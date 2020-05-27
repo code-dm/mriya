@@ -1,5 +1,4 @@
-// Generated from V:/ÏîÄ¿/real_time_etl/genscript-ddl-parser/src/main/antlr4/ddl/parser/mysql/generated\MySqlParser.g4 by ANTLR 4.7.2
-package com.genscript.generated;
+package com.codingdm.mriya.mysql.ast;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**

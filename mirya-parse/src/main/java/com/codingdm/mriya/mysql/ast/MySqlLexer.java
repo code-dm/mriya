@@ -1,5 +1,5 @@
 // Generated from V:/��Ŀ/real_time_etl/genscript-ddl-parser/src/main/antlr4/ddl/parser/mysql/generated\MySqlLexer.g4 by ANTLR 4.7.2
-package com.genscript.generated;
+package com.codingdm.mriya.mysql.ast;
 
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
