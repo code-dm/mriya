@@ -5,10 +5,15 @@ import com.alibaba.druid.sql.ast.SQLStatement;
 import com.alibaba.druid.sql.visitor.SQLTransformVisitor;
 import com.alibaba.druid.sql.visitor.SchemaStatVisitor;
 import com.alibaba.druid.util.JdbcConstants;
+import com.codingdm.mriya.mysql.ast.MySqlLexer;
+import com.codingdm.mriya.mysql.ast.MySqlParser;
 import lombok.extern.slf4j.Slf4j;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CodePointCharStream;
 import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.tree.ParseTree;
+import org.antlr.v4.runtime.tree.ParseTreeListener;
+import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 /**
  * @author wudongming1
@@ -20,15 +25,21 @@ public class TestParser {
 
     public static void main(String[] args) {
 
-        String sql = "ALTER TABLE `shipping`.`wo_reservaion` \n" +
-                "CHANGE COLUMN `mto_flag` `mto_flag1` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'SAP侧服务和产品定义' AFTER `invoice_entity`,\n" +
-                "MODIFY COLUMN `invoice_entity` int(10) NULL DEFAULT NULL COMMENT '查看票是开给谁的' AFTER `invoice_amount`,\n" +
-                "ADD COLUMN `test_t1` varchar(255) NULL COMMENT '这是才是增加' AFTER `mto_flag1`;";
-        SQLStatement statement = SQLUtils.parseSingleMysqlStatement(sql);
-        SchemaStatVisitor visitor = SQLUtils.createSchemaStatVisitor(JdbcConstants.MYSQL);
-        statement.accept(visitor);
+        String sql = "ALTER table shipping.wo_reservaion change column mto_flag mto_flag1 varchar(10) comment 'SAP侧服务和产品定义';";
 
-        System.out.println(visitor);
+
+        MySqlLexer lexer = new MySqlLexer(CharStreams.fromString(sql));
+
+        MySqlParser parser = new MySqlParser(new CommonTokenStream(lexer));
+
+
+        ParseTree parseTree = parser.root();
+
+        MySqlAntlrDdlParserListener listener = new MySqlAntlrDdlParserListener();
+
+        ParseTreeWalker.DEFAULT.walk(listener, parseTree);
+
+        System.out.println("end");
 
     }
 }
