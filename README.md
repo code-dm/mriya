@@ -6,10 +6,10 @@
 支持MySql DDL语句的同步
 
 目前转义支持 MySql ---> PostGreSql/Greenplum：
-
+`
 CREATE TABLE [IF NOT EXISTS] tbl_name create_definition: {...}
-
-ALTER TABLE tbl_name
+`
+`ALTER TABLE tbl_name
 
   | ADD [COLUMN] col_name column_definition （支持）
   
@@ -19,7 +19,7 @@ ALTER TABLE tbl_name
   
   | MODIFY [COLUMN] col_name column_definition（支持）
   
-  | RENAME COLUMN old_col_name TO new_col_name（支持）
+  | RENAME COLUMN old_col_name TO new_col_name（支持）`
 
 #### 软件架构
 软件架构说明
