@@ -6,5 +6,5 @@ package com.codingdm.mriya.antlr.enums;
  * @Date 5/27/2020 1:40 PM
  **/
 public enum AlterTypeEnum {
-    DROP, CHANGE, MODIFY, ADD, TABLE_RENAME
+    DROP, CHANGE, MODIFY, ADD, TABLE_RENAME, CREATE
 }
