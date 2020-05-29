@@ -33,7 +33,7 @@ public class TestParser {
         MySqlParser parser = new MySqlParser(new CommonTokenStream(lexer));
 
 
-        ParseTree parseTree = parser.root();
+        ParseTree parseTree = parser.alterTable();
 
         MySqlAntlrDdlParserListener listener = new MySqlAntlrDdlParserListener();
 
