@@ -39,24 +39,38 @@ public class MysqlParser implements AlterTable {
     }
 
     @Override
-    public List<Column> addColumns(List<Column> columns) {
-        return null;
+    public void addColumns(List<SQLColumnDefinition> definitions) {
+        this.columns.addAll(definitions.stream()
+                .map(MysqlParser::beanConvert)
+                .peek(c->c.setAlterType(AlterTypeEnum.ADD))
+                .collect(Collectors.toList()));
     }
 
     @Override
-    public List<Column> dropColumns(List<Column> columns) {
-        return null;
+    public void dropColumns(SQLColumnDefinition definition) {
+
     }
 
     @Override
-    public List<Column> modifyColumns(List<Column> columns) {
-        return null;
+    public void modifyColumn(SQLColumnDefinition definition) {
+        Column column = MysqlParser.beanConvert(definition);
+        column.setAlterType(AlterTypeEnum.MODIFY);
+        this.columns.add(column);
     }
 
     @Override
-    public List<Column> renameColumns(List<Column> columns) {
-        return null;
+    public void changeColumn(SQLColumnDefinition definition, String oldName) {
+        Column column = MysqlParser.beanConvert(definition);
+        column.setOldName(oldName);
+        column.setAlterType(AlterTypeEnum.CHANGE);
+        this.columns.add(column);
     }
+
+    @Override
+    public void renameColumns(List<Column> columns) {
+
+    }
+
 
     /**
      * SQLColumnDefinition -> Column

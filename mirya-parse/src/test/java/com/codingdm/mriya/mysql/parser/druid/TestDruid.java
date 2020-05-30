@@ -6,6 +6,8 @@ import com.alibaba.druid.util.JdbcConstants;
 import com.codingdm.mriya.mysql.parser.MysqlParser;
 import com.codingdm.mriya.mysql.visitor.MysqlAlterTableVisitor;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.Test;
+
 
 import java.util.List;
 
@@ -17,12 +19,10 @@ import java.util.List;
 @Slf4j
 public class TestDruid {
 
-    public static void main(String[] args) {
-
-
-
+    @Test
+    public void createTable() {
         String dbType = JdbcConstants.MYSQL; // JdbcConstants.MYSQL或者JdbcConstants.POSTGRESQL
-        String sql = "create table data_center.demo\n" +
+        String sql = "create table data_center.users\n" +
                 "(\n" +
                 "    id           varchar(50)    not null comment '主键ID'\n" +
                 "        primary key,\n" +
@@ -50,6 +50,26 @@ public class TestDruid {
             stmt.accept(visitor);
         }
         parser.getColumns().forEach(System.out::println);
+    }
 
+    @Test
+    public void alterTable(){
+        String sql = "ALTER TABLE `jeecg-boot`.`demo` \n" +
+                "CHANGE COLUMN `sys_org_code` `sys_org_code2` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '所属部门编码' AFTER `update_time`,\n" +
+                "CHANGE COLUMN `sys_org_code_temp` `sys_org_code_4` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '所属部门编码' AFTER `update_time`,\n" +
+                "MODIFY COLUMN `update_time` varchar(10) NULL DEFAULT NULL COMMENT '修改时间' AFTER `update_by`,\n" +
+                "MODIFY COLUMN `update_time_2` varchar(10) NULL DEFAULT NULL COMMENT '修改时间',\n" +
+                "ADD COLUMN `t1` varchar(255) NULL COMMENT 't1-comment' AFTER `sys_org_code2`,\n" +
+                "RENAME COLUMN old_col_name TO new_col_name,\n" +
+                "ADD COLUMN `t2` varchar(100) NULL COMMENT 't2-comment' AFTER `t1`;";
+
+        List<SQLStatement> stmtList = SQLUtils.parseStatements(sql, JdbcConstants.MYSQL);
+
+        MysqlParser parser = new MysqlParser();
+        MysqlAlterTableVisitor visitor = new MysqlAlterTableVisitor(parser);
+        for (SQLStatement stmt : stmtList) {
+            stmt.accept(visitor);
+        }
+        parser.getColumns().forEach(System.out::println);
     }
 }

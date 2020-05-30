@@ -14,7 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 @Data
 @ToString
 public class Column {
-
     private String name;
 
     private String comment;

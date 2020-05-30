@@ -11,5 +11,7 @@
 
     <artifactId>mirya-core</artifactId>
 
+    <dependencies>
 
+    </dependencies>
 </project>

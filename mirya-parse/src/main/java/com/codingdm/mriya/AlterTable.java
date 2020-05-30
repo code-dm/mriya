@@ -21,29 +21,35 @@ public interface AlterTable {
     /**
      * add column
      * @return list
-     * @param columns column
+     * @param definitions column
      */
-    List<Column> addColumns(List<Column> columns);
+    void addColumns(List<SQLColumnDefinition> definitions);
 
     /**
      * drop column
      * @return list
-     * @param columns column
+     * @param definition column
      */
-    List<Column> dropColumns(List<Column> columns);
+    void dropColumns(SQLColumnDefinition definition);
 
     /**
-     * modify column
-     * @return list
-     * @param columns columns
+     * change column
+     * @param definition new column
      */
-    List<Column> modifyColumns(List<Column> columns);
+    void modifyColumn(SQLColumnDefinition definition);
+
+    /**
+     * change column
+     * @param definition new column
+     * @param oldName oldName
+     */
+    void changeColumn(SQLColumnDefinition definition, String oldName);
 
     /**
      * rename column
      * @return list
      * @param columns columns
      */
-    List<Column> renameColumns(List<Column> columns);
+    void renameColumns(List<Column> columns);
 
 }
