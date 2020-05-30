@@ -21,7 +21,6 @@ ALTER TABLE tbl_name
   
   | MODIFY [COLUMN] col_name column_definition（支持）
   
-  | RENAME COLUMN old_col_name TO new_col_name（支持）
 ```
 
 #### 软件架构
