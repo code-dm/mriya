@@ -2,6 +2,7 @@ package com.codingdm.mriya.antlr.model;
 
 import com.codingdm.mriya.antlr.enums.AlterTypeEnum;
 import lombok.Data;
+import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -11,7 +12,8 @@ import lombok.extern.slf4j.Slf4j;
  **/
 @Slf4j
 @Data
-public class ColumnEditor {
+@ToString
+public class Column {
 
     private String name;
 
@@ -25,5 +27,10 @@ public class ColumnEditor {
 
     private int length;
 
+    private int numericScale;
+
     String defaultValue;
+
+    boolean isPrivateKey;
+
 }
