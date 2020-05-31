@@ -21,7 +21,7 @@ public class TestDruid {
 
     @Test
     public void createTable() {
-        String dbType = JdbcConstants.MYSQL; // JdbcConstants.MYSQL或者JdbcConstants.POSTGRESQL
+        String dbType = JdbcConstants.MYSQL;
         String sql = "create table data_center.users\n" +
                 "(\n" +
                 "    id           varchar(50)    not null comment '主键ID'\n" +
@@ -51,6 +51,41 @@ public class TestDruid {
         }
         parser.getColumns().forEach(System.out::println);
     }
+
+    @Test
+    public void createTable2() {
+        String dbType = JdbcConstants.MYSQL;
+        String sql = "/* ApplicationName=DataGrip 2020.1.4 */ CREATE TABLE `mriya`.`table_t1`  (     `id` int(255) NOT NULL AUTO_INCREMENT COMMENT 't1',     `t1` varchar(100) NULL COMMENT 't1',     `t2` varchar(200) NULL COMMENT 't2',     `t3` float NULL COMMENT 't3 float',     `t4` date NULL COMMENT 't4 date',     `t5` time NULL COMMENT 't5 time',     `t6` datetime NULL COMMENT 't6 datetime',     `t7` timestamp NULL COMMENT 't7 timestamp',     `t8` double NULL COMMENT 't8 double',     `t9` text NULL COMMENT 't8 text',     `t10` decimal(10, 3) NULL COMMENT 't10 decimal(10, 3)',     PRIMARY KEY (`id`, `t1`))";
+
+        List<SQLStatement> stmtList = SQLUtils.parseStatements(sql, dbType);
+
+        MysqlParser parser = new MysqlParser();
+        MysqlAlterTableVisitor visitor = new MysqlAlterTableVisitor(parser);
+        for (SQLStatement stmt : stmtList) {
+            stmt.accept(visitor);
+        }
+        parser.getColumns().forEach(System.out::println);
+    }
+
+    @Test
+    public void createTablePrivateKey() {
+        String dbType = JdbcConstants.MYSQL;
+        String sql = "CREATE TABLE `mriya`.`table_private_key`  (\n" +
+                "   PRIMARY KEY (t2, t1),\n" +
+                "  `t1` int(10) NOT NULL,\n" +
+                "  `t2` int(10) NOT NULL\n" +
+                ");";
+
+        List<SQLStatement> stmtList = SQLUtils.parseStatements(sql, dbType);
+
+        MysqlParser parser = new MysqlParser();
+        MysqlAlterTableVisitor visitor = new MysqlAlterTableVisitor(parser);
+        for (SQLStatement stmt : stmtList) {
+            stmt.accept(visitor);
+        }
+        parser.getColumns().forEach(System.out::println);
+    }
+
 
     @Test
     public void alterTable(){

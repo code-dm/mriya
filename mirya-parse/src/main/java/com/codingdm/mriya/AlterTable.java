@@ -1,6 +1,7 @@
 package com.codingdm.mriya;
 
 import com.alibaba.druid.sql.ast.statement.SQLColumnDefinition;
+import com.alibaba.druid.sql.dialect.mysql.ast.MySqlPrimaryKey;
 import com.codingdm.mriya.antlr.model.Column;
 
 import java.util.List;
@@ -46,10 +47,9 @@ public interface AlterTable {
     void changeColumn(SQLColumnDefinition definition, String oldName);
 
     /**
-     * rename column
-     * @return list
-     * @param columns columns
+     * set private keys
+     * @param privateKey columns
      */
-    void renameColumns(List<Column> columns);
+    void setPrivateKeys(MySqlPrimaryKey privateKey);
 
 }
