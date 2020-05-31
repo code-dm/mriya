@@ -28,9 +28,9 @@ public interface AlterTable {
     /**
      * drop column
      * @return list
-     * @param definition column
+     * @param columnName column
      */
-    void dropColumns(SQLColumnDefinition definition);
+    void dropColumns(String columnName);
 
     /**
      * change column

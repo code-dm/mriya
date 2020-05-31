@@ -60,8 +60,9 @@ public class TestDruid {
                 "MODIFY COLUMN `update_time` varchar(10) NULL DEFAULT NULL COMMENT '修改时间' AFTER `update_by`,\n" +
                 "MODIFY COLUMN `update_time_2` varchar(10) NULL DEFAULT NULL COMMENT '修改时间',\n" +
                 "ADD COLUMN `t1` varchar(255) NULL COMMENT 't1-comment' AFTER `sys_org_code2`,\n" +
-                "RENAME COLUMN old_col_name TO new_col_name,\n" +
-                "ADD COLUMN `t2` varchar(100) NULL COMMENT 't2-comment' AFTER `t1`;";
+                "DROP COLUMN col_name ,\n" +
+                "DROP COLUMN col_name2 ,\n" +
+                "ADD COLUMN `t2` varchar(100) NULL COMMENT 't2-comment' AFTER `t1`, ADD COLUMN(t5 varchar(255), t6 varchar(255), t7 varchar(255));";
 
         List<SQLStatement> stmtList = SQLUtils.parseStatements(sql, JdbcConstants.MYSQL);
 
@@ -72,4 +73,7 @@ public class TestDruid {
         }
         parser.getColumns().forEach(System.out::println);
     }
+
+
+
 }

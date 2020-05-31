@@ -47,8 +47,10 @@ public class MysqlParser implements AlterTable {
     }
 
     @Override
-    public void dropColumns(SQLColumnDefinition definition) {
-
+    public void dropColumns(String columnName) {
+        Column column = new Column(columnName);
+        column.setAlterType(AlterTypeEnum.DROP);
+        this.columns.add(column);
     }
 
     @Override

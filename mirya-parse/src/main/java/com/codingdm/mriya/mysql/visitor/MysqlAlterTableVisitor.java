@@ -34,7 +34,11 @@ public class MysqlAlterTableVisitor extends MySqlASTVisitorAdapter {
 
     @Override
     public boolean visit(SQLAlterTableDropColumnItem x) {
-        System.out.println("SQLAlterTableDropColumnItem");
+
+        x.getColumns().forEach(s-> {
+            parser.dropColumns(s.getSimpleName());
+        });
+
         return true;
     }
 
@@ -45,7 +49,7 @@ public class MysqlAlterTableVisitor extends MySqlASTVisitorAdapter {
 
     @Override
     public boolean visit(SQLAlterTableAddColumn x) {
-        System.out.println("SQLAlterTableAddColumn");
+
         if(!Objects.isNull(x) && x.getColumns().size() > 0){
             parser.addColumns(x.getColumns());
         }
@@ -120,7 +124,6 @@ public class MysqlAlterTableVisitor extends MySqlASTVisitorAdapter {
 
     @Override
     public boolean visit(MySqlAlterTableChangeColumn x) {
-        System.out.println("MySqlAlterTableChangeColumn");
         if(!Objects.isNull(x.getNewColumnDefinition())){
             parser.changeColumn(x.getNewColumnDefinition(), x.getColumnName().getSimpleName());
         }
