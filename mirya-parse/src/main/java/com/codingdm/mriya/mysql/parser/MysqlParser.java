@@ -72,12 +72,6 @@ public class MysqlParser implements AlterTable {
 
     @Override
     public void setPrivateKeys(MySqlPrimaryKey privateKey) {
-//        privateKey.getColumns().forEach(
-//                p-> this.columns
-//                        .stream()
-//                        .filter(c-> cleanColumnName(c.getName()).equals(cleanColumnName(p.getExpr().toString())))
-//                        .peek(c->c.setPrivateKey(true))
-//        );
         for (SQLSelectOrderByItem item : privateKey.getColumns()) {
             for (int i = 0; i < this.columns.size(); i++) {
                 if(cleanColumnName(item.getExpr().toString())
