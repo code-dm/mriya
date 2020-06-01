@@ -2,6 +2,8 @@ package com.codingdm.mriya.mysql.parser;
 
 import com.alibaba.druid.sql.ast.SQLExpr;
 import com.alibaba.druid.sql.ast.statement.SQLColumnDefinition;
+import com.alibaba.druid.sql.ast.statement.SQLSelectOrderByItem;
+import com.alibaba.druid.sql.dialect.mysql.ast.MySqlPrimaryKey;
 import com.codingdm.mriya.AlterTable;
 import com.codingdm.mriya.antlr.enums.AlterTypeEnum;
 import com.codingdm.mriya.antlr.model.Column;
@@ -47,8 +49,10 @@ public class MysqlParser implements AlterTable {
     }
 
     @Override
-    public void dropColumns(SQLColumnDefinition definition) {
-
+    public void dropColumns(String columnName) {
+        Column column = new Column(columnName);
+        column.setAlterType(AlterTypeEnum.DROP);
+        this.columns.add(column);
     }
 
     @Override
@@ -67,8 +71,15 @@ public class MysqlParser implements AlterTable {
     }
 
     @Override
-    public void renameColumns(List<Column> columns) {
-
+    public void setPrivateKeys(MySqlPrimaryKey privateKey) {
+        for (SQLSelectOrderByItem item : privateKey.getColumns()) {
+            for (int i = 0; i < this.columns.size(); i++) {
+                if(cleanColumnName(item.getExpr().toString())
+                        .equals(cleanColumnName(this.getColumns().get(i).getName()))){
+                    this.columns.get(i).setPrivateKey(true);
+                }
+            }
+        }
     }
 
 
@@ -93,4 +104,10 @@ public class MysqlParser implements AlterTable {
         }
         return column;
     }
+
+    public static String cleanColumnName(String originalName){
+        return originalName.replaceAll("`*?`", "")
+                .replaceAll(".*[.]", "");
+    }
+
 }

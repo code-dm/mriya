@@ -4,6 +4,7 @@ import com.alibaba.druid.sql.ast.expr.SQLIntervalExpr;
 import com.alibaba.druid.sql.ast.statement.SQLAlterTableAddColumn;
 import com.alibaba.druid.sql.ast.statement.SQLAlterTableDropColumnItem;
 import com.alibaba.druid.sql.ast.statement.SQLColumnDefinition;
+import com.alibaba.druid.sql.ast.statement.SQLTableElement;
 import com.alibaba.druid.sql.dialect.mysql.ast.MySqlKey;
 import com.alibaba.druid.sql.dialect.mysql.ast.MySqlPrimaryKey;
 import com.alibaba.druid.sql.dialect.mysql.ast.statement.*;
@@ -12,6 +13,8 @@ import com.codingdm.mriya.mysql.parser.MysqlParser;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -32,9 +35,15 @@ public class MysqlAlterTableVisitor extends MySqlASTVisitorAdapter {
 
     }
 
+
+
     @Override
     public boolean visit(SQLAlterTableDropColumnItem x) {
-        System.out.println("SQLAlterTableDropColumnItem");
+
+        x.getColumns().forEach(s-> {
+            parser.dropColumns(s.getSimpleName());
+        });
+
         return true;
     }
 
@@ -45,7 +54,7 @@ public class MysqlAlterTableVisitor extends MySqlASTVisitorAdapter {
 
     @Override
     public boolean visit(SQLAlterTableAddColumn x) {
-        System.out.println("SQLAlterTableAddColumn");
+
         if(!Objects.isNull(x) && x.getColumns().size() > 0){
             parser.addColumns(x.getColumns());
         }
@@ -79,7 +88,9 @@ public class MysqlAlterTableVisitor extends MySqlASTVisitorAdapter {
 
     @Override
     public boolean visit(MySqlPrimaryKey x) {
-
+        if(x.getColumns().size() > 0){
+            parser.setPrivateKeys(x);
+        }
         return true;
     }
 
@@ -120,18 +131,25 @@ public class MysqlAlterTableVisitor extends MySqlASTVisitorAdapter {
 
     @Override
     public boolean visit(MySqlAlterTableChangeColumn x) {
-        System.out.println("MySqlAlterTableChangeColumn");
         if(!Objects.isNull(x.getNewColumnDefinition())){
             parser.changeColumn(x.getNewColumnDefinition(), x.getColumnName().getSimpleName());
         }
         return true;
     }
 
+
     @Override
     public boolean visit(MySqlCreateTableStatement x) {
         if(!Objects.isNull(x) && x.getTableElementList().size() > 0){
+//            List<SQLColumnDefinition> definitions = new ArrayList<>();
+//            for (SQLTableElement sqlTableElement : x.getTableElementList()) {
+//                if(sqlTableElement instanceof SQLColumnDefinition){
+//                    definitions.add((SQLColumnDefinition) sqlTableElement);
+//                }
+//            }
             parser.createTable(x.getTableElementList()
                     .stream()
+                    .filter(c-> c instanceof SQLColumnDefinition)
                     .map(s->(SQLColumnDefinition)s)
                     .collect(Collectors.toList())
             );
