@@ -1,4 +1,4 @@
-package com.codingdm.mriya.antlr.enums;
+package com.codingdm.mriya.enums;
 
 /**
  * @author wudongming1
