@@ -1,4 +1,4 @@
-package com.codingdm.mriya.antlr.enums;
+package com.codingdm.mriya.common.enums;
 
 /**
  * Protobuf enum {@code com.alibaba.otter.canal.protocol.EventType}
@@ -7,6 +7,7 @@ package com.codingdm.mriya.antlr.enums;
  ** 事件类型 *
  * </pre>
  */
+
 public enum EventType {
     /**
      * <code>INSERT = 1;</code>

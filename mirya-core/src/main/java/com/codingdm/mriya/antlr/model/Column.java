@@ -1,6 +1,6 @@
 package com.codingdm.mriya.antlr.model;
 
-import com.codingdm.mriya.antlr.enums.AlterTypeEnum;
+import com.codingdm.mriya.enums.AlterTypeEnum;
 import lombok.Data;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;

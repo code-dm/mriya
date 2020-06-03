@@ -3,7 +3,7 @@
  * @email dongming1.wu@genscript.com
  * @create 2019-08-07 15:59
  **/
-package com.codingdm.mriya.antlr.enums;
+package com.codingdm.mriya.enums;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -49,17 +49,17 @@ public class  PgEnum {
         pgMapping.put("ENUM", "varchar(20)");
         pgMapping.put("BINARY", "text");
     }
-    public static com.genscript.model.enums.PgEnum getInstance(){
+    public static PgEnum getInstance(){
         return SingletonPatternHolder.pgEnum;
     }
 
     private static class SingletonPatternHolder {
-        private static final com.genscript.model.enums.PgEnum pgEnum = new com.genscript.model.enums.PgEnum();
+        private static final PgEnum pgEnum = new PgEnum();
     }
 
     public static String getMapping(String typeName){
         if (!StringUtils.isEmpty(typeName)){
-            com.genscript.model.enums.PgEnum pgEnum = com.genscript.model.enums.PgEnum.getInstance();
+            PgEnum pgEnum = PgEnum.getInstance();
             return pgEnum.pgMapping.get(typeName.toUpperCase());
         }
         return "";

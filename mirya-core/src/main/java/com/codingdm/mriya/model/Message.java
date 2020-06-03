@@ -1,8 +1,10 @@
-package com.codingdm.mriya.antlr.model;
+package com.codingdm.mriya.model;
 
-import com.codingdm.mriya.antlr.constant.CommonConstants;
-import com.codingdm.mriya.antlr.enums.EventType;
+import com.alibaba.fastjson.JSONObject;
+import com.codingdm.mriya.common.enums.EventType;
+import com.codingdm.mriya.constant.CommonConstants;
 import lombok.Data;
+import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
@@ -17,6 +19,7 @@ import java.util.Set;
  **/
 @Slf4j
 @Data
+@ToString
 public class Message {
 
     private static final long serialVersionUID = -3386650678735860050L;
@@ -36,6 +39,7 @@ public class Message {
     private String topic;
 
     public List<Map<String, String>> getData() {
+
         if (data != null && data.size() > 0) {
             // 处理时间问题 0000-00-00  --> 统一修改为 1970-01-01 00:00:00
             if (data.toString().contains(CommonConstants.ERROR_DATE)) {
@@ -57,5 +61,12 @@ public class Message {
             }
         }
         return data;
+    }
+
+    public static Message buildMessage(String jsonString){
+        if(StringUtils.isNotEmpty(jsonString)){
+            return JSONObject.parseObject(jsonString, Message.class);
+        }
+        return new Message();
     }
 }
