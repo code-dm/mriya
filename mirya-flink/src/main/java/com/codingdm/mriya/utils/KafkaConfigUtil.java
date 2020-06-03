@@ -15,8 +15,12 @@ public class KafkaConfigUtil {
 
         Properties props = new Properties();
 
-        props.put("bootstrap.servers", "192.168.2.185:9092");
-        props.put("zookeeper.connect", "127.0.0.1:2181");
+//        props.put("bootstrap.servers", "192.168.2.185:9092");
+//        props.put("zookeeper.connect", "127.0.0.1:2181");
+
+        props.put("bootstrap.servers", "10.168.2.224:9092");
+        props.put("zookeeper.connect", "10.168.2.224:2181");
+
         props.put("group.id", "mriya-dev");
         props.put("auto.offset.reset", "earliest");
 

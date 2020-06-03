@@ -8,9 +8,11 @@ import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author wudongming1
@@ -20,7 +22,7 @@ import java.util.Set;
 @Slf4j
 @Data
 @ToString
-public class Message {
+public class Message implements Serializable {
 
     private static final long serialVersionUID = -3386650678735860050L;
     private long id;
@@ -37,9 +39,13 @@ public class Message {
     private List<Map<String, String>> data;
     private List<Map<String, String>> old;
     private String topic;
+    public String targetTable;
+//    public String keyByTable;
+//    private Map<String, String> dataMap;
+    private Map<String, Map<String, String>> deleteData;
+    private Map<String, Map<String, String>> inOrUpData;
 
     public List<Map<String, String>> getData() {
-
         if (data != null && data.size() > 0) {
             // 处理时间问题 0000-00-00  --> 统一修改为 1970-01-01 00:00:00
             if (data.toString().contains(CommonConstants.ERROR_DATE)) {
@@ -63,10 +69,58 @@ public class Message {
         return data;
     }
 
-    public static Message buildMessage(String jsonString){
+    public static Message buildMessage(String jsonString, String topic){
         if(StringUtils.isNotEmpty(jsonString)){
-            return JSONObject.parseObject(jsonString, Message.class);
+            Message msg = JSONObject.parseObject(jsonString, Message.class);
+            msg.setTopic(topic);
+            msg.setTargetTable();
+//            msg.setKeyByTable();
+            return msg;
         }
         return new Message();
+    }
+
+    public void setTargetTable() {
+        this.targetTable = String.format(CommonConstants.TARGET_TABLE, this.getTopic(), this.getDatabase(), this.getTable());
+    }
+
+    public void addData(List<Map<String, String>> data){
+        this.data.addAll(data);
+    }
+
+//    public void setKeyByTable(){
+//        String type = "";
+//        if(typeIsDdl()){
+//            type = "DDL_" + this.type;
+//        }else {
+//            type = "DML";
+//        }
+//        this.keyByTable = String.format(CommonConstants.KEY_BY_TABLE, this.getTopic(), this.getDatabase(), this.getTable(), type);
+//    }
+
+    public boolean typeIsDdl(){
+        return !(this.type == EventType.INSERT
+                || this.type == EventType.UPDATE
+                || this.type == EventType.DELETE);
+
+    }
+
+    /**
+     * 根据data 可以获取到该data的唯一值，可用于去重
+     * @param v map
+     * @return str
+     */
+    public String getPkValuesIds(Map<String, String> v) {
+        return String.format(
+                CommonConstants.PK_VALUES_IDS,
+                this.getTargetTable(),
+                this.getPkNames()
+                        .stream()
+                        .map(v::get)
+                        .collect(Collectors.joining(CommonConstants.FILTER_LINE)));
+    }
+
+    public String toJsonString(){
+        return JSONObject.toJSONString(this);
     }
 }

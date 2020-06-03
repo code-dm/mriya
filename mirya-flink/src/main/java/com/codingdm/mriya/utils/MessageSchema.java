@@ -15,9 +15,14 @@ import java.io.IOException;
  * @created: 2020/06/02 21:28
  */
 public class MessageSchema implements DeserializationSchema<Message>, SerializationSchema<Message> {
+    private String topic;
+    public MessageSchema(String topic){
+        this.topic = topic;
+    }
+
     @Override
     public Message deserialize(byte[] bytes) {
-        return Message.buildMessage(new String(bytes));
+        return Message.buildMessage(new String(bytes), this.topic);
     }
 
     @Override
