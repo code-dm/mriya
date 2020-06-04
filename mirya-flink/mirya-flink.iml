@@ -11,20 +11,6 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Maven: org.apache.flink:flink-streaming-java_2.11:1.9.3" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.flink:flink-core:1.9.3" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.flink:flink-annotations:1.9.3" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.flink:flink-metrics-core:1.9.3" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.flink:flink-runtime_2.11:1.9.3" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.flink:flink-java:1.9.3" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.flink:flink-queryable-state-client-java:1.9.3" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.flink:flink-hadoop-fs:1.9.3" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.flink:flink-shaded-jackson:2.10.1-9.0" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.flink:flink-clients_2.11:1.9.3" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.flink:flink-optimizer_2.11:1.9.3" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.flink:force-shading:1.9.3" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.flink:flink-connector-kafka_2.12:1.9.3" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.flink:flink-connector-kafka-base_2.12:1.9.3" level="project" />
     <orderEntry type="module" module-name="mirya-core" />
     <orderEntry type="module" module-name="mirya-parse" />
     <orderEntry type="module" module-name="mirya-template" />
@@ -83,14 +69,18 @@
     <orderEntry type="library" name="Maven: log4j:log4j:1.2.17" level="project" />
     <orderEntry type="library" name="Maven: com.alibaba:fastjson:1.2.56" level="project" />
     <orderEntry type="library" name="Maven: org.apache.commons:commons-lang3:3.8.1" level="project" />
-    <orderEntry type="library" name="Maven: com.alibaba.nacos:nacos-client:1.0.0" level="project" />
-    <orderEntry type="library" name="Maven: com.alibaba.nacos:nacos-common:1.0.0" level="project" />
-    <orderEntry type="library" name="Maven: com.alibaba.nacos:nacos-api:1.0.0" level="project" />
-    <orderEntry type="library" name="Maven: com.google.guava:guava:19.0" level="project" />
+    <orderEntry type="library" name="Maven: com.alibaba.nacos:nacos-client:1.2.1" level="project" />
+    <orderEntry type="library" name="Maven: com.alibaba.nacos:nacos-common:1.2.1" level="project" />
+    <orderEntry type="library" name="Maven: com.alibaba.nacos:nacos-api:1.2.1" level="project" />
+    <orderEntry type="library" name="Maven: com.google.guava:guava:22.0" level="project" />
+    <orderEntry type="library" name="Maven: com.google.errorprone:error_prone_annotations:2.0.18" level="project" />
+    <orderEntry type="library" name="Maven: com.google.j2objc:j2objc-annotations:1.1" level="project" />
+    <orderEntry type="library" name="Maven: org.codehaus.mojo:animal-sniffer-annotations:1.14" level="project" />
     <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.11" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.9.9" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.9.9" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.9.0" level="project" />
     <orderEntry type="library" name="Maven: io.prometheus:simpleclient:0.5.0" level="project" />
+    <orderEntry type="library" name="Maven: org.yaml:snakeyaml:1.23" level="project" />
   </component>
 </module>
