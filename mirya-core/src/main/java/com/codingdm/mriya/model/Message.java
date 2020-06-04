@@ -1,6 +1,7 @@
 package com.codingdm.mriya.model;
 
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.codingdm.mriya.common.enums.EventType;
 import com.codingdm.mriya.constant.CommonConstants;
 import lombok.Data;
@@ -84,9 +85,9 @@ public class Message implements Serializable {
         this.targetTable = String.format(CommonConstants.TARGET_TABLE, this.getTopic(), this.getDatabase(), this.getTable());
     }
 
-    public void addData(List<Map<String, String>> data){
-        this.data.addAll(data);
-    }
+//    public void addData(List<Map<String, String>> data){
+//        this.data.addAll(data);
+//    }
 
 //    public void setKeyByTable(){
 //        String type = "";
@@ -121,6 +122,6 @@ public class Message implements Serializable {
     }
 
     public String toJsonString(){
-        return JSONObject.toJSONString(this);
+        return JSONObject.toJSONString(this, SerializerFeature.WriteMapNullValue);
     }
 }

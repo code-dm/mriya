@@ -1,14 +1,13 @@
 package com.codingdm.mriya.aggregate;
 
 import com.codingdm.mriya.common.enums.EventType;
-import com.codingdm.mriya.constant.CommonConstants;
 import com.codingdm.mriya.model.Message;
-import com.sun.org.apache.bcel.internal.generic.NEW;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.flink.api.common.functions.AggregateFunction;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author wudongming1
@@ -17,51 +16,66 @@ import java.util.stream.Collectors;
  **/
 @Slf4j
 public class AggregateMessage implements AggregateFunction<Message, Message, Message> {
+//    private Map<String, Map<String, String>> deleteData;
+//    private Map<String, Map<String, String>> inOrUpData;
+//    private StringBuilder sqlBuilder;
 
     @Override
     public Message createAccumulator() {
+//        deleteData = new HashMap<>();
+//        inOrUpData = new HashMap<>();
+//        sqlBuilder = new StringBuilder();
         return null;
     }
 
+    /**
+     * @param message
+     * @param accumulator
+     * @return
+     */
     @Override
-    public Message add(Message message, Message newMessage) {
-        if(newMessage != null){
-            if(newMessage.typeIsDdl()){
-                message.setSql(message.getSql() + ";" + newMessage.getSql());
-            }else {
-                if(newMessage.getType() == EventType.DELETE && newMessage.getData() != null){
-                    distintData(message, newMessage);
+    public Message add(Message message, Message accumulator) {
+        if (accumulator == null ) {
+            accumulator = message;
+        } else {
+            if (message.typeIsDdl()) {
+                accumulator.setSql(accumulator.getSql() + ";" + message.getSql());
+            }
+            if(message.getType() == EventType.DELETE && message.getData() != null){
+                for (Map<String, String> delete : message.getData()) {
+                    String pkValuesIds = message.getPkValuesIds(delete);
+                    Map<String, Map<String, String>> deleteData = accumulator.getDeleteData();
+                    if(deleteData == null){
+                        deleteData = new HashMap<>();
+                    }
+                    deleteData.put(pkValuesIds, delete);
+                    accumulator.setDeleteData(deleteData);
                 }
-                boolean b = (newMessage.getType() == EventType.INSERT
-                        || newMessage.getType() == EventType.UPDATE)
-                        && newMessage.getData() != null;
-                if(b){
-                    distintData(message, newMessage);
-                }
-                if(message.getData() == null){
-                    message.setData(new ArrayList<>(newMessage.getData()));
-                }else {
-                    message.addData(newMessage.getData());
+            }
+            boolean b = (message.getType() == EventType.INSERT
+                    || message.getType() == EventType.UPDATE)
+                    && message.getData() != null;
+            if(b){
+                for (Map<String, String> inOrUp : message.getData()) {
+                    String pkValuesIds = message.getPkValuesIds(inOrUp);
+                    Map<String, Map<String, String>> inOrUpData = accumulator.getDeleteData();
+                    if(inOrUpData == null){
+                        inOrUpData = new HashMap<>();
+                    }
+                    inOrUpData.put(pkValuesIds, inOrUp);
+                    accumulator.setInOrUpData(inOrUpData);
                 }
             }
         }
-        return message;
-    }
-
-    private void distintData(Message message, Message newMessage) {
-        newMessage.getData().forEach(inOrUp-> {
-            String pkValuesIds = newMessage.getPkValuesIds(inOrUp);
-            Map<String, Map<String, String>> inOrUpdate = message.getDeleteData();
-            if(inOrUpdate == null){
-                inOrUpdate = new HashMap<>();
-            }
-            inOrUpdate.put(pkValuesIds, inOrUp);
-            message.setDeleteData(inOrUpdate);
-        });
+        accumulator.setData(null);
+        return accumulator;
     }
 
     @Override
     public Message getResult(Message message) {
+//        message.setDeleteData(deleteData);
+//        message.setInOrUpData(inOrUpData);
+//        message.setSql(sqlBuilder.toString());
         return message;
     }
 
@@ -70,7 +84,7 @@ public class AggregateMessage implements AggregateFunction<Message, Message, Mes
         return message;
     }
 
-    public static AggregateMessage build(){
+    public static AggregateMessage build() {
         return new AggregateMessage();
     }
 }
