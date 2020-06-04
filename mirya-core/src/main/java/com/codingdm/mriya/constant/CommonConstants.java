@@ -21,4 +21,6 @@ public class CommonConstants {
     public static final String PK_VALUES_IDS = "%s_%s";
     public static final String FILTER_LINE = "-";
 
+    public static final String PERCENT_S_DOUBLE = "\"%s\"";
+
 }

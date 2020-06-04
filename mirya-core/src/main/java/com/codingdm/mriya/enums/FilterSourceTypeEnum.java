@@ -1,4 +1,4 @@
-package com.codingdm.mriya.common.enums;
+package com.codingdm.mriya.enums;
 
 /**
  * 获取filter的来源

@@ -6,11 +6,13 @@ import com.codingdm.mriya.trigger.DdlTrigger;
 import com.codingdm.mriya.utils.KafkaConfigUtil;
 import com.codingdm.mriya.utils.MessageSchema;
 import lombok.extern.log4j.Log4j;
+import org.apache.flink.api.common.ExecutionConfig;
 import org.apache.flink.api.java.tuple.Tuple;
 import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
 import org.apache.flink.streaming.api.datastream.WindowedStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.functions.ProcessFunction;
+import org.apache.flink.streaming.api.functions.sink.SinkFunction;
 import org.apache.flink.streaming.api.windowing.time.Time;
 import org.apache.flink.streaming.api.windowing.windows.TimeWindow;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer;
@@ -41,16 +43,8 @@ public class MriyaDevTimeWindow {
                 .timeWindow(Time.seconds(5))
                 .trigger(DdlTrigger.build());
         SingleOutputStreamOperator<Message> process = targetTable
+                .aggregate(AggregateMessage.build());
 
-                .aggregate(AggregateMessage.build())
-
-                .process(new ProcessFunction<Message, Message>() {
-                    @Override
-                    public void processElement(Message message, Context context, Collector<Message> collector) throws Exception {
-                        System.out.println("---------------processElement-----------------");
-                        System.out.println(message.toJsonString());
-                    }
-                });
 
 
         flinkEnv.execute("run dev");

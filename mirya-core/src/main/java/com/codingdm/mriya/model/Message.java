@@ -2,8 +2,8 @@ package com.codingdm.mriya.model;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
-import com.codingdm.mriya.common.enums.EventType;
 import com.codingdm.mriya.constant.CommonConstants;
+import com.codingdm.mriya.enums.EventType;
 import lombok.Data;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
@@ -41,10 +41,8 @@ public class Message implements Serializable {
     private List<Map<String, String>> old;
     private String topic;
     public String targetTable;
-//    public String keyByTable;
-//    private Map<String, String> dataMap;
-    private Map<String, Map<String, String>> deleteData;
-    private Map<String, Map<String, String>> inOrUpData;
+    public Set<MergeData> mergeData;
+
 
     public List<Map<String, String>> getData() {
         if (data != null && data.size() > 0) {
@@ -75,7 +73,6 @@ public class Message implements Serializable {
             Message msg = JSONObject.parseObject(jsonString, Message.class);
             msg.setTopic(topic);
             msg.setTargetTable();
-//            msg.setKeyByTable();
             return msg;
         }
         return new Message();
@@ -84,20 +81,6 @@ public class Message implements Serializable {
     public void setTargetTable() {
         this.targetTable = String.format(CommonConstants.TARGET_TABLE, this.getTopic(), this.getDatabase(), this.getTable());
     }
-
-//    public void addData(List<Map<String, String>> data){
-//        this.data.addAll(data);
-//    }
-
-//    public void setKeyByTable(){
-//        String type = "";
-//        if(typeIsDdl()){
-//            type = "DDL_" + this.type;
-//        }else {
-//            type = "DML";
-//        }
-//        this.keyByTable = String.format(CommonConstants.KEY_BY_TABLE, this.getTopic(), this.getDatabase(), this.getTable(), type);
-//    }
 
     public boolean typeIsDdl(){
         return !(this.type == EventType.INSERT
@@ -120,6 +103,15 @@ public class Message implements Serializable {
                         .map(v::get)
                         .collect(Collectors.joining(CommonConstants.FILTER_LINE)));
     }
+
+    private static final String PK_NAME_SPLIT = "||";
+
+//    public String getPkNamesString(){
+//        List<String> ks = this.getPkNames().stream()
+//                .map(k -> String.format(CommonConstants.PERCENT_S_DOUBLE, k))
+//                .collect(Collectors.toList());
+//        return StringUtils.join(ks, PK_NAME_SPLIT);
+//    }
 
     public String toJsonString(){
         return JSONObject.toJSONString(this, SerializerFeature.WriteMapNullValue);

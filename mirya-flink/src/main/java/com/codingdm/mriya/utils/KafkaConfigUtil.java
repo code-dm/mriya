@@ -1,5 +1,7 @@
 package com.codingdm.mriya.utils;
 
+import lombok.extern.log4j.Log4j;
+
 import java.util.Properties;
 
 /**
@@ -9,6 +11,7 @@ import java.util.Properties;
  * @Email wdmcode@aliyun.com
  * @created: 2020/06/02 21:19
  */
+@Log4j
 public class KafkaConfigUtil {
 
     public static Properties buildKafkaProps() {
@@ -26,6 +29,8 @@ public class KafkaConfigUtil {
 
         props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
+
+        log.info("get kafka config, config map-> " + props.toString());
         return props;
     }
 }

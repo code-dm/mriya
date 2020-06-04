@@ -36,6 +36,7 @@
         <lombok.version>1.16.20</lombok.version>
         <spring.boot.version>2.1.7.RELEASE</spring.boot.version>
         <commons.lang3.version>3.8.1</commons.lang3.version>
+        <nacos.version>1.0.0</nacos.version>
     </properties>
 
     <dependencies>
@@ -62,11 +63,6 @@
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>${version.org.slf4j}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
             <version>${version.org.slf4j}</version>
         </dependency>
@@ -74,11 +70,6 @@
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
             <version>${version.log4j}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
-            <version>${version.org.slf4j}</version>
         </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>
@@ -89,6 +80,12 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>${commons.lang3.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba.nacos</groupId>
+            <artifactId>nacos-client</artifactId>
+            <version>${nacos.version}</version>
         </dependency>
     </dependencies>
     <dependencyManagement>
@@ -102,5 +99,22 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
+    <repositories>
+        <repository>
+            <id>aliyun-repos</id>
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>aliyun-plugin</id>
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
 </project>

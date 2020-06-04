@@ -1,6 +1,6 @@
 package com.codingdm.mriya.model;
 
-import com.codingdm.mriya.common.enums.EventType;
+import com.codingdm.mriya.enums.EventType;
 import org.junit.Test;
 
 public class MessageTest {

@@ -1,4 +1,4 @@
-package com.codingdm.mriya.common.enums;
+package com.codingdm.mriya.enums;
 
 /**
  * Protobuf enum {@code com.alibaba.otter.canal.protocol.EventType}

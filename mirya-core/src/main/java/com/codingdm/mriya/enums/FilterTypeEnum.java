@@ -1,4 +1,4 @@
-package com.codingdm.mriya.common.enums;
+package com.codingdm.mriya.enums;
 
 /**
  * 过滤器类型 BLACKLIST 黑名单 WHITELIST白名单
