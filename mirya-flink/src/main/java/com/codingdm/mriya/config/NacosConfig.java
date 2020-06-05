@@ -5,9 +5,15 @@ import com.alibaba.nacos.api.PropertyKeyConst;
 import com.alibaba.nacos.api.config.ConfigService;
 import com.alibaba.nacos.api.config.listener.Listener;
 import com.alibaba.nacos.api.exception.NacosException;
+import com.codingdm.mriya.constant.PropertiesConstants;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.flink.api.java.utils.ParameterTool;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.Reader;
+import java.io.StringReader;
 import java.util.Properties;
 import java.util.concurrent.Executor;
 
@@ -20,42 +26,47 @@ import java.util.concurrent.Executor;
 @Data
 public class NacosConfig {
 
-    private String content;
+    private Properties properties;
 
     private static class LazyHolder {
         private static final NacosConfig INSTANCE = new NacosConfig();
     }
-
 
     public static final NacosConfig getInstance() {
         return LazyHolder.INSTANCE;
     }
 
     private NacosConfig(){
-        String serverAddr = "127.0.0.1:8848";
+//        String serverAddr = "10.168.2.224:8848";
         String dataId = "MRIYA";
-        String group = "MRIYA-GROUP";
+        String group = "MRIYA_GROUP";
 
-        Properties properties = new Properties();
-        properties.put(PropertyKeyConst.SERVER_ADDR, serverAddr);
-//        properties.put(PropertyKeyConst.NAMESPACE, "dabf5d10-b374-4d7d-b1d2-a1fad9c70b41");
-        properties.put(PropertyKeyConst.NAMESPACE, "public");
+        ParameterTool resourcesConfig = ResourcesConfig.CONFIG;
+        if(resourcesConfig == null){
+            log.error("nacos resourcesConfig is null, please check resources/application.properties");
+            throw new NullPointerException();
+        }
+        Properties pro = new Properties();
+
+        pro.put(PropertyKeyConst.SERVER_ADDR, resourcesConfig.get(PropertiesConstants.MRIYA_NACOS_CONFIG_SERVERADDR));
+        pro.put(PropertyKeyConst.NAMESPACE, "public");
         try {
-            ConfigService configService = NacosFactory.createConfigService(serverAddr);
-            content = configService.getConfig(dataId, group, 5000);
+            ConfigService configService = NacosFactory.createConfigService(pro);
+            String config = configService.getConfig(dataId, group, 5000);
+            properties = new Properties();
+            properties.load(new StringReader(config));
             configService.addListener(dataId, group, new ConfingListener());
-        }catch (NacosException exception){
-            log.error("nacos config exception" + exception.getErrMsg());
-            exception.printStackTrace();
+        }catch (NacosException e){
+            log.error("nacos config NacosException --> \n" + e.getErrMsg());
+            e.printStackTrace();
+        } catch (IOException e) {
+            log.error("nacos config IOException --> \n" + e.getMessage());
+            e.printStackTrace();
         }
     }
 
-    public static void main(String[] args) throws InterruptedException {
-
-        NacosConfig nacosConfig = NacosConfig.getInstance();
-        while (true){
-            System.out.println(nacosConfig.getContent());
-            Thread.sleep(1000);
-        }
+    public static String get(String key){
+        return getInstance().getProperties().getProperty(key);
     }
+
 }
