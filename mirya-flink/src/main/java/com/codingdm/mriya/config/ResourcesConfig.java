@@ -25,9 +25,8 @@ public class ResourcesConfig {
                     .mergeWith(ParameterTool.fromSystemProperties())
                     .mergeWith(ParameterTool.fromMap(getenv()));
         } catch (IOException e) {
+            log.info("ResourcesConfig createParameterTool IOException");
             e.printStackTrace();
-        }finally {
-            log.info();
         }
         return null;
     }

@@ -37,10 +37,6 @@ public class NacosConfig {
     }
 
     private NacosConfig(){
-//        String serverAddr = "10.168.2.224:8848";
-        String dataId = "MRIYA";
-        String group = "MRIYA_GROUP";
-
         ParameterTool resourcesConfig = ResourcesConfig.CONFIG;
         if(resourcesConfig == null){
             log.error("nacos resourcesConfig is null, please check resources/application.properties");
@@ -49,13 +45,22 @@ public class NacosConfig {
         Properties pro = new Properties();
 
         pro.put(PropertyKeyConst.SERVER_ADDR, resourcesConfig.get(PropertiesConstants.MRIYA_NACOS_CONFIG_SERVERADDR));
-        pro.put(PropertyKeyConst.NAMESPACE, "public");
+        pro.put(PropertyKeyConst.NAMESPACE, resourcesConfig.get(PropertiesConstants.MRIYA_NACOS_CONFIG_NAMESPACE));
+
         try {
             ConfigService configService = NacosFactory.createConfigService(pro);
-            String config = configService.getConfig(dataId, group, 5000);
+            String config = configService.getConfig(
+                    resourcesConfig.get(PropertiesConstants.MRIYA_NACOS_CONFIG_DATAID),
+                    resourcesConfig.get(PropertiesConstants.MRIYA_NACOS_CONFIG_GROUP),
+                    resourcesConfig.getInt(PropertiesConstants.MRIYA_NACOS_CONFIG_TIMEOUT)
+            );
+            System.out.println(config);
             properties = new Properties();
             properties.load(new StringReader(config));
-            configService.addListener(dataId, group, new ConfingListener());
+            configService.addListener(
+                    resourcesConfig.get(PropertiesConstants.MRIYA_NACOS_CONFIG_DATAID),
+                    resourcesConfig.get(PropertiesConstants.MRIYA_NACOS_CONFIG_GROUP),
+                    new ConfingListener());
         }catch (NacosException e){
             log.error("nacos config NacosException --> \n" + e.getErrMsg());
             e.printStackTrace();
