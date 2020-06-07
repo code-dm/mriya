@@ -26,16 +26,4 @@ public class NacosConfigTest {
         }
     }
 
-    @Test
-    public void test() throws NacosException {
-        String serverAddr = "localhost";
-        String dataId = "MRIYA";
-        String group = "MRIYA_GROUP";
-        Properties properties = new Properties();
-        properties.put(PropertyKeyConst.SERVER_ADDR, serverAddr);
-        ConfigService configService = NacosFactory.createConfigService(properties);
-        String content = configService.getConfig(dataId, group, 5000);
-        System.out.println(content);
-
-    }
 }

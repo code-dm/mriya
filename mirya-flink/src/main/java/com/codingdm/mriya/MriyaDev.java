@@ -1,10 +1,17 @@
 package com.codingdm.mriya;
 
+import com.codingdm.mriya.aggregate.AggregateMessage;
 import com.codingdm.mriya.model.Message;
+import com.codingdm.mriya.trigger.DdlTrigger;
 import com.codingdm.mriya.utils.KafkaConfigUtil;
 import com.codingdm.mriya.utils.MessageSchema;
 import lombok.extern.log4j.Log4j;
+import org.apache.flink.api.java.tuple.Tuple;
+import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
+import org.apache.flink.streaming.api.datastream.WindowedStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
+import org.apache.flink.streaming.api.windowing.time.Time;
+import org.apache.flink.streaming.api.windowing.windows.TimeWindow;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer;
 
 import java.util.Properties;
@@ -26,10 +33,14 @@ public class MriyaDev {
         Properties props = KafkaConfigUtil.buildKafkaProps();
         FlinkKafkaConsumer<Message> kafkaSource = new FlinkKafkaConsumer<>(topic, new MessageSchema(topic), props);
 
-        flinkEnv
+        WindowedStream<Message, Tuple, TimeWindow> targetTable = flinkEnv
                 .addSource(kafkaSource)
-//                .flatMap(FlatMapMessage.build())
-                .print();
+                .keyBy("targetTable")
+                .timeWindow(Time.seconds(5))
+                .trigger(DdlTrigger.build());
+        SingleOutputStreamOperator<Message> process = targetTable
+                .aggregate(AggregateMessage.build());
+
 
 
         flinkEnv.execute("run dev");
