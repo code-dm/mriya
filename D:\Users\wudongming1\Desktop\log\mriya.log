@@ -1,0 +1,11 @@
+2020-06-04 22:35:59,034 WARN  com.alibaba.nacos.client.utils.LogUtils                       - Load Log4j Configuration of Nacos fail, message: org/apache/logging/log4j/LogManager
+2020-06-04 22:35:59,039 INFO  com.alibaba.nacos.client.utils.ParamUtil                      - [settings] [req-serv] nacos-server port:8848
+2020-06-04 22:35:59,039 INFO  com.alibaba.nacos.client.utils.ParamUtil                      - [settings] [http-client] connect timeout:1000
+2020-06-04 22:35:59,040 INFO  com.alibaba.nacos.client.utils.ParamUtil                      - NACOS_CLIENT_VERSION: ${project.version}
+2020-06-04 22:35:59,042 INFO  com.alibaba.nacos.client.utils.ParamUtil                      - PER_TASK_CONFIG_SIZE: 3000.0
+2020-06-04 22:35:59,069 INFO  com.alibaba.nacos.client.identify.CredentialWatcher           - null No credential found
+2020-06-04 22:35:59,078 INFO  com.alibaba.nacos.client.config.impl.LocalConfigInfoProcessor  - LOCAL_SNAPSHOT_PATH:/Users/wudongming/nacos/config
+2020-06-04 22:35:59,120 INFO  com.alibaba.nacos.client.config.impl.Limiter                  - limitTime:5.0
+2020-06-04 22:35:59,176 INFO  com.alibaba.nacos.client.config.impl.ClientWorker             - [fixed-127.0.0.1_8848] [subscribe] MRIYA+MRIYA-GROUP
+2020-06-04 22:35:59,177 INFO  com.alibaba.nacos.client.config.impl.CacheData                - [fixed-127.0.0.1_8848] [add-listener] ok, tenant=, dataId=MRIYA, group=MRIYA-GROUP, cnt=1
+2020-06-04 22:35:59,186 INFO  com.alibaba.nacos.client.config.impl.ClientWorker             - get changedGroupKeys:[]

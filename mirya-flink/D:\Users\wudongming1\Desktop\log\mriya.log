@@ -1,0 +1,62 @@
+2020-06-08 21:59:13,938 WARN  com.alibaba.nacos.client.utils.LogUtils                       - Load Log4j Configuration of Nacos fail, message: org/apache/logging/log4j/LogManager
+2020-06-08 21:59:13,940 INFO  com.alibaba.nacos.client.utils.ParamUtil                      - [settings] [req-serv] nacos-server port:8848
+2020-06-08 21:59:13,941 INFO  com.alibaba.nacos.client.utils.ParamUtil                      - [settings] [http-client] connect timeout:1000
+2020-06-08 21:59:13,941 INFO  com.alibaba.nacos.client.utils.ParamUtil                      - NACOS_CLIENT_VERSION: unknown
+2020-06-08 21:59:13,943 INFO  com.alibaba.nacos.client.utils.ParamUtil                      - PER_TASK_CONFIG_SIZE: 3000.0
+2020-06-08 21:59:13,964 INFO  com.alibaba.nacos.client.identify.CredentialWatcher           - null No credential found
+2020-06-08 21:59:13,971 INFO  com.alibaba.nacos.client.config.impl.LocalConfigInfoProcessor  - LOCAL_SNAPSHOT_PATH:/Users/wudongming/nacos/config
+2020-06-08 21:59:14,013 INFO  com.alibaba.nacos.client.config.impl.Limiter                  - limitTime:5.0
+2020-06-08 21:59:14,032 ERROR com.alibaba.nacos.client.config.http.ServerHttpAgent          - [NACOS ConnectException httpGet] currentServerAddr:http://127.0.0.1:8848, err : Connection refused (Connection refused)
+2020-06-08 21:59:14,223 ERROR com.alibaba.nacos.client.config.http.ServerHttpAgent          - [NACOS ConnectException httpGet] currentServerAddr:http://127.0.0.1:8848, err : Connection refused (Connection refused)
+2020-06-08 21:59:14,425 ERROR com.alibaba.nacos.client.config.http.ServerHttpAgent          - [NACOS ConnectException httpGet] currentServerAddr:http://127.0.0.1:8848, err : Connection refused (Connection refused)
+2020-06-08 21:59:14,627 ERROR com.alibaba.nacos.client.config.http.ServerHttpAgent          - [NACOS ConnectException httpGet] currentServerAddr:http://127.0.0.1:8848, err : Connection refused (Connection refused)
+2020-06-08 21:59:14,628 ERROR com.alibaba.nacos.client.config.impl.ClientWorker             - [fixed-127.0.0.1_8848-public] [sub-server] get server config exception, dataId=MRIYA, group=MRIYA_GROUP, tenant=public
+java.net.ConnectException: [NACOS HTTP-GET] The maximum number of tolerable server reconnection errors has been reached
+	at com.alibaba.nacos.client.config.http.ServerHttpAgent.httpGet(ServerHttpAgent.java:115)
+	at com.alibaba.nacos.client.config.http.MetricsHttpAgent.httpGet(MetricsHttpAgent.java:48)
+	at com.alibaba.nacos.client.config.impl.ClientWorker.getServerConfig(ClientWorker.java:230)
+	at com.alibaba.nacos.client.config.NacosConfigService.getConfigInner(NacosConfigService.java:143)
+	at com.alibaba.nacos.client.config.NacosConfigService.getConfig(NacosConfigService.java:92)
+	at com.codingdm.mriya.config.NacosConfig.<init>(NacosConfig.java:48)
+	at com.codingdm.mriya.config.NacosConfig.<init>(NacosConfig.java:23)
+	at com.codingdm.mriya.config.NacosConfig$LazyHolder.<clinit>(NacosConfig.java:28)
+	at com.codingdm.mriya.config.NacosConfig.getInstance(NacosConfig.java:32)
+	at com.codingdm.mriya.config.NacosConfig.get(NacosConfig.java:70)
+	at com.codingdm.mriya.transformer.imp.MysqlTransformer.lambda$getDeleteSql$2(MysqlTransformer.java:74)
+	at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:193)
+	at java.util.Iterator.forEachRemaining(Iterator.java:116)
+	at java.util.Spliterators$IteratorSpliterator.forEachRemaining(Spliterators.java:1801)
+	at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:482)
+	at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:472)
+	at java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:708)
+	at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+	at java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:499)
+	at com.codingdm.mriya.transformer.imp.MysqlTransformer.getDeleteSql(MysqlTransformer.java:79)
+	at com.codingdm.mriya.transformer.MysqlTransformerTest.getDeleteSql(MysqlTransformerTest.java:35)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+	at com.intellij.junit4.JUnit4IdeaTestRunner.startRunnerWithArgs(JUnit4IdeaTestRunner.java:68)
+	at com.intellij.rt.execution.junit.IdeaTestRunner$Repeater.startRunnerWithArgs(IdeaTestRunner.java:47)
+	at com.intellij.rt.execution.junit.JUnitStarter.prepareStreamsAndStart(JUnitStarter.java:242)
+	at com.intellij.rt.execution.junit.JUnitStarter.main(JUnitStarter.java:70)
+2020-06-08 21:59:14,630 WARN  com.alibaba.nacos.client.config.NacosConfigService            - [fixed-127.0.0.1_8848-public] [get-config] get from server error, dataId=MRIYA, group=MRIYA_GROUP, tenant=public, msg=ErrCode:500, ErrMsg:[NACOS HTTP-GET] The maximum number of tolerable server reconnection errors has been reached
+2020-06-08 21:59:14,630 WARN  com.alibaba.nacos.client.config.NacosConfigService            - [fixed-127.0.0.1_8848-public] [get-config] get snapshot ok, dataId=MRIYA, group=MRIYA_GROUP, tenant=public, config=
+2020-06-08 21:59:14,630 INFO  com.alibaba.nacos.client.config.utils.JVMUtil                 - isMultiInstance:false
+2020-06-08 21:59:14,632 INFO  com.alibaba.nacos.client.config.impl.ClientWorker             - [fixed-127.0.0.1_8848-public] [subscribe] MRIYA+MRIYA_GROUP+public
+2020-06-08 21:59:14,634 INFO  com.alibaba.nacos.client.config.impl.CacheData                - [fixed-127.0.0.1_8848-public] [add-listener] ok, tenant=public, dataId=MRIYA, group=MRIYA_GROUP, cnt=1

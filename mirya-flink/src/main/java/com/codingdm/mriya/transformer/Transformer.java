@@ -25,7 +25,7 @@ public interface Transformer {
      * @param message msg
      * @return delete sql
      */
-    String getDeleteSql(Message message);
+    List<String> getDeleteSql(Message message);
 
     /**
      * 处理DDLsql语句

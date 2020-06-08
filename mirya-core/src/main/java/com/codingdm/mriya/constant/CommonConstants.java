@@ -25,5 +25,9 @@ public class CommonConstants {
 
     public static final String PERCENT_S_DOUBLE = "\"%s\"";
 
+    public static final String PERCENT_S = "'%s'";
+
+    public static final String LINE_DOUBLE = "||";
+
 
 }

@@ -27,10 +27,6 @@ public class MergeData {
 
     private List<ColumnData> data;
 
-//    private String pkNames;
-//
-//    private String pkValues;
-
     public MergeData(String pkValuesId, EventType type, List<ColumnData> data) {
         setPkValuesId(pkValuesId);
         setType(type);
