@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 
-import java.util.Map;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -25,19 +25,19 @@ public class MergeData {
 
     private EventType type;
 
-    private Map<String, String> data;
+    private List<ColumnData> data;
 
-    private String pkNames;
+//    private String pkNames;
+//
+//    private String pkValues;
 
-    private String pkValues;
-
-    public MergeData(String pkValuesId, EventType type, Map<String, String> data) {
+    public MergeData(String pkValuesId, EventType type, List<ColumnData> data) {
         setPkValuesId(pkValuesId);
         setType(type);
         setData(data);
     }
 
-    public static MergeData build(String pkValuesId, EventType type, Map<String, String> data){
+    public static MergeData build(String pkValuesId, EventType type, List<ColumnData> data){
         return new MergeData(pkValuesId, type, data);
     }
 

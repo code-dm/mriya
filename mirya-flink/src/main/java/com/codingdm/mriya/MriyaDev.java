@@ -10,9 +10,11 @@ import org.apache.flink.api.java.tuple.Tuple;
 import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
 import org.apache.flink.streaming.api.datastream.WindowedStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
+import org.apache.flink.streaming.api.functions.ProcessFunction;
 import org.apache.flink.streaming.api.windowing.time.Time;
 import org.apache.flink.streaming.api.windowing.windows.TimeWindow;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer;
+import org.apache.flink.util.Collector;
 
 import java.util.Properties;
 
@@ -32,14 +34,19 @@ public class MriyaDev {
         final StreamExecutionEnvironment flinkEnv = StreamExecutionEnvironment.getExecutionEnvironment();
         Properties props = KafkaConfigUtil.buildKafkaProps();
         FlinkKafkaConsumer<Message> kafkaSource = new FlinkKafkaConsumer<>(topic, new MessageSchema(topic), props);
-
         WindowedStream<Message, Tuple, TimeWindow> targetTable = flinkEnv
                 .addSource(kafkaSource)
                 .keyBy("targetTable")
                 .timeWindow(Time.seconds(5))
                 .trigger(DdlTrigger.build());
         SingleOutputStreamOperator<Message> process = targetTable
-                .aggregate(AggregateMessage.build());
+                .aggregate(AggregateMessage.build())
+                .process(new ProcessFunction<Message, Message>() {
+                    @Override
+                    public void processElement(Message message, Context context, Collector<Message> collector) throws Exception {
+                        System.out.println(message.toJsonString());
+                    }
+                });
 
 
 

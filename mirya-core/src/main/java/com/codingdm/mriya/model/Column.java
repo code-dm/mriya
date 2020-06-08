@@ -1,4 +1,4 @@
-package com.codingdm.mriya.antlr.model;
+package com.codingdm.mriya.model;
 
 import com.codingdm.mriya.enums.AlterTypeEnum;
 import lombok.Data;

@@ -1,14 +1,12 @@
 package com.codingdm.mriya.aggregate;
 
-import com.codingdm.mriya.enums.EventType;
+import com.codingdm.mriya.model.ColumnData;
 import com.codingdm.mriya.model.MergeData;
 import com.codingdm.mriya.model.Message;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.flink.api.common.functions.AggregateFunction;
 
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author wudongming1
@@ -42,9 +40,10 @@ public class AggregateMessage implements AggregateFunction<Message, Message, Mes
             if(mergeData == null){
                 mergeData = new HashSet<>();
             }
-            for (Map<String, String> d : inMsg.getData()) {
+            for (Map<String, Object> d : inMsg.getData()) {
                 String pkValuesIds = inMsg.getPkValuesIds(d);
-                MergeData mg = new MergeData(pkValuesIds, inMsg.getType(), d);
+                List<ColumnData> columns = dataMapToColumnList(d, inMsg.getSqlType());
+                MergeData mg = new MergeData(pkValuesIds, inMsg.getType(), columns);
                 mergeData.remove(mg);
                 mergeData.add(mg);
             }
@@ -52,6 +51,14 @@ public class AggregateMessage implements AggregateFunction<Message, Message, Mes
         }
         accumulator.setData(null);
         return accumulator;
+    }
+
+    private List<ColumnData> dataMapToColumnList(Map<String, Object> data, Map<String, Integer> sqlType){
+        ArrayList<ColumnData> columns = new ArrayList<>(data.keySet().size());
+        for(String key : data.keySet()){
+            columns.add(new ColumnData(key, data.get(key), sqlType.get(key)));
+        }
+        return columns;
     }
 
     @Override

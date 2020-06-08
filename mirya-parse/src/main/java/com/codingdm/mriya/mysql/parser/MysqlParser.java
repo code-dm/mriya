@@ -4,8 +4,8 @@ import com.alibaba.druid.sql.ast.statement.SQLColumnDefinition;
 import com.alibaba.druid.sql.ast.statement.SQLSelectOrderByItem;
 import com.alibaba.druid.sql.dialect.mysql.ast.MySqlPrimaryKey;
 import com.codingdm.mriya.AlterTable;
-import com.codingdm.mriya.antlr.model.Column;
 import com.codingdm.mriya.enums.AlterTypeEnum;
+import com.codingdm.mriya.model.Column;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 

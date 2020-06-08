@@ -14,23 +14,23 @@ import java.util.List;
 public interface Transformer {
 
     /**
-     * 获取字段名称字符串
-     * @param message
-     * @return
-     */
-    public String getComlunsStr(Message message);
-
-    /**
      * 获取所有字段
-     * @param message
-     * @return
+     * @param message msg
+     * @return list
      */
-    public List<String> getColumnsList(Message message);
+    List<String> getColumnsList(Message message);
 
     /**
      * 获取删除SQL语句
-     * @param message
-     * @return
+     * @param message msg
+     * @return delete sql
      */
-    public String getDeleteSql(Message message);
+    String getDeleteSql(Message message);
+
+    /**
+     * 处理DDLsql语句
+     * @param message msg
+     * @return sql
+     */
+    List<String> getDdlSql(Message message);
 }

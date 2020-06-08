@@ -7,6 +7,7 @@ import com.codingdm.mriya.enums.EventType;
 import lombok.Data;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
@@ -37,20 +38,20 @@ public class Message implements Serializable {
     private String sql;
     private Map<String, Integer> sqlType;
     private Map<String, String> mysqlType;
-    private List<Map<String, String>> data;
-    private List<Map<String, String>> old;
+    private List<Map<String, Object>> data;
+    private List<Map<String, Object>> old;
     private String topic;
     public String targetTable;
     public Set<MergeData> mergeData;
 
 
-    public List<Map<String, String>> getData() {
+    public List<Map<String, Object>> getData() {
         if (data != null && data.size() > 0) {
             // 处理时间问题 0000-00-00  --> 统一修改为 1970-01-01 00:00:00
             if (data.toString().contains(CommonConstants.ERROR_DATE)) {
-                for (Map<String, String> datum : data) {
+                for (Map<String, Object> datum : data) {
                     for (String key : datum.keySet()) {
-                        if (!StringUtils.isEmpty(datum.get(key))) {
+                        if (ObjectUtils.allNotNull(datum.get(key))) {
                             // 0000-00-00 00:00:00
                             if (datum.get(key).equals(CommonConstants.ERROR_DATE_TIME)) {
                                 datum.put(key, CommonConstants.CORRET_DATE_TIME);
@@ -94,24 +95,18 @@ public class Message implements Serializable {
      * @param v map
      * @return str
      */
-    public String getPkValuesIds(Map<String, String> v) {
+    public String getPkValuesIds(Map<String, Object> v) {
         return String.format(
                 CommonConstants.PK_VALUES_IDS,
                 this.getTargetTable(),
                 this.getPkNames()
                         .stream()
                         .map(v::get)
+                        .map(Object::toString)
                         .collect(Collectors.joining(CommonConstants.FILTER_LINE)));
     }
 
     private static final String PK_NAME_SPLIT = "||";
-
-//    public String getPkNamesString(){
-//        List<String> ks = this.getPkNames().stream()
-//                .map(k -> String.format(CommonConstants.PERCENT_S_DOUBLE, k))
-//                .collect(Collectors.toList());
-//        return StringUtils.join(ks, PK_NAME_SPLIT);
-//    }
 
     public String toJsonString(){
         return JSONObject.toJSONString(this, SerializerFeature.WriteMapNullValue);

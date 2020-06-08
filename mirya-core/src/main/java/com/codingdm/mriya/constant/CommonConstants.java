@@ -10,6 +10,8 @@ package com.codingdm.mriya.constant;
 
 public class CommonConstants {
 
+    public static final String SEPARATOR = ",";
+
     public static final String ERROR_DATE_TIME = "0000-00-00 00:00:00";
     public static final String ERROR_DATE = "0000-00-00";
     public static final String CORRET_DATE_TIME = "1970-01-01 00:00:00";
@@ -22,5 +24,6 @@ public class CommonConstants {
     public static final String FILTER_LINE = "-";
 
     public static final String PERCENT_S_DOUBLE = "\"%s\"";
+
 
 }
