@@ -14,7 +14,6 @@ public class PropertiesConstants {
     public static final String MRIYA_NACOS_CONFIG_TIMEOUT =      "mriya.nacos.config.timeout";
 
     public static final String MRIYA_TARGET_DATASOURCE_URL =     "mriya.target.datasource.url";
-    public static final String MRIYA_TARGET_DATASOURCE_DBNAME =  "mriya.target.datasource.dbname";
     public static final String MRIYA_TARGET_DATASOURCE_SCHEMA =  "mriya.target.datasource.schema";
     public static final String MRIYA_TARGET_DATASOURCE_USERNAME ="mriya.target.datasource.username";
     public static final String MRIYA_TARGET_DATASOURCE_PASSWORD ="mriya.target.datasource.password";

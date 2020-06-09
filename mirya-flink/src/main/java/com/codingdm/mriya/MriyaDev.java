@@ -2,6 +2,7 @@ package com.codingdm.mriya;
 
 import com.codingdm.mriya.aggregate.AggregateMessage;
 import com.codingdm.mriya.model.Message;
+import com.codingdm.mriya.sink.GreenplumSink;
 import com.codingdm.mriya.trigger.DdlTrigger;
 import com.codingdm.mriya.utils.KafkaConfigUtil;
 import com.codingdm.mriya.utils.MessageSchema;
@@ -34,21 +35,12 @@ public class MriyaDev {
         final StreamExecutionEnvironment flinkEnv = StreamExecutionEnvironment.getExecutionEnvironment();
         Properties props = KafkaConfigUtil.buildKafkaProps();
         FlinkKafkaConsumer<Message> kafkaSource = new FlinkKafkaConsumer<>(topic, new MessageSchema(topic), props);
-        WindowedStream<Message, Tuple, TimeWindow> targetTable = flinkEnv
-                .addSource(kafkaSource)
+        flinkEnv.addSource(kafkaSource)
                 .keyBy("targetTable")
                 .timeWindow(Time.seconds(5))
-                .trigger(DdlTrigger.build());
-        SingleOutputStreamOperator<Message> process = targetTable
+                .trigger(DdlTrigger.build())
                 .aggregate(AggregateMessage.build())
-                .process(new ProcessFunction<Message, Message>() {
-                    @Override
-                    public void processElement(Message message, Context context, Collector<Message> collector) throws Exception {
-                        System.out.println(message.toJsonString());
-                    }
-                });
-
-
+                .addSink(new GreenplumSink());
 
         flinkEnv.execute("run dev");
     }

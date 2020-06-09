@@ -1,7 +1,7 @@
 package com.codingdm.mriya.aggregate;
 
 import com.codingdm.mriya.model.ColumnData;
-import com.codingdm.mriya.model.MergeData;
+import com.codingdm.mriya.model.RowData;
 import com.codingdm.mriya.model.Message;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.flink.api.common.functions.AggregateFunction;
@@ -36,18 +36,18 @@ public class AggregateMessage implements AggregateFunction<Message, Message, Mes
         if (inMsg.typeIsDdl()) {
             accumulator.setSql(accumulator.getSql() + ";" + inMsg.getSql());
         }else if(isMerge){
-            Set<MergeData> mergeData = accumulator.getMergeData();
-            if(mergeData == null){
-                mergeData = new HashSet<>();
+            Set<RowData> rowData = accumulator.getRowData();
+            if(rowData == null){
+                rowData = new HashSet<>();
             }
             for (Map<String, Object> d : inMsg.getData()) {
                 String pkValuesIds = inMsg.getPkValuesIds(d);
                 List<ColumnData> columns = dataMapToColumnList(d, inMsg.getSqlType());
-                MergeData mg = new MergeData(pkValuesIds, inMsg.getType(), columns);
-                mergeData.remove(mg);
-                mergeData.add(mg);
+                RowData mg = new RowData(pkValuesIds, inMsg.getType(), columns);
+                rowData.remove(mg);
+                rowData.add(mg);
             }
-            accumulator.setMergeData(mergeData);
+            accumulator.setRowData(rowData);
         }
         accumulator.setData(null);
         return accumulator;

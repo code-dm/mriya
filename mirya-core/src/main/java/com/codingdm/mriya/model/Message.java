@@ -42,7 +42,7 @@ public class Message implements Serializable {
     private List<Map<String, Object>> old;
     private String topic;
     public String targetTable;
-    private Set<MergeData> mergeData;
+    private Set<RowData> rowData;
 
 
     public List<Map<String, Object>> getData() {

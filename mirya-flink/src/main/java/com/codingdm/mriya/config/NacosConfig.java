@@ -50,7 +50,6 @@ public class NacosConfig {
                     resourcesConfig.get(PropertiesConstants.MRIYA_NACOS_CONFIG_GROUP),
                     resourcesConfig.getInt(PropertiesConstants.MRIYA_NACOS_CONFIG_TIMEOUT)
             );
-            System.out.println(config);
             properties = new Properties();
             properties.load(new StringReader(config));
             configService.addListener(

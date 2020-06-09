@@ -1,21 +1,20 @@
-package com.codingdm.mriya.transformer.imp;
+package com.codingdm.mriya.transformer.impl;
 
 import com.codingdm.mriya.config.NacosConfig;
 import com.codingdm.mriya.constant.CommonConstants;
 import com.codingdm.mriya.constant.PropertiesConstants;
 import com.codingdm.mriya.constant.SqlConstants;
 import com.codingdm.mriya.model.ColumnData;
-import com.codingdm.mriya.model.MergeData;
+import com.codingdm.mriya.model.RowData;
 import com.codingdm.mriya.model.Message;
 import com.codingdm.mriya.transformer.Transformer;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -25,6 +24,7 @@ import java.util.stream.Collectors;
  **/
 @Slf4j
 public class MysqlTransformer implements Transformer {
+    private final int DELETE_PARTITION_SIZE = 500;
 
     @Override
     public List<String> getColumnsList(Message message) {
@@ -32,7 +32,7 @@ public class MysqlTransformer implements Transformer {
                 return message.getSqlType()
                         .keySet()
                         .stream()
-                        .sorted()
+                        .sorted(Comparator.comparingInt(String::hashCode))
                         .collect(Collectors.toList());
         }
         return null;
@@ -40,12 +40,12 @@ public class MysqlTransformer implements Transformer {
 
     @Override
     public List<String> getDeleteSql(Message message) {
-        if(CollectionUtils.isNotEmpty(message.getMergeData())){
-            List<MergeData> mergeData = new ArrayList<>(message.getMergeData());
+        if(CollectionUtils.isNotEmpty(message.getRowData())){
+            List<RowData> rowData = new ArrayList<>(message.getRowData());
             List<String> primaryKeyNames = new ArrayList<>(message.getPkNames());
             String primaryKeyName = String.join(CommonConstants.LINE_DOUBLE, primaryKeyNames);
 
-            List<String> pkValuesList = mergeData.stream()
+            List<String> pkValuesList = rowData.stream()
                     .map(md -> {
                         StringBuilder pkValue = new StringBuilder();
                         for (ColumnData datum : md.getData()) {
@@ -60,7 +60,7 @@ public class MysqlTransformer implements Transformer {
                     .map(s-> String.format(CommonConstants.PERCENT_S, s))
                     .collect(Collectors.toList());
 
-            List<List<String>> pkValuesPartition = Lists.partition(pkValuesList, 500);
+            List<List<String>> pkValuesPartition = Lists.partition(pkValuesList, DELETE_PARTITION_SIZE);
 
             return pkValuesPartition.stream()
                     .map(v-> {

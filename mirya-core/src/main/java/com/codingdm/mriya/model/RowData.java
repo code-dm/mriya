@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
@@ -17,7 +19,7 @@ import java.util.Objects;
  **/
 @Slf4j
 @Data
-public class MergeData {
+public class RowData {
     /**
      * 用于数据合并的唯一键 组成：targetTableName+主键字段名+主键值
      */
@@ -27,14 +29,14 @@ public class MergeData {
 
     private List<ColumnData> data;
 
-    public MergeData(String pkValuesId, EventType type, List<ColumnData> data) {
+    public RowData(String pkValuesId, EventType type, List<ColumnData> data) {
         setPkValuesId(pkValuesId);
         setType(type);
         setData(data);
     }
 
-    public static MergeData build(String pkValuesId, EventType type, List<ColumnData> data){
-        return new MergeData(pkValuesId, type, data);
+    public static RowData build(String pkValuesId, EventType type, List<ColumnData> data){
+        return new RowData(pkValuesId, type, data);
     }
 
     @Override
@@ -48,10 +50,17 @@ public class MergeData {
 
         if (o == null || getClass() != o.getClass()) return false;
 
-        MergeData mergeData = (MergeData) o;
+        RowData rowData = (RowData) o;
 
         return new EqualsBuilder()
-                .append(pkValuesId, mergeData.pkValuesId)
+                .append(pkValuesId, rowData.pkValuesId)
                 .isEquals();
+    }
+
+    public List<ColumnData> getData() {
+        if(data != null){
+            Collections.sort(data, Comparator.comparingInt(o -> o.getColumnName().hashCode()));
+        }
+        return data;
     }
 }
