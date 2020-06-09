@@ -28,7 +28,7 @@ import java.util.Properties;
 @Log4j
 public class MriyaDev {
     public static void main(String[] args) throws Exception {
-
+        log.info("start dev");
 //        String topic = "mriya";
         String topic = "canal224";
         final StreamExecutionEnvironment flinkEnv = StreamExecutionEnvironment.getExecutionEnvironment();
