@@ -13,9 +13,9 @@ buildNumber.properties
 .mvn/wrapper/maven-wrapper.jar
 .idea
 .idea/
-mirya-core/mirya-core.iml
-mirya-parse/mirya-parse.iml
-mirya-template/mirya-template.iml
-mirya-web/mirya-web.iml
+mriya-core/mriya-core.iml
+mriya-parse/mriya-parse.iml
+mriya-template/mriya-template.iml
+mriya-web/mriya-web.iml
 mriya.iml
-mirya-flink/mirya-flink.iml
+mriya-flink/mriya-flink.iml

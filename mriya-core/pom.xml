@@ -9,14 +9,9 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>mirya-parse</artifactId>
+    <artifactId>mriya-core</artifactId>
+
     <dependencies>
-        <dependency>
-            <groupId>com.codingdm.mriya</groupId>
-            <artifactId>mirya-core</artifactId>
-            <version>0.1.0-SNAPSHOT</version>
-        </dependency>
+
     </dependencies>
-
-
 </project>

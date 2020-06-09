@@ -9,11 +9,11 @@
     <packaging>pom</packaging>
     <version>0.1.0-SNAPSHOT</version>
     <modules>
-        <module>mirya-core</module>
-        <module>mirya-flink</module>
-        <module>mirya-parse</module>
-        <module>mirya-template</module>
-        <module>mirya-web</module>
+        <module>mriya-core</module>
+        <module>mriya-flink</module>
+        <module>mriya-parse</module>
+        <module>mriya-template</module>
+        <module>mriya-web</module>
     </modules>
 
     <properties>
