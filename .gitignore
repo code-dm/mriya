@@ -12,6 +12,7 @@ buildNumber.properties
 # https://github.com/takari/maven-wrapper#usage-without-binary-jar
 .mvn/wrapper/maven-wrapper.jar
 .idea
+.idea/
 mirya-core/mirya-core.iml
 mirya-parse/mirya-parse.iml
 mirya-template/mirya-template.iml
