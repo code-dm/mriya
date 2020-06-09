@@ -15,7 +15,7 @@ public class SqlConstants {
     public static final String SHOW_DATABASES = "SHOW DATABASES;";
     public static final String GET_TABLE = "SELECT table_name FROM information_schema.tables WHERE table_schema = '%s' and table_type = 'BASE TABLE';";
 
-    public static final String DELETE_SQL = "DELETE FROM \"%s\".\"%s\" WHERE %s in (%s);";
+    public static final String DELETE_SQL = "DELETE FROM \"%s\".\"%s\" WHERE \"%s\" in (%s);";
 
     public static final String CLEAN_SQL = "UPDATE \"%s\".\"%s\" set %s WHERE %s in (%s);";
 
