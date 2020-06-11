@@ -24,11 +24,15 @@ import java.util.List;
  */
 public class GreenplumTemplate implements DDLTemplate {
 
+    private final SqlParser sqlParser;
+
+    public GreenplumTemplate(){
+        sqlParser = new MysqlSqlParserImpl();
+    }
+
     @Override
     public String alterSql(String sql, String tableName) {
         // 首先解析sql
-        SqlParser sqlParser = new MysqlSqlParserImpl();
-
         List<Column> columns = sqlParser.parserAlterSql(sql);
 
         List<String> alterList = new ArrayList<>();
@@ -65,6 +69,9 @@ public class GreenplumTemplate implements DDLTemplate {
 
     @Override
     public String createSql(String sql) {
+        List<Column> columns = sqlParser.parserAlterSql(sql);
+
+
 
         return null;
     }

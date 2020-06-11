@@ -19,4 +19,6 @@ public class TemplateConstant {
     public static final String ALTER_MODIFY_COLUMN = "ALTER TABLE \"${schema}\".\"${table}\" ALTER COLUMN \"${name}\" TYPE ${pgColumnType} using \"${name}\"::${pgColumnType};";
 
     public static final String COLUMN_COMMENT = "COMMENT ON COLUMN \"${schema}\".\"${table}\".\"${name}\" IS '${comment}';";
+
+    public static final String CREATE_TABLE_DISTRIBUTED = "CREATE TABLE \"${schema}\".\"${table}\" (${fields}) distributed by(${pkNames}); ${comments}";
 }
