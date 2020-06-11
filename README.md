@@ -11,7 +11,7 @@
 2. 支持自动创建表
 
 ```
-CREATE TABLE [IF NOT EXISTS] tbl_name create_definition: {...} :ballot_box_with_check:
+CREATE TABLE [IF NOT EXISTS] tbl_name create_definition: {...} :blush:
 ```
 
 3. 支持MySql表结构的变更
@@ -19,13 +19,13 @@ CREATE TABLE [IF NOT EXISTS] tbl_name create_definition: {...} :ballot_box_with_
 ```
 ALTER TABLE tbl_name
 
-  | ADD [COLUMN] col_name column_definition :ballot_box_with_check:
+  | ADD [COLUMN] col_name column_definition :blush:
   
-  | ADD [COLUMN] (col_name column_definition,...) :ballot_box_with_check:
+  | ADD [COLUMN] (col_name column_definition,...) :blush:
   
-  | DROP [COLUMN] col_name :ballot_box_with_check:
+  | DROP [COLUMN] col_name :blush:
   
-  | MODIFY [COLUMN] col_name column_definition :ballot_box_with_check:
+  | MODIFY [COLUMN] col_name column_definition :blush:
   
 ```
 
