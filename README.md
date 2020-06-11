@@ -6,26 +6,26 @@
 
 >> MySql :arrow_right: PostGreSql/Greenplum:
 
-1. 支持近实时级别的数据增删改
+1. 支持近实时级别的数据增删改:tw-2714:
 
-2. 支持自动创建表
+2. 支持自动创建表:tw-2714:
 
 ```
 CREATE TABLE [IF NOT EXISTS] tbl_name create_definition: {...} :blush:
 ```
 
-3. 支持MySql表结构的变更
+3. 支持MySql表结构的变更:tw-2714:
 
 ```
 ALTER TABLE tbl_name
 
-  | ADD [COLUMN] col_name column_definition :blush:
+  | ADD [COLUMN] col_name column_definition
   
-  | ADD [COLUMN] (col_name column_definition,...) :blush:
+  | ADD [COLUMN] (col_name column_definition,...) 
   
-  | DROP [COLUMN] col_name :blush:
+  | DROP [COLUMN] col_name 
   
-  | MODIFY [COLUMN] col_name column_definition :blush:
+  | MODIFY [COLUMN] col_name column_definition
   
 ```
 
