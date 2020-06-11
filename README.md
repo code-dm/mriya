@@ -1,4 +1,4 @@
-# mriya (运输机)
+# mriya (运输机) :airplane:
 
 #### 介绍
 使用Flink开发的实时ETL，数据从MySQL到Greenplum。使用canal解析MySQL的binlog，投放进kafka，使用Flink消费kafka并把数据组装进Greenplum，后续将会添加更多的数据源和目标源。
@@ -28,6 +28,9 @@ ALTER TABLE tbl_name
   | MODIFY [COLUMN] col_name column_definition（支持）
   
 ```
+
+4. 支持主键的修改
+
 
 #### 软件架构
 软件架构说明
