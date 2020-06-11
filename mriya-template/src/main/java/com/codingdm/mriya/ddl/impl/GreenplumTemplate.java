@@ -10,10 +10,13 @@ import com.codingdm.mriya.model.Column;
 import com.codingdm.mriya.model.GPColumn;
 import com.codingdm.mriya.mysql.MysqlSqlParserImpl;
 import com.codingdm.mriya.utils.TemplateUtil;
+import lombok.extern.log4j.Log4j;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @program: mriya
@@ -22,6 +25,7 @@ import java.util.List;
  * @Email wdmcode@aliyun.com
  * @created: 2020/06/09 21:34
  */
+@Log4j
 public class GreenplumTemplate implements DDLTemplate {
 
     private final SqlParser sqlParser;
@@ -31,7 +35,7 @@ public class GreenplumTemplate implements DDLTemplate {
     }
 
     @Override
-    public String alterSql(String sql, String tableName) {
+    public String alterSql(String sql, String tableName, String schema) {
         // 首先解析sql
         List<Column> columns = sqlParser.parserAlterSql(sql);
 
@@ -40,7 +44,7 @@ public class GreenplumTemplate implements DDLTemplate {
 
         for (Column column : columns) {
             GPColumn gpColumn = new GPColumn(column.toMap());
-            gpColumn.setSchema(NacosConfig.get(PropertiesConstants.MRIYA_TARGET_DATASOURCE_SCHEMA));
+            gpColumn.setSchema(schema);
             gpColumn.setTable(tableName);
             switch (gpColumn.getAlterType()){
                 case DROP:
@@ -68,10 +72,15 @@ public class GreenplumTemplate implements DDLTemplate {
     }
 
     @Override
-    public String createSql(String sql) {
+    public String createSql(String sql, String tableName, String schema) {
         List<Column> columns = sqlParser.parserAlterSql(sql);
 
+        if(CollectionUtils.isNotEmpty(columns)){
+            List<GPColumn> gpColumns = columns.stream().map(c -> new GPColumn(c.toMap())).collect(Collectors.toList());
 
+            List<Column> gpColumnsComments = columns.stream().filter(c-> StringUtils.isNotBlank(c.getComment())).collect(Collectors.toList());
+//            gpColumn.setSchema();
+        }
 
         return null;
     }

@@ -13,17 +13,20 @@ public interface DDLTemplate {
      * alter SQL转换
      * @param sql org sql
      * @param tableName org tableName
+     * @param schema org tableName
      * @return to sql
      */
-    String alterSql(String sql, String tableName);
+    String alterSql(String sql, String tableName, String schema);
 
 
     /**
      * create SQL转换
      * @param sql org sql
+     * @param tableName tableName
+     * @param schema org tableName
      * @return to sql
      */
-    String createSql(String sql);
+    String createSql(String sql, String tableName, String schema);
 
 
     /**

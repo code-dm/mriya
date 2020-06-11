@@ -75,7 +75,7 @@ public class MysqlParser implements AlterTable {
             for (int i = 0; i < this.columns.size(); i++) {
                 if(cleanColumnName(item.getExpr().toString())
                         .equals(cleanColumnName(this.getColumns().get(i).getName()))){
-                    this.columns.get(i).setPrivateKey(true);
+                    this.columns.get(i).setIsPrivateKey(true);
                 }
             }
         }
@@ -94,7 +94,7 @@ public class MysqlParser implements AlterTable {
         if(!Objects.isNull(definition.getComment())){
             column.setComment(definition.getComment().toString());
         }
-        column.setPrivateKey(definition.isPrimaryKey());
+        column.setIsPrivateKey(definition.isPrimaryKey());
         if(definition.getDataType().getArguments().size() > 0){
             column.setLength(Integer.parseInt(definition.getDataType().getArguments().get(0).toString()));
         }

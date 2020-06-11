@@ -5,11 +5,8 @@ import lombok.Data;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.beanutils.BeanMap;
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -28,7 +25,7 @@ public class Column {
 
     private String oldName;
 
-    AlterTypeEnum alterType;
+    private AlterTypeEnum alterType;
 
     private String type;
 
@@ -36,9 +33,9 @@ public class Column {
 
     private int numericScale;
 
-    String defaultValue;
+    private String defaultValue;
 
-    boolean isPrivateKey;
+    private Boolean isPrivateKey;
 
     public Column(){
 
