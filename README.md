@@ -1,17 +1,17 @@
-# mriya (运输机) :airplane:
+# mriya (运输机) :airplane: 
 
 #### 介绍
 使用Flink开发的实时ETL，数据从MySQL到Greenplum。使用canal解析MySQL的binlog，投放进kafka，使用Flink消费kafka并把数据组装进Greenplum，后续将会添加更多的数据源和目标源。
 
 
->> MySql ---> PostGreSql/Greenplum:
+>> MySql :arrow_right: PostGreSql/Greenplum:
 
 1. 支持近实时级别的数据增删改
 
 2. 支持自动创建表
 
 ```
-CREATE TABLE [IF NOT EXISTS] tbl_name create_definition: {...}
+CREATE TABLE [IF NOT EXISTS] tbl_name create_definition: {...} :ballot_box_with_check:
 ```
 
 3. 支持MySql表结构的变更
@@ -19,13 +19,13 @@ CREATE TABLE [IF NOT EXISTS] tbl_name create_definition: {...}
 ```
 ALTER TABLE tbl_name
 
-  | ADD [COLUMN] col_name column_definition （支持）
+  | ADD [COLUMN] col_name column_definition :ballot_box_with_check:
   
-  | ADD [COLUMN] (col_name column_definition,...)（支持）
+  | ADD [COLUMN] (col_name column_definition,...) :ballot_box_with_check:
   
-  | DROP [COLUMN] col_name（支持）
+  | DROP [COLUMN] col_name :ballot_box_with_check:
   
-  | MODIFY [COLUMN] col_name column_definition（支持）
+  | MODIFY [COLUMN] col_name column_definition :ballot_box_with_check:
   
 ```
 
