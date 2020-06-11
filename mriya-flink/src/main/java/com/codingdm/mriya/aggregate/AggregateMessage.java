@@ -33,9 +33,7 @@ public class AggregateMessage implements AggregateFunction<Message, Message, Mes
         }
         boolean isMerge = inMsg.getData() != null
                 && !inMsg.typeIsDdl();
-        if (inMsg.typeIsDdl()) {
-            accumulator.setSql(accumulator.getSql() + ";" + inMsg.getSql());
-        }else if(isMerge){
+        if(isMerge){
             Set<RowData> rowData = accumulator.getRowData();
             if(rowData == null){
                 rowData = new HashSet<>();
@@ -50,6 +48,7 @@ public class AggregateMessage implements AggregateFunction<Message, Message, Mes
             accumulator.setRowData(rowData);
         }
         accumulator.setData(null);
+        accumulator.setType(inMsg.getType());
         return accumulator;
     }
 

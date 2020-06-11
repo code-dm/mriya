@@ -58,7 +58,7 @@ public class  PgEnum {
     }
 
     public static String getMapping(String typeName){
-        if (!StringUtils.isEmpty(typeName)){
+        if (StringUtils.isNotBlank(typeName)){
             PgEnum pgEnum = PgEnum.getInstance();
             return pgEnum.pgMapping.get(typeName.toUpperCase());
         }

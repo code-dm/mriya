@@ -4,6 +4,7 @@ import com.codingdm.mriya.enums.EventType;
 import com.codingdm.mriya.model.ColumnData;
 import com.codingdm.mriya.model.RowData;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.UnsupportedEncodingException;
@@ -45,19 +46,22 @@ public class GreenPlumUtils {
 
 
     public static String getCopySql(List<String> columnList, String schemaName, String tableName){
-        StringBuilder sb = new StringBuilder()
-                .append("COPY ")
-                .append(QUOTE)
-                .append(schemaName)
-                .append(QUOTE)
-                .append(POINT)
-                .append(QUOTE)
-                .append(tableName)
-                .append(QUOTE)
-                .append("(")
-                .append(constructColumnNameList(columnList))
-                .append(") FROM STDIN WITH DELIMITER '|' NULL '' CSV QUOTE '\"' ESCAPE E'\\\\';");
-        return sb.toString();
+        if(CollectionUtils.isNotEmpty(columnList)){
+            StringBuilder sb = new StringBuilder()
+                    .append("COPY ")
+                    .append(QUOTE)
+                    .append(schemaName)
+                    .append(QUOTE)
+                    .append(POINT)
+                    .append(QUOTE)
+                    .append(tableName)
+                    .append(QUOTE)
+                    .append("(")
+                    .append(constructColumnNameList(columnList))
+                    .append(") FROM STDIN WITH DELIMITER '|' NULL '' CSV QUOTE '\"' ESCAPE E'\\\\';");
+            return sb.toString();
+        }
+        return null;
     }
     /**
      * Any occurrence within the value of a QUOTE character or the ESCAPE

@@ -11,6 +11,7 @@ package com.codingdm.mriya.constant;
 public class CommonConstants {
 
     public static final String SEPARATOR = ",";
+    public static final String EMPTY = "";
 
     public static final String ERROR_DATE_TIME = "0000-00-00 00:00:00";
     public static final String ERROR_DATE = "0000-00-00";
@@ -28,6 +29,14 @@ public class CommonConstants {
     public static final String PERCENT_S = "'%s'";
 
     public static final String LINE_DOUBLE = "||";
+
+    public static final String FIELD_LENGTH = "(%s, %s)";
+    public static final String FIELD_LENGTH_ONLY = "(%s)";
+
+    public static final String DECIMAL = "DECIMAL";
+    public static final String NUMERIC = "NUMERIC";
+    public static final String BIT = "BIT";
+    public static final String BPCHAR = "BPCHAR";
 
 
 }

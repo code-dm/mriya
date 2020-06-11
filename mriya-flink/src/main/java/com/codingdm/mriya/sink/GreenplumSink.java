@@ -4,11 +4,15 @@ import com.codingdm.mriya.config.NacosConfig;
 import com.codingdm.mriya.connection.SinkConnection;
 import com.codingdm.mriya.connection.impl.GpConnection;
 import com.codingdm.mriya.constant.PropertiesConstants;
+import com.codingdm.mriya.ddl.DDLTemplate;
+import com.codingdm.mriya.ddl.impl.GreenplumTemplate;
 import com.codingdm.mriya.model.Message;
 import com.codingdm.mriya.transformer.Transformer;
 import com.codingdm.mriya.transformer.impl.MysqlTransformer;
 import com.codingdm.mriya.utils.GreenPlumUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.flink.configuration.Configuration;
 import org.apache.flink.streaming.api.functions.sink.RichSinkFunction;
 import org.apache.flink.streaming.api.functions.source.RichSourceFunction;
@@ -55,23 +59,45 @@ public class GreenplumSink extends RichSinkFunction<Message> {
         Connection con = sinkConnection.getConnection();
         Statement statement = con.createStatement();
         // 处理删除数据
+
         Transformer transformer = new MysqlTransformer();
         List<String> deleteSql = transformer.getDeleteSql(message);
-        for (String del : deleteSql) {
-            statement.execute(del);
+        if(CollectionUtils.isNotEmpty(deleteSql)){
+            for (String del : deleteSql) {
+                statement.execute(del);
+            }
         }
         // 执行copy
         List<String> columnsList = transformer.getColumnsList(message);
-        CopyManager copyManager = new CopyManager((BaseConnection) con);
-        String schemaName = NacosConfig.get(PropertiesConstants.MRIYA_TARGET_DATASOURCE_SCHEMA);
-        String copySql = GreenPlumUtils.getCopySql(columnsList, schemaName, message.getTargetTable());
-        byte[] bytes = GreenPlumUtils.serializeRecord(new ArrayList<>(message.getRowData()));
-        InputStream in = new ByteArrayInputStream(bytes);
-        copyManager.copyIn(copySql, in);
-        in.close();
+        if(CollectionUtils.isNotEmpty(columnsList)){
+            String schemaName = NacosConfig.get(PropertiesConstants.MRIYA_TARGET_DATASOURCE_SCHEMA);
+            String copySql = GreenPlumUtils.getCopySql(columnsList, schemaName, message.getTargetTable());
+            CopyManager copyManager = new CopyManager((BaseConnection) con);
+            byte[] bytes = GreenPlumUtils.serializeRecord(new ArrayList<>(message.getRowData()));
+            InputStream in = new ByteArrayInputStream(bytes);
+            copyManager.copyIn(copySql, in);
+            in.close();
+        }
         // 执行ddl语句
-
-
+        if(StringUtils.isNotBlank(message.getSql())){
+            String sql = getSql(message);
+            statement.execute(sql);
+        }
         con.commit();
+    }
+
+    private String getSql(Message message){
+        DDLTemplate template = new GreenplumTemplate();
+        String sql;
+        switch (message.getType()){
+            case ALTER:
+                sql = template.alterSql(message.getSql(), message.getTargetTable());
+                break;
+
+            default:
+                throw new IllegalStateException("Unexpected value: " + message.getType());
+        }
+
+        return sql;
     }
 }

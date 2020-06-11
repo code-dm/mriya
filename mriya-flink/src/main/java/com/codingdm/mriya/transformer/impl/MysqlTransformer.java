@@ -75,7 +75,7 @@ public class MysqlTransformer implements Transformer {
                         return deleteSql.toString();
                     }).collect(Collectors.toList());
         }
-        return null;
+        return new ArrayList<>(0);
     }
 
     @Override

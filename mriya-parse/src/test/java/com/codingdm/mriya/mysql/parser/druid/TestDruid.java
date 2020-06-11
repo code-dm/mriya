@@ -100,7 +100,6 @@ public class TestDruid {
                 "ADD COLUMN `t2` varchar(100) NULL COMMENT 't2-comment' AFTER `t1`, ADD COLUMN(t5 varchar(255), t6 varchar(255), t7 varchar(255));";
 
         List<SQLStatement> stmtList = SQLUtils.parseStatements(sql, JdbcConstants.MYSQL);
-
         MysqlParser parser = new MysqlParser();
         MysqlAlterTableVisitor visitor = new MysqlAlterTableVisitor(parser);
         for (SQLStatement stmt : stmtList) {

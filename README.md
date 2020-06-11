@@ -4,11 +4,17 @@
 使用Flink开发的实时ETL，数据从MySQL到Greenplum。使用canal解析MySQL的binlog，投放进kafka，使用Flink消费kafka并把数据组装进Greenplum，后续将会添加更多的数据源和目标源。
 
 
-支持 MySql ---> DML+DDL语句 ---> PostGreSql/Greenplum：
+>> MySql ---> PostGreSql/Greenplum:
+
+1. 支持近实时级别的数据增删改
+
+2. 支持自动创建表
 
 ```
 CREATE TABLE [IF NOT EXISTS] tbl_name create_definition: {...}
 ```
+
+3. 支持MySql表结构的变更
 
 ```
 ALTER TABLE tbl_name
