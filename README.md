@@ -6,15 +6,15 @@
 
  :thumbsup: MySql :arrow_right: PostGreSql/Greenplum:
 
-1. 支持近实时级别的数据增删改:tw-2714:
+1. :white_check_mark:支持近实时级别的数据增删改
 
-2. 支持自动创建表:tw-2714:
+2. :white_check_mark:支持自动创建表
 
 ```
-CREATE TABLE [IF NOT EXISTS] tbl_name create_definition: {...} :blush:
+CREATE TABLE [IF NOT EXISTS] tbl_name create_definition: {...} :white_check_mark:
 ```
 
-3. 支持MySql表结构的变更:tw-2714:
+3. :white_check_mark:支持MySql表结构的变更
 
 ```
 ALTER TABLE tbl_name
@@ -29,7 +29,11 @@ ALTER TABLE tbl_name
   
 ```
 
-4. 支持主键的修改
+4. :white_check_mark:支持主键的修改
+
+5. :white_check_mark:删除表
+
+6. :white_check_mark:修改表名
 
 
 #### 软件架构

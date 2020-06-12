@@ -51,4 +51,10 @@ public interface AlterTable {
      */
     void setPrivateKeys(MySqlPrimaryKey privateKey);
 
+    /**
+     * get old table name
+     * @param oldTableName name
+     */
+    void renameTable(String oldTableName);
+
 }

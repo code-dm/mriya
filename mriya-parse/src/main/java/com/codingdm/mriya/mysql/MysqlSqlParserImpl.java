@@ -34,4 +34,18 @@ public class MysqlSqlParserImpl implements SqlParser {
         }
         return null;
     }
+
+    @Override
+    public String renameTable(String sql) {
+        if(StringUtils.isNotBlank(sql)){
+            List<SQLStatement> stmtList = SQLUtils.parseStatements(sql, JdbcConstants.MYSQL);
+            MysqlParser parser = new MysqlParser();
+            MysqlAlterTableVisitor visitor = new MysqlAlterTableVisitor(parser);
+            for (SQLStatement stmt : stmtList) {
+                stmt.accept(visitor);
+            }
+            return Column.eraseName(parser.getOldTableName());
+        }
+        return null;
+    }
 }

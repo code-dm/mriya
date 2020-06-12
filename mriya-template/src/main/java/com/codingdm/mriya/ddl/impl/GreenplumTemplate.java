@@ -15,7 +15,9 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -27,6 +29,11 @@ import java.util.stream.Collectors;
  */
 @Log4j
 public class GreenplumTemplate implements DDLTemplate {
+    private final static String SCHEMA = "schema";
+    private final static String TABLE = "table";
+    private final static String GPCOLUMNS = "gpColumns";
+    private final static String PRIMARYKEYS = "primaryKeys";
+    private final static String OLDTABLENAME = "oldTableName";
 
     private final SqlParser sqlParser;
 
@@ -74,20 +81,33 @@ public class GreenplumTemplate implements DDLTemplate {
     @Override
     public String createSql(String sql, String tableName, String schema) {
         List<Column> columns = sqlParser.parserAlterSql(sql);
-
         if(CollectionUtils.isNotEmpty(columns)){
-            List<GPColumn> gpColumns = columns.stream().map(c -> new GPColumn(c.toMap())).collect(Collectors.toList());
-
-            List<Column> gpColumnsComments = columns.stream().filter(c-> StringUtils.isNotBlank(c.getComment())).collect(Collectors.toList());
-//            gpColumn.setSchema();
+            List<GPColumn> gpColumns = columns.stream()
+                    .map(c -> new GPColumn(c.toMap()))
+                    .collect(Collectors.toList());
+            List<String> primaryKeys = columns.stream()
+                    .filter(Column::getIsPrivateKey)
+                    .map(Column::getName).collect(Collectors.toList());
+            Map<String, Object> model = new HashMap<>();
+            model.put(SCHEMA, schema);
+            model.put(TABLE, tableName);
+            model.put(GPCOLUMNS, gpColumns);
+            model.put(PRIMARYKEYS, primaryKeys);
+            return TemplateUtil.rendering(TemplateConstant.CREATE_TABLE_DISTRIBUTED, model);
         }
-
         return null;
     }
 
     @Override
-    public String renameTableSql(String sql) {
-
+    public String renameTableSql(String sql, String tableName, String schema, String oldTableFormat) {
+        String oldTableName = sqlParser.renameTable(sql);
+        if(StringUtils.isNotBlank(oldTableName)){
+            Map<String, String> model = new HashMap<>(3);
+            model.put(SCHEMA, schema);
+            model.put(TABLE, tableName);
+            model.put(OLDTABLENAME, String.format(oldTableFormat, oldTableName));
+            return TemplateUtil.rendering(TemplateConstant.TABLE_RENAME, model);
+        }
         return null;
     }
 

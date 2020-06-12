@@ -80,7 +80,23 @@ public class Message implements Serializable {
     }
 
     public void setTargetTable() {
-        this.targetTable = String.format(CommonConstants.TARGET_TABLE, this.getTopic(), this.getDatabase(), this.getTable());
+        this.targetTable = formatTableName(this.getTable());
+    }
+
+    public void getOldTargetTable(String originalTableName) {
+        this.targetTable = formatTableName(originalTableName);
+    }
+
+    /**
+     * 获取目标的格式模板
+     * @return
+     */
+    public String getFormatTableTemplate(){
+        return String.format(CommonConstants.TARGET_TABLE_FORMAT, topic, database);
+    }
+
+    private String formatTableName(String table) {
+        return String.format(getFormatTableTemplate(), table);
     }
 
     public boolean typeIsDdl(){

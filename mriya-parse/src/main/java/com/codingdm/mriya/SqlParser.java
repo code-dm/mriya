@@ -17,4 +17,11 @@ public interface SqlParser {
      * @return list
      */
     List<Column> parserAlterSql(String sql);
+
+    /**
+     * 解析更改表名sql， 获取老的表名
+     * @param sql sql
+     * @return old name
+     */
+    String renameTable(String sql);
 }

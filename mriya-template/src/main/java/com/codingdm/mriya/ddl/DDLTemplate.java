@@ -32,9 +32,11 @@ public interface DDLTemplate {
     /**
      * rename SQL转换
      * @param sql org sql
+     * @param tableName tableName
+     * @param schema org tableName
      * @return to sql
      */
-    String renameTableSql(String sql);
+    String renameTableSql(String sql, String tableName, String schema, String oldTableFormat);
 
     /**
      * 删除表操作

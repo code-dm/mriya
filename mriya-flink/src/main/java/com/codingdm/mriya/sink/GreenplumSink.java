@@ -4,12 +4,15 @@ import com.codingdm.mriya.config.NacosConfig;
 import com.codingdm.mriya.connection.SinkConnection;
 import com.codingdm.mriya.connection.impl.GpConnection;
 import com.codingdm.mriya.constant.PropertiesConstants;
+import com.codingdm.mriya.constant.TemplateConstant;
 import com.codingdm.mriya.ddl.DDLTemplate;
 import com.codingdm.mriya.ddl.impl.GreenplumTemplate;
+import com.codingdm.mriya.model.GPColumn;
 import com.codingdm.mriya.model.Message;
 import com.codingdm.mriya.transformer.Transformer;
 import com.codingdm.mriya.transformer.impl.MysqlTransformer;
 import com.codingdm.mriya.utils.GreenPlumUtils;
+import com.codingdm.mriya.utils.TemplateUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -91,9 +94,26 @@ public class GreenplumSink extends RichSinkFunction<Message> {
         String sql;
         switch (message.getType()){
             case ALTER:
-                sql = template.alterSql(message.getSql(), message.getTargetTable());
+                sql = template.alterSql(message.getSql(), message.getTargetTable(),
+                        NacosConfig.get(PropertiesConstants.MRIYA_TARGET_DATASOURCE_SCHEMA));
+                log.info(message.getTargetTable() + " alter table: " + sql);
                 break;
-
+            case CREATE:
+                sql = template.createSql(message.getSql(), message.getTargetTable(),
+                        NacosConfig.get(PropertiesConstants.MRIYA_TARGET_DATASOURCE_SCHEMA));
+                log.info(message.getTargetTable() + " create table: " + sql);
+                break;
+            case RENAME:
+                sql = template.renameTableSql(message.getSql(), message.getTargetTable(),
+                        NacosConfig.get(PropertiesConstants.MRIYA_TARGET_DATASOURCE_SCHEMA),
+                        message.getFormatTableTemplate());
+                break;
+            case ERASE:
+                GPColumn gpColumn = new GPColumn();
+                gpColumn.setSchema(NacosConfig.get(PropertiesConstants.MRIYA_TARGET_DATASOURCE_SCHEMA));
+                gpColumn.setTable(message.getTargetTable());
+                sql = TemplateUtil.rendering(TemplateConstant.DROP_TABLE, gpColumn);
+                break;
             default:
                 throw new IllegalStateException("Unexpected value: " + message.getType());
         }

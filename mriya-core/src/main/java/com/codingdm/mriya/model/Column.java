@@ -62,14 +62,14 @@ public class Column {
         this.comment = eraseComment(comment);
     }
 
-    private String eraseName(String nameStr){
+    public static String eraseName(String nameStr){
         if(StringUtils.isNoneBlank(nameStr)){
             nameStr = nameStr.replace("`", "");
         }
         return nameStr;
     }
 
-    private String eraseComment(String commentStr){
+    public static String eraseComment(String commentStr){
         if(StringUtils.isNoneBlank(commentStr)){
             commentStr = commentStr.replaceAll("^[']", "")
                     .replaceAll("[']$", "");

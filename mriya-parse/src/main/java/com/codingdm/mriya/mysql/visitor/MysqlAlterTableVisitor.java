@@ -39,11 +39,7 @@ public class MysqlAlterTableVisitor extends MySqlASTVisitorAdapter {
 
     @Override
     public boolean visit(SQLAlterTableDropColumnItem x) {
-
-        x.getColumns().forEach(s-> {
-            parser.dropColumns(s.getSimpleName());
-        });
-
+        x.getColumns().forEach(s-> parser.dropColumns(s.getSimpleName()));
         return true;
     }
 
@@ -54,7 +50,6 @@ public class MysqlAlterTableVisitor extends MySqlASTVisitorAdapter {
 
     @Override
     public boolean visit(SQLAlterTableAddColumn x) {
-
         if(!Objects.isNull(x) && x.getColumns().size() > 0){
             parser.addColumns(x.getColumns());
         }
@@ -106,9 +101,7 @@ public class MysqlAlterTableVisitor extends MySqlASTVisitorAdapter {
 
     @Override
     public boolean visit(MySqlRenameTableStatement.Item x) {
-        System.out.println("MySqlRenameTableStatement");
-        System.out.println(x.getName());
-        System.out.println(x.getTo());
+        parser.renameTable(x.getName().getSimpleName());
         return true;
     }
 
@@ -116,18 +109,6 @@ public class MysqlAlterTableVisitor extends MySqlASTVisitorAdapter {
     public void endVisit(MySqlRenameTableStatement.Item x) {
 
     }
-
-    @Override
-    public boolean visit(MySqlRenameTableStatement x) {
-        System.out.println("MySqlRenameTableStatement");
-        return true;
-    }
-
-    @Override
-    public void endVisit(MySqlRenameTableStatement x) {
-
-    }
-
 
     @Override
     public boolean visit(MySqlAlterTableChangeColumn x) {
@@ -141,12 +122,6 @@ public class MysqlAlterTableVisitor extends MySqlASTVisitorAdapter {
     @Override
     public boolean visit(MySqlCreateTableStatement x) {
         if(!Objects.isNull(x) && x.getTableElementList().size() > 0){
-//            List<SQLColumnDefinition> definitions = new ArrayList<>();
-//            for (SQLTableElement sqlTableElement : x.getTableElementList()) {
-//                if(sqlTableElement instanceof SQLColumnDefinition){
-//                    definitions.add((SQLColumnDefinition) sqlTableElement);
-//                }
-//            }
             parser.createTable(x.getTableElementList()
                     .stream()
                     .filter(c-> c instanceof SQLColumnDefinition)

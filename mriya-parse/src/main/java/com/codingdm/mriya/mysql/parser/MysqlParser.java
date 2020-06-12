@@ -25,6 +25,8 @@ public class MysqlParser implements AlterTable {
 
     private List<Column> columns;
 
+    private String oldTableName;
+
     public MysqlParser(){
 
         columns = new ArrayList<>();
@@ -79,6 +81,11 @@ public class MysqlParser implements AlterTable {
                 }
             }
         }
+    }
+
+    @Override
+    public void renameTable(String oldTableName) {
+        setOldTableName(oldTableName);
     }
 
 
