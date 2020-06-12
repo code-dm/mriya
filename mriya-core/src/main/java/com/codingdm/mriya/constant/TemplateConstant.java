@@ -35,4 +35,8 @@ public class TemplateConstant {
                                                             "<#list gpColumns as gpColumn>" +
                                                             "<#if (gpColumn.comment)?default(\"\")?length gt 1 >COMMENT ON COLUMN \"${schema}\".\"${table}\".\"${gpColumn.name}\" IS '${gpColumn.comment}';</#if>" +
                                                             "</#list>";
+    public static final String UPDATE_PRIMARY = "ALTER TABLE \"${schema}\".\"${table}\"\n" +
+                                                "DROP CONSTRAINT \"${table}_pkey\";\n" +
+                                                "ALTER TABLE \"${schema}\".\"${table}\"\n" +
+                                                "ADD PRIMARY KEY (${primaryKeys?join(\", \")});";
 }

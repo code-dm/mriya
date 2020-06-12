@@ -8,6 +8,7 @@ import com.codingdm.mriya.enums.AlterTypeEnum;
 import com.codingdm.mriya.model.Column;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,12 +75,35 @@ public class MysqlParser implements AlterTable {
     @Override
     public void setPrivateKeys(MySqlPrimaryKey privateKey) {
         for (SQLSelectOrderByItem item : privateKey.getColumns()) {
-            for (int i = 0; i < this.columns.size(); i++) {
-                if(cleanColumnName(item.getExpr().toString())
-                        .equals(cleanColumnName(this.getColumns().get(i).getName()))){
-                    this.columns.get(i).setIsPrivateKey(true);
+            if(CollectionUtils.isNotEmpty(this.columns)){
+                for (int i = 0; i < this.columns.size(); i++) {
+                    if(cleanColumnName(item.getExpr().toString())
+                            .equals(cleanColumnName(this.getColumns().get(i).getName()))){
+                        this.columns.get(i).setIsPrivateKey(true);
+                        this.columns.get(i).setIsUpdatePrivateKey(true);
+                    }else {
+                        Column primary = new Column();
+                        primary.setName(cleanColumnName(item.getExpr().toString()));
+                        primary.setIsPrivateKey(true);
+                        primary.setIsUpdatePrivateKey(true);
+                        primary.setAlterType(AlterTypeEnum.UPDATE_PRIMARY);
+                        if(!this.columns.contains(primary)){
+                            this.columns.add(primary);
+                        }
+                    }
+                }
+            }else {
+                this.columns = new ArrayList<>(privateKey.getColumns().size());
+                for (SQLSelectOrderByItem column : privateKey.getColumns()) {
+                    Column primary = new Column();
+                    primary.setName(cleanColumnName(column.getExpr().toString()));
+                    primary.setIsPrivateKey(true);
+                    primary.setIsUpdatePrivateKey(true);
+                    primary.setAlterType(AlterTypeEnum.UPDATE_PRIMARY);
+                    this.columns.add(primary);
                 }
             }
+
         }
     }
 

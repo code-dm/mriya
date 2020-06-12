@@ -70,10 +70,28 @@ public class MysqlSqlParserImplTest {
     }
 
     @Test
+    public void alter2(){
+        String sql = "ALTER TABLE `mriya`.`alter_table` DROP PRIMARY KEY ,ADD PRIMARY KEY ( `id`, idcard )";
+        List<Column> columns = sqlParser.parserAlterSql(sql);
+        System.out.println(columns);
+    }
+
+    @Test
+    public void alter3(){
+        String sql = "ALTER TABLE `mriya`.`alter_table` \n" +
+                "MODIFY COLUMN `id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键' FIRST,\n" +
+                "MODIFY COLUMN `rename_column` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '电话1' AFTER `idcard_pic`,\n" +
+                "MODIFY COLUMN `add_column` varchar(300) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '测试新增字段' AFTER `update_time`,\n" +
+                "DROP PRIMARY KEY,\n" +
+                "ADD PRIMARY KEY (`id`, `idcard`, `rename_column`, `update_column`) USING BTREE;";
+        List<Column> columns = sqlParser.parserAlterSql(sql);
+        columns.forEach(System.out::println);
+    }
+
+    @Test
     public void erase(){
         String sql = "drop table `test_table`.`demo`";
-        String f = "%s_%s_%%s";
-        System.out.println(String.format(f, "t", "s"));
+        sqlParser.parserAlterSql(sql);
 
     }
 

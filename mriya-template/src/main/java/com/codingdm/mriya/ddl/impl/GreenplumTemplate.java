@@ -43,6 +43,7 @@ public class GreenplumTemplate implements DDLTemplate {
 
     @Override
     public String alterSql(String sql, String tableName, String schema) {
+        StringBuilder sqlBuild = new StringBuilder();
         // 首先解析sql
         List<Column> columns = sqlParser.parserAlterSql(sql);
 
@@ -68,14 +69,29 @@ public class GreenplumTemplate implements DDLTemplate {
                     alterList.add(rendering(TemplateConstant.ALTER_ADD_COLUMN, gpColumn));
                     getCommentSql(gpColumn, comments);
                     break;
+                case UPDATE_PRIMARY:
+                    break;
                 default:
                     throw new IllegalStateException("Unexpected value: " + column.getType());
             }
         }
         if (alterList.size() > 0){
-            return StringUtils.join(alterList, CommonConstants.EMPTY).concat(StringUtils.join(comments, CommonConstants.EMPTY));
+            sqlBuild.append(StringUtils.join(alterList, CommonConstants.EMPTY).concat(StringUtils.join(comments, CommonConstants.EMPTY)));
         }
-        return null;
+        // 处理主键更新
+        List<String> primaries = columns.stream()
+                .filter(Column::getIsUpdatePrivateKey)
+                .map(Column::getName)
+                .map(s->String.format(CommonConstants.PERCENT_S_DOUBLE, s))
+                .collect(Collectors.toList());
+        if(CollectionUtils.isNotEmpty(primaries)){
+            Map<String, Object> model = new HashMap<>();
+            model.put(SCHEMA, schema);
+            model.put(TABLE, tableName);
+            model.put(PRIMARYKEYS, primaries);
+            sqlBuild.append(TemplateUtil.rendering(TemplateConstant.UPDATE_PRIMARY, model));
+        }
+        return sqlBuild.toString();
     }
 
     @Override
@@ -87,7 +103,9 @@ public class GreenplumTemplate implements DDLTemplate {
                     .collect(Collectors.toList());
             List<String> primaryKeys = columns.stream()
                     .filter(Column::getIsPrivateKey)
-                    .map(Column::getName).collect(Collectors.toList());
+                    .map(Column::getName)
+                    .map(s->String.format(CommonConstants.PERCENT_S_DOUBLE, s))
+                    .collect(Collectors.toList());
             Map<String, Object> model = new HashMap<>();
             model.put(SCHEMA, schema);
             model.put(TABLE, tableName);

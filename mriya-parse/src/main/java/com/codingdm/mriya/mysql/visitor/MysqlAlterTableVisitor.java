@@ -4,7 +4,6 @@ import com.alibaba.druid.sql.ast.expr.SQLIntervalExpr;
 import com.alibaba.druid.sql.ast.statement.SQLAlterTableAddColumn;
 import com.alibaba.druid.sql.ast.statement.SQLAlterTableDropColumnItem;
 import com.alibaba.druid.sql.ast.statement.SQLColumnDefinition;
-import com.alibaba.druid.sql.ast.statement.SQLTableElement;
 import com.alibaba.druid.sql.dialect.mysql.ast.MySqlKey;
 import com.alibaba.druid.sql.dialect.mysql.ast.MySqlPrimaryKey;
 import com.alibaba.druid.sql.dialect.mysql.ast.statement.*;
@@ -13,8 +12,6 @@ import com.codingdm.mriya.mysql.parser.MysqlParser;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -155,5 +152,6 @@ public class MysqlAlterTableVisitor extends MySqlASTVisitorAdapter {
     public void endVisit(MySqlAlterTableAlterColumn x) {
 
     }
+
 
 }

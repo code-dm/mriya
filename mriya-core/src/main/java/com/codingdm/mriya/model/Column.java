@@ -6,6 +6,8 @@ import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.beanutils.BeanMap;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.util.Map;
 
@@ -36,6 +38,8 @@ public class Column {
     private String defaultValue;
 
     private Boolean isPrivateKey;
+
+    private Boolean isUpdatePrivateKey = false;
 
     public Column(){
 
@@ -75,5 +79,25 @@ public class Column {
                     .replaceAll("[']$", "");
         }
         return commentStr;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Column column = (Column) o;
+
+        return new EqualsBuilder()
+                .append(name, column.name)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .append(name)
+                .toHashCode();
     }
 }

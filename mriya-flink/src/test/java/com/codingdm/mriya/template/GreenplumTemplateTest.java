@@ -29,9 +29,34 @@ public class GreenplumTemplateTest {
                 "ADD COLUMN `t2` varchar(100) NULL COMMENT 't2-comment' AFTER `t1`, ADD COLUMN(t5 varchar(255), t6 varchar(255), t7 varchar(255));";
 
         DDLTemplate template = new GreenplumTemplate();
-        template.alterSql(alterSql, "target_demo",
+        String target_demo = template.alterSql(alterSql, "target_demo",
                 NacosConfig.get(PropertiesConstants.MRIYA_TARGET_DATASOURCE_SCHEMA));
+        System.out.println(target_demo);
+    }
 
+    @Test
+    public void testAlter2(){
+        String alterSql = "ALTER TABLE `mriya`.`alter_table` \n" +
+                "MODIFY COLUMN `id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键' FIRST,\n" +
+                "MODIFY COLUMN `rename_column` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '电话1' AFTER `idcard_pic`,\n" +
+                "MODIFY COLUMN `add_column` varchar(300) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '测试新增字段' AFTER `update_time`,\n" +
+                "DROP PRIMARY KEY,\n" +
+                "ADD PRIMARY KEY (`id`, `idcard`, `rename_column`, `update_column`) USING BTREE;";
+
+        DDLTemplate template = new GreenplumTemplate();
+        String target_demo = template.alterSql(alterSql, "target_demo",
+                NacosConfig.get(PropertiesConstants.MRIYA_TARGET_DATASOURCE_SCHEMA));
+        System.out.println(target_demo);
+    }
+
+    @Test
+    public void testAlter3(){
+        String alterSql = "ALTER TABLE `mriya`.`alter_table` DROP PRIMARY KEY ,ADD PRIMARY KEY ( `id`, idcard )";
+
+        DDLTemplate template = new GreenplumTemplate();
+        String target_demo = template.alterSql(alterSql, "target_demo",
+                NacosConfig.get(PropertiesConstants.MRIYA_TARGET_DATASOURCE_SCHEMA));
+        System.out.println(target_demo);
     }
 
     @Test
