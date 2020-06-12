@@ -38,3 +38,55 @@ INSERT INTO mriya.table_t1 (id, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10) VALUES
 (26, '26', '19', 19, '2020-06-03', '01:00:00', '2020-06-03 09:27:28', '2020-06-03 09:27:34', 19, '19', 19);
 
 delete from mriya.table_t1 where id in (20, 21, 22, 23, 24, 25);
+
+-- 创建表
+CREATE TABLE `mriya`.`Untitled`  (
+  `id` int NOT NULL COMMENT '主键',
+  `t1` varchar(255) NULL,
+  `t2` bigint(10) NULL,
+  `t3` text NULL,
+  `t4` date NULL,
+  `t5` time NULL,
+  `t6` datetime NULL,
+  `t7` timestamp NULL,
+  `t8` float NULL,
+  `t9` year NULL,
+  `t10` char(1) NULL,
+  `t11` smallint(10) NULL COMMENT '测试注释',
+  PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `mriya`.`rename_table`  (
+  `id` int(255) NOT NULL,
+  PRIMARY KEY (`id`)
+);
+
+RENAME TABLE mriya.rename_table TO mriya.rename_new_table;
+
+CREATE TABLE `mriya`.`drop_table`  (
+  `id` int(255) NOT NULL,
+  PRIMARY KEY (`id`)
+);
+
+DROP TABLE `mriya`.`drop_table`;
+
+CREATE TABLE `mriya`.`alter_table`  (
+  `id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键',
+  `name` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '客户名',
+  `sex` varchar(4) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '性别',
+  `idcard` varchar(18) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '身份证号码',
+  `idcard_pic` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '身份证扫描件',
+  `telphone` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '电话1',
+  `order_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '外键',
+  `create_by` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建人',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '修改人',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+ALTER TABLE `mriya`.`alter_table`
+CHANGE COLUMN `telphone` `rename_column` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '电话1' AFTER `idcard_pic`,
+CHANGE COLUMN `order_id` `update_column` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '外键' AFTER `rename_column`,
+MODIFY COLUMN `update_time` datetime(0) NULL DEFAULT NULL COMMENT '测试修改备注' AFTER `update_by`,
+ADD COLUMN `add_column` varchar(255) NULL COMMENT '测试新增字段' AFTER `update_time`;

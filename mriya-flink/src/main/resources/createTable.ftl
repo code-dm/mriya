@@ -1,8 +1,9 @@
 CREATE TABLE "${schema}"."${table}"
 (
 <#list gpColumns as gpColumn>
-    "${gpColumn.name}" ${gpColumn.pgColumnType}<#if gpColumn.isPrivateKey>PRIMARY KEY</#if><#if gpColumn_has_next>,</#if>
+    "${gpColumn.name}" ${gpColumn.pgColumnType},
 </#list>
+PRIMARY KEY (${primaryKeys?join(", ")})
  )
 distributed by(${primaryKeys?join(", ")});
 <#list gpColumns as gpColumn>

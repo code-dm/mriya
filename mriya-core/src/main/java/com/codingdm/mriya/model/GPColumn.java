@@ -25,6 +25,8 @@ public class GPColumn extends Column{
 
     private String pgColumnType;
 
+    public GPColumn() {}
+
     public GPColumn(Map<?, ?> map){
         try {
             BeanUtils.populate(this, (Map<String, ? extends Object>) map);

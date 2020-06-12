@@ -107,12 +107,14 @@ public class GreenplumSink extends RichSinkFunction<Message> {
                 sql = template.renameTableSql(message.getSql(), message.getTargetTable(),
                         NacosConfig.get(PropertiesConstants.MRIYA_TARGET_DATASOURCE_SCHEMA),
                         message.getFormatTableTemplate());
+                log.info(message.getTargetTable() + " rename table: " + sql);
                 break;
             case ERASE:
                 GPColumn gpColumn = new GPColumn();
                 gpColumn.setSchema(NacosConfig.get(PropertiesConstants.MRIYA_TARGET_DATASOURCE_SCHEMA));
                 gpColumn.setTable(message.getTargetTable());
                 sql = TemplateUtil.rendering(TemplateConstant.DROP_TABLE, gpColumn);
+                log.info(message.getTargetTable() + " erase table: " + sql);
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + message.getType());

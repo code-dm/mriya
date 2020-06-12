@@ -25,13 +25,14 @@ public class TemplateConstant {
     public static final String DROP_TABLE = "DROP TABLE \"${schema}\".\"${table}\";";
 
     public static final String CREATE_TABLE_DISTRIBUTED = "CREATE TABLE \"${schema}\".\"${table}\"\n" +
-                                                        "(\n" +
-                                                        "<#list gpColumns as gpColumn>\n" +
-                                                        "    \"${gpColumn.name}\" ${gpColumn.pgColumnType}<#if gpColumn.isPrivateKey>PRIMARY KEY</#if><#if gpColumn_has_next>,</#if>\n" +
-                                                        "</#list>\n" +
-                                                        " )\n" +
-                                                        "distributed by(${primaryKeys?join(\", \")});\n" +
-                                                        "<#list gpColumns as gpColumn>\n" +
-                                                        "<#if (gpColumn.comment)?default(\"\")?length gt 1 >COMMENT ON COLUMN \"${schema}\".\"${table}\".\"${gpColumn.name}\" IS '${gpColumn.comment}';</#if>\n" +
-                                                        "</#list>";
+                                                            "(\n" +
+                                                            "<#list gpColumns as gpColumn>\n" +
+                                                            "    \"${gpColumn.name}\" ${gpColumn.pgColumnType},\n" +
+                                                            "</#list>\n" +
+                                                            "PRIMARY KEY (${primaryKeys?join(\", \")})\n" +
+                                                            " )\n" +
+                                                            "distributed by(${primaryKeys?join(\", \")});\n" +
+                                                            "<#list gpColumns as gpColumn>" +
+                                                            "<#if (gpColumn.comment)?default(\"\")?length gt 1 >COMMENT ON COLUMN \"${schema}\".\"${table}\".\"${gpColumn.name}\" IS '${gpColumn.comment}';</#if>" +
+                                                            "</#list>";
 }
