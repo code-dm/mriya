@@ -35,6 +35,7 @@ ALTER TABLE tbl_name
 
 6.  修改表名
 
+#### MySql --> Apache Kudu(待开发):
 
 ### 软件架构
 软件架构说明
