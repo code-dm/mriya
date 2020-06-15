@@ -2,6 +2,7 @@ package com.codingdm.mriya.config;
 
 import com.alibaba.nacos.api.config.listener.Listener;
 import lombok.extern.log4j.Log4j;
+import org.apache.commons.configuration2.ex.ConfigurationException;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -23,8 +24,8 @@ public class ConfingListener implements Listener {
     @Override
     public void receiveConfigInfo(String config) {
         try {
-            NacosConfig.getInstance().getProperties().load(new StringReader(config));
-        } catch (IOException e) {
+            NacosConfig.getInstance().getProperties().read(new StringReader(config));
+        }catch (ConfigurationException | IOException e) {
             log.error("nacos config IOException in receiveConfigInfo --> \n" + e.getMessage());
         }
     }

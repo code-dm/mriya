@@ -6,8 +6,11 @@ import com.alibaba.nacos.api.config.ConfigService;
 import com.alibaba.nacos.api.config.listener.Listener;
 import com.alibaba.nacos.api.exception.NacosException;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.configuration2.PropertiesConfiguration;
+import org.apache.commons.configuration2.builder.fluent.Configurations;
 import org.junit.Test;
 
+import java.util.List;
 import java.util.Properties;
 
 /**
@@ -24,6 +27,12 @@ public class NacosConfigTest {
             System.out.println(NacosConfig.get("mriya.target.datasource.url"));
             Thread.sleep(1000);
         }
+    }
+
+    @Test
+    public void getConfigList(){
+        List list = NacosConfig.getList("mriya.message.filer");
+        System.out.println(list);
     }
 
 }
