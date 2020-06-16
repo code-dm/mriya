@@ -22,7 +22,7 @@ public class TemplateConstant {
 
     public static final String TABLE_RENAME = "ALTER TABLE \"${schema}\".\"${oldTableName}\" RENAME TO \"${table}\";";
 
-    public static final String DROP_TABLE = "DROP TABLE \"${schema}\".\"${table}\";";
+    public static final String DROP_TABLE = "DROP TABLE IF EXISTS \"${schema}\".\"${table}\" CASCADE;";
 
     public static final String CREATE_TABLE_DISTRIBUTED = "CREATE TABLE \"${schema}\".\"${table}\"\n" +
                                                             "(\n" +

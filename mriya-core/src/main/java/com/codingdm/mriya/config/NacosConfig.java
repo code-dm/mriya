@@ -8,7 +8,6 @@ import com.codingdm.mriya.constant.PropertiesConstants;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.configuration2.PropertiesConfiguration;
-import org.apache.commons.configuration2.builder.fluent.Configurations;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.flink.api.java.utils.ParameterTool;
 

@@ -24,7 +24,7 @@ public class NacosConfigTest {
     @Test
     public void getConfig() throws InterruptedException {
         while (true){
-            System.out.println(NacosConfig.get("mriya.target.datasource.url"));
+            System.out.println(NacosConfig.getList("mriya.message.filer"));
             Thread.sleep(1000);
         }
     }

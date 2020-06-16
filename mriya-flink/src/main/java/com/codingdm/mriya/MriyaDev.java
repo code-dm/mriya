@@ -31,7 +31,7 @@ public class MriyaDev {
     public static void main(String[] args) throws Exception {
         log.info("start dev");
 //        String topic = "mriya";
-        String topic = "canal224";
+        String topic = "mriya";
         final StreamExecutionEnvironment flinkEnv = StreamExecutionEnvironment.getExecutionEnvironment();
         Properties props = KafkaConfigUtil.buildKafkaProps();
         FlinkKafkaConsumer<Message> kafkaSource = new FlinkKafkaConsumer<>(topic, new MessageSchema(topic), props);
