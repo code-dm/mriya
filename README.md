@@ -53,8 +53,8 @@ ALTER TABLE tbl_name
 2.  xxxx
 3.  xxxx
 
-### 快速体验
-1. docker
+### 使用docker快速体验
+
 
 ### 参与贡献
 
