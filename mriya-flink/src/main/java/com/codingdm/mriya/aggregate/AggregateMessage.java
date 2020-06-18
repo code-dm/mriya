@@ -4,6 +4,7 @@ import com.codingdm.mriya.model.ColumnData;
 import com.codingdm.mriya.model.RowData;
 import com.codingdm.mriya.model.Message;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.flink.api.common.functions.AggregateFunction;
 
 import java.util.*;
@@ -33,7 +34,12 @@ public class AggregateMessage implements AggregateFunction<Message, Message, Mes
         }
         boolean isMerge = inMsg.getData() != null
                 && !inMsg.typeIsDdl();
-        if(isMerge){
+        if (inMsg.typeIsDdl()) {
+            if(StringUtils.isNotBlank(inMsg.getSql())){
+                accumulator.setSql(inMsg.getSql() + ";" +  accumulator.getSql());
+            }
+        }
+        else if(isMerge){
             Set<RowData> rowData = accumulator.getRowData();
             if(rowData == null){
                 rowData = new HashSet<>();

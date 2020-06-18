@@ -1,5 +1,7 @@
 package com.codingdm.mriya.utils;
 
+import com.codingdm.mriya.config.NacosConfig;
+import com.codingdm.mriya.constant.PropertiesConstants;
 import lombok.extern.log4j.Log4j;
 
 import java.util.Properties;
@@ -18,14 +20,11 @@ public class KafkaConfigUtil {
 
         Properties props = new Properties();
 
-//        props.put("bootstrap.servers", "192.168.2.185:9092");
-//        props.put("zookeeper.connect", "127.0.0.1:2181");
+        props.put("bootstrap.servers", NacosConfig.get(PropertiesConstants.MRIYA_SOURCES_KAFKA_BOOTSTRAP_SERVERS));
+        props.put("zookeeper.connect", NacosConfig.get(PropertiesConstants.MRIYA_SOURCES_KAFKA_ZOOKEEPER_CONNECT));
 
-        props.put("bootstrap.servers", "10.168.2.224:9092");
-        props.put("zookeeper.connect", "10.168.2.224:2181");
-
-        props.put("group.id", "mriya-dev");
-        props.put("auto.offset.reset", "earliest");
+        props.put("group.id", NacosConfig.get(PropertiesConstants.MRIYA_SOURCES_KAFKA_GROUP_ID));
+        props.put("auto.offset.reset", NacosConfig.get(PropertiesConstants.MRIYA_SOURCES_KAFKA_AUTO_OFFSET_RESET));
 
         props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");

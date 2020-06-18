@@ -25,6 +25,7 @@ import org.postgresql.core.BaseConnection;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -83,8 +84,14 @@ public class GreenplumSink extends RichSinkFunction<Message> {
         }
         // 执行ddl语句
         if(StringUtils.isNotBlank(message.getSql())){
-            String sql = getSql(message);
-            statement.execute(sql);
+            try {
+                String sql = getSql(message);
+                statement.execute(sql);
+            }catch (SQLException e){
+                e.printStackTrace();
+                log.error(e.getMessage());
+            }
+
         }
         con.commit();
     }
