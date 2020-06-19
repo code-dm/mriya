@@ -13,7 +13,6 @@
         <module>mriya-flink</module>
         <module>mriya-parse</module>
         <module>mriya-template</module>
-        <module>mriya-web</module>
     </modules>
 
     <properties>
