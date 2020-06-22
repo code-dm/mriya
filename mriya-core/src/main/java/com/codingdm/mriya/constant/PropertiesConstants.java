@@ -23,4 +23,6 @@ public class PropertiesConstants {
     public static final String MRIYA_SOURCES_KAFKA_GROUP_ID = "mriya.source.kafka.group.id";
     public static final String MRIYA_SOURCES_KAFKA_AUTO_OFFSET_RESET = "mriya.source.kafka.auto.offset.reset";
 
+    public static final String MRIYA_MESSAGE_FILTER = "mriya.message.filer";
+
 }

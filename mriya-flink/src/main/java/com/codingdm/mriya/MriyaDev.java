@@ -1,6 +1,7 @@
 package com.codingdm.mriya;
 
 import com.codingdm.mriya.aggregate.AggregateMessage;
+import com.codingdm.mriya.filter.MsgFilter;
 import com.codingdm.mriya.model.Message;
 import com.codingdm.mriya.sink.GreenplumSink;
 import com.codingdm.mriya.trigger.DdlTrigger;
@@ -36,6 +37,7 @@ public class MriyaDev {
         Properties props = KafkaConfigUtil.buildKafkaProps();
         FlinkKafkaConsumer<Message> kafkaSource = new FlinkKafkaConsumer<>(topic, new MessageSchema(topic), props);
         flinkEnv.addSource(kafkaSource)
+                .filter(MsgFilter::filter)
                 .keyBy("targetTable")
                 .timeWindow(Time.seconds(5))
                 .trigger(DdlTrigger.build())
