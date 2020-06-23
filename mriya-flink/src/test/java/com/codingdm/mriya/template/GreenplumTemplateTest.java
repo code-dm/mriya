@@ -93,9 +93,9 @@ public class GreenplumTemplateTest {
     public void renameTable(){
         String sql = "RENAME TABLE `test_table`.`demo` TO `test_table`.`demo2`";
         DDLTemplate template = new GreenplumTemplate();
-        String target_demo = template.renameTableSql(sql, "target_demo",
+        String target_demo = template.renameTableSql(sql, "new_target_demo",
                 NacosConfig.get(PropertiesConstants.MRIYA_TARGET_DATASOURCE_SCHEMA),
-                "topic_database_%s");
+                "topic_database_${table}");
         System.out.println(target_demo);
     }
 
