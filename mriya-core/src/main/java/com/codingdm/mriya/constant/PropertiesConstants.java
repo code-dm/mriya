@@ -2,7 +2,7 @@ package com.codingdm.mriya.constant;
 
 /**
  * @author wudongming1
- * @email dongming1.wu@genscript.com
+ * @email wdmcode@aliyun.com
  * @Date 6/5/2020 9:52 AM
  **/
 public class PropertiesConstants {

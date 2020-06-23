@@ -1,6 +1,6 @@
 /**
  * @author wudongming1
- * @email dongming1.wu@genscript.com
+ * @email wdmcode@aliyun.com
  * @create 2019-08-07 15:59
  **/
 package com.codingdm.mriya.enums;

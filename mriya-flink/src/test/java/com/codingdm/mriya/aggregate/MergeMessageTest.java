@@ -6,7 +6,7 @@ import org.junit.Test;
 
 /**
  * @author wudongming1
- * @email dongming1.wu@genscript.com
+ * @email wdmcode@aliyun.com
  * @Date 6/8/2020 2:45 PM
  **/
 @Slf4j

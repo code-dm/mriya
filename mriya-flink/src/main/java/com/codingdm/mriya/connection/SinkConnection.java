@@ -4,7 +4,7 @@ import java.sql.Connection;
 
 /**
  * @author wudongming1
- * @email dongming1.wu@genscript.com
+ * @email wdmcode@aliyun.com
  * @Date 6/9/2020 1:20 PM
  **/
 public interface SinkConnection {

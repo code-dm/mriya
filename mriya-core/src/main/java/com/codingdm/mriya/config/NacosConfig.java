@@ -18,7 +18,7 @@ import java.util.Properties;
 
 /**
  * @author wudongming1
- * @email dongming1.wu@genscript.com
+ * @email wdmcode@aliyun.com
  * @Date 6/4/2020 5:12 PM
  **/
 @Slf4j

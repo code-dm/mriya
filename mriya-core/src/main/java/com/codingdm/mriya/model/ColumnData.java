@@ -10,7 +10,7 @@ import java.util.Objects;
 /**
  * 数据库字段类
  * @author wudongming1
- * @email dongming1.wu@genscript.com
+ * @email wdmcode@aliyun.com
  * @Date 6/8/2020 2:06 PM
  **/
 @Slf4j

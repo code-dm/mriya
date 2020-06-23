@@ -4,7 +4,7 @@ package com.codingdm.mriya.constant;
 
 /**
  * @author wudongming1
- * @email dongming1.wu@genscript.com
+ * @email wdmcode@aliyun.com
  * @Date 6/2/2020 5:33 PM
  **/
 

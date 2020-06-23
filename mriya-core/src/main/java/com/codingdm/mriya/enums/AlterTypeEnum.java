@@ -2,7 +2,7 @@ package com.codingdm.mriya.enums;
 
 /**
  * @author wudongming1
- * @email dongming1.wu@genscript.com
+ * @email wdmcode@aliyun.com
  * @Date 5/27/2020 1:40 PM
  **/
 public enum AlterTypeEnum {
