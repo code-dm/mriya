@@ -8,6 +8,7 @@ import com.codingdm.mriya.constant.TemplateConstant;
 import com.codingdm.mriya.ddl.DDLTemplate;
 import com.codingdm.mriya.model.Column;
 import com.codingdm.mriya.model.GPColumn;
+import com.codingdm.mriya.model.Message;
 import com.codingdm.mriya.mysql.MysqlSqlParserImpl;
 import com.codingdm.mriya.utils.TemplateUtil;
 import lombok.extern.log4j.Log4j;
@@ -123,7 +124,9 @@ public class GreenplumTemplate implements DDLTemplate {
             Map<String, String> model = new HashMap<>(3);
             model.put(SCHEMA, schema);
             model.put(TABLE, tableName);
-            model.put(OLDTABLENAME, String.format(oldTableFormat, oldTableName));
+            Message message = new Message();
+            message.setTable(oldTableName);
+            model.put(OLDTABLENAME, TemplateUtil.rendering(oldTableFormat, message));
             return TemplateUtil.rendering(TemplateConstant.TABLE_RENAME, model);
         }
         return null;

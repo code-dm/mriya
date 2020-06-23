@@ -25,4 +25,6 @@ public class PropertiesConstants {
 
     public static final String MRIYA_MESSAGE_FILTER = "mriya.message.filer";
 
+    public static final String MRIYA_TABLE_NAME_TEMPLATE = "mriya.table.name.template";
+
 }

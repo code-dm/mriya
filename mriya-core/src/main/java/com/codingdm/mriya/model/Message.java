@@ -2,8 +2,11 @@ package com.codingdm.mriya.model;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.codingdm.mriya.config.NacosConfig;
 import com.codingdm.mriya.constant.CommonConstants;
+import com.codingdm.mriya.constant.PropertiesConstants;
 import com.codingdm.mriya.enums.EventType;
+import com.codingdm.mriya.utils.TemplateUtil;
 import lombok.Data;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
@@ -92,11 +95,18 @@ public class Message implements Serializable {
      * @return
      */
     public String getFormatTableTemplate(){
-        return String.format(CommonConstants.TARGET_TABLE_FORMAT, topic, database);
+        Message message = new Message();
+        message.setTopic(this.getTopic());
+        message.setDatabase(this.getDatabase());
+        String tableNameTemplate = NacosConfig.get(PropertiesConstants.MRIYA_TABLE_NAME_TEMPLATE)
+                .replace("${table}", "${r'${table}'}");
+        return TemplateUtil.rendering(tableNameTemplate, message);
     }
 
-    private String formatTableName(String table) {
-        return String.format(getFormatTableTemplate(), table);
+    public String formatTableName(String table) {
+        Message message = new Message();
+        message.setTable(table);
+        return TemplateUtil.rendering(getFormatTableTemplate(), message);
     }
 
     public boolean typeIsDdl(){
