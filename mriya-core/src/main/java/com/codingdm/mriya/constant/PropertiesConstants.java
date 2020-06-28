@@ -18,10 +18,15 @@ public class PropertiesConstants {
     public static final String MRIYA_TARGET_DATASOURCE_USERNAME ="mriya.target.datasource.username";
     public static final String MRIYA_TARGET_DATASOURCE_PASSWORD ="mriya.target.datasource.password";
 
+    public static final String MRIYA_MYSQL_DATASOURCE_URL =     "mriya.mysql.datasource.url";
+    public static final String MRIYA_MYSQL_DATASOURCE_USERNAME ="mriya.mysql.datasource.username";
+    public static final String MRIYA_MYSQL_DATASOURCE_PASSWORD ="mriya.mysql.datasource.password";
+
     public static final String MRIYA_SOURCES_KAFKA_BOOTSTRAP_SERVERS = "mriya.source.kafka.bootstrap.servers";
     public static final String MRIYA_SOURCES_KAFKA_ZOOKEEPER_CONNECT = "mriya.source.kafka.zookeeper.connect";
     public static final String MRIYA_SOURCES_KAFKA_GROUP_ID = "mriya.source.kafka.group.id";
     public static final String MRIYA_SOURCES_KAFKA_AUTO_OFFSET_RESET = "mriya.source.kafka.auto.offset.reset";
+    public static final String MRIYA_SOURCES_KAFKA_TOPIC = "mriya.source.kafka.topic";
 
     public static final String MRIYA_MESSAGE_FILTER = "mriya.message.filer";
 

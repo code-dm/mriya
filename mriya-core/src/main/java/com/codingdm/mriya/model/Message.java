@@ -47,6 +47,14 @@ public class Message implements Serializable {
     public String targetTable;
     private Set<RowData> rowData;
 
+    public Message(){ }
+
+    public Message(String topic, String database, String table){
+        setTopic(topic);
+        setDatabase(database);
+        setTable(table);
+        setTargetTable();
+    }
 
     public List<Map<String, Object>> getData() {
         if (data != null && data.size() > 0) {

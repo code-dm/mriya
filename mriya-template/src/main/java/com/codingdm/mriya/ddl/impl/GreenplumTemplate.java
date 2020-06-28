@@ -107,14 +107,18 @@ public class GreenplumTemplate implements DDLTemplate {
                     .map(Column::getName)
                     .map(s->String.format(CommonConstants.PERCENT_S_DOUBLE, s))
                     .collect(Collectors.toList());
-            Map<String, Object> model = new HashMap<>();
-            model.put(SCHEMA, schema);
-            model.put(TABLE, tableName);
-            model.put(GPCOLUMNS, gpColumns);
-            model.put(PRIMARYKEYS, primaryKeys);
-            return TemplateUtil.rendering(TemplateConstant.CREATE_TABLE_DISTRIBUTED, model);
+            if(primaryKeys.size() > 0){
+                Map<String, Object> model = new HashMap<>();
+                model.put(SCHEMA, schema);
+                model.put(TABLE, tableName);
+                model.put(GPCOLUMNS, gpColumns);
+                model.put(PRIMARYKEYS, primaryKeys);
+                return TemplateUtil.rendering(TemplateConstant.CREATE_TABLE_DISTRIBUTED, model);
+            }else {
+                log.error(tableName + " not have primary key");
+            }
         }
-        return null;
+        return "";
     }
 
     @Override

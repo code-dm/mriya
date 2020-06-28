@@ -29,12 +29,14 @@ public class TemplateConstant {
                                                             "<#list gpColumns as gpColumn>\n" +
                                                             "    \"${gpColumn.name}\" ${gpColumn.pgColumnType},\n" +
                                                             "</#list>\n" +
+                                                            "dw_modify_date timestamp,\n" +
                                                             "PRIMARY KEY (${primaryKeys?join(\", \")})\n" +
                                                             " )\n" +
                                                             "distributed by(${primaryKeys?join(\", \")});\n" +
-                                                            "<#list gpColumns as gpColumn>" +
-                                                            "<#if (gpColumn.comment)?default(\"\")?length gt 1 >COMMENT ON COLUMN \"${schema}\".\"${table}\".\"${gpColumn.name}\" IS '${gpColumn.comment}';</#if>" +
+                                                            "<#list gpColumns as gpColumn>\n" +
+                                                            "<#if (gpColumn.comment)?default(\"\")?length gt 1 >COMMENT ON COLUMN \"${schema}\".\"${table}\".\"${gpColumn.name}\" IS '${gpColumn.comment}';</#if>\n" +
                                                             "</#list>";
+
     public static final String UPDATE_PRIMARY = "ALTER TABLE \"${schema}\".\"${table}\"\n" +
                                                 "DROP CONSTRAINT \"${table}_pkey\";\n" +
                                                 "ALTER TABLE \"${schema}\".\"${table}\"\n" +

@@ -65,8 +65,8 @@ public class GreenplumTemplateTest {
                 "(\n" +
                 "    id           varchar(50)    not null comment '主键ID'\n" +
                 "        primary key,\n" +
-                "    name         varchar(30)    null comment '姓名',\n" +
-                "    key_word     varchar(255)   null comment '关键词',\n" +
+                "    name         varchar(30)    null comment '''Y'' means default',\n" +
+                "    key_word     varchar(255)   null comment '关''键词',\n" +
                 "    punch_time   datetime       null comment '打卡时间',\n" +
                 "    salary_money decimal(10, 3) null comment '工资',\n" +
                 "    bonus_money  double(10, 2)  null comment '奖金',\n" +

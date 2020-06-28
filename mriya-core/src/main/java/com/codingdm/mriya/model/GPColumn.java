@@ -25,6 +25,8 @@ public class GPColumn extends Column{
 
     private String pgColumnType;
 
+    private String comment;
+
     public GPColumn() {}
 
     public GPColumn(Map<?, ?> map){
@@ -53,4 +55,5 @@ public class GPColumn extends Column{
         }
         return "";
     }
+
 }
