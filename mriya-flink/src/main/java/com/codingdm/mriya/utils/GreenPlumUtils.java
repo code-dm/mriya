@@ -154,7 +154,9 @@ public class GreenPlumUtils {
                     case Types.VARBINARY: {
                         if(columnValue != null){
                             byte[] data = columnValue.toString().getBytes();
+                            sb.append(QUOTE);
                             sb.append(escapeBinary(data));
+                            sb.append(QUOTE);
                         }
                         break;
                     }
@@ -172,6 +174,7 @@ public class GreenPlumUtils {
             }
             sb.append(NEWLINE);
         }
+        System.out.println(sb.toString());
         return sb.toString().getBytes(StandardCharsets.UTF_8);
     }
 }

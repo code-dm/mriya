@@ -54,14 +54,24 @@ ALTER TABLE tbl_name
 
 
 ### 安装教程
-
-1.  安装配置中心nacos
-2.  安装Flink
-3.  安装Greenplum
+1.  安装MySql
+2.  安装canal
+3.  安装kafka
+4.  安装zookeeper
+5.  安装配置中心nacos
+6.  安装Flink
+7.  安装Greenplum
 
 ### 使用说明
 
-1.  xxxx
+1.  使用源码编译
+``` 
+git clone https://github.com/JeasonPeople/mriya.git
+cd mriya
+mvn install -Dmaven.test.skip=true
+cd mriya-flink/target
+```
+
 2.  xxxx
 3.  xxxx
 

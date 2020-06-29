@@ -21,6 +21,7 @@ import org.apache.flink.streaming.api.functions.sink.RichSinkFunction;
 import org.apache.flink.streaming.api.functions.source.RichSourceFunction;
 import org.postgresql.copy.CopyManager;
 import org.postgresql.core.BaseConnection;
+import org.postgresql.util.PSQLException;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -72,23 +73,32 @@ public class GreenplumSink extends RichSinkFunction<Message> {
                     statement.execute(del);
                 }
             }catch (Exception e){
+                e.printStackTrace();
                 log.info(deleteSql.toString());
                 log.info(message.toJsonString());
                 log.error(e.getMessage());
                 con.rollback();
-                throw new RuntimeException();
+                throw new RuntimeException(e);
             }
         }
         // 执行copy
         List<String> columnsList = transformer.getColumnsList(message);
-        if(CollectionUtils.isNotEmpty(columnsList)){
-            String schemaName = NacosConfig.get(PropertiesConstants.MRIYA_TARGET_DATASOURCE_SCHEMA);
-            String copySql = GreenPlumUtils.getCopySql(columnsList, schemaName, message.getTargetTable());
-            CopyManager copyManager = new CopyManager((BaseConnection) con);
-            byte[] bytes = GreenPlumUtils.serializeRecord(new ArrayList<>(message.getRowData()));
-            InputStream in = new ByteArrayInputStream(bytes);
-            copyManager.copyIn(copySql, in);
-            in.close();
+        try {
+            if(CollectionUtils.isNotEmpty(columnsList)){
+                String schemaName = NacosConfig.get(PropertiesConstants.MRIYA_TARGET_DATASOURCE_SCHEMA);
+                String copySql = GreenPlumUtils.getCopySql(columnsList, schemaName, message.getTargetTable());
+                CopyManager copyManager = new CopyManager((BaseConnection) con);
+                byte[] bytes = GreenPlumUtils.serializeRecord(new ArrayList<>(message.getRowData()));
+                InputStream in = new ByteArrayInputStream(bytes);
+                copyManager.copyIn(copySql, in);
+                in.close();
+            }
+        }catch (PSQLException e){
+            log.info(message.toJsonString());
+            log.error(e.getMessage());
+            e.printStackTrace();
+            con.rollback();
+            throw new RuntimeException(e);
         }
         // 执行ddl语句
         if(StringUtils.isNotBlank(message.getSql())){
@@ -97,7 +107,9 @@ public class GreenplumSink extends RichSinkFunction<Message> {
                 statement.execute(sql);
             }catch (SQLException e){
                 e.printStackTrace();
+                log.info(message.toJsonString());
                 log.error(e.getMessage());
+                throw new RuntimeException(e);
             }
 
         }
