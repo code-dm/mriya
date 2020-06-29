@@ -1,6 +1,8 @@
 package com.codingdm.mriya;
 
 import com.codingdm.mriya.aggregate.AggregateMessage;
+import com.codingdm.mriya.config.NacosConfig;
+import com.codingdm.mriya.constant.PropertiesConstants;
 import com.codingdm.mriya.filter.MsgFilter;
 import com.codingdm.mriya.model.Message;
 import com.codingdm.mriya.sink.GreenplumSink;
@@ -32,7 +34,7 @@ public class MriyaDev {
     public static void main(String[] args) throws Exception {
         log.info("start dev");
 //        String topic = "mriya";
-        String topic = "mriya";
+        String topic = NacosConfig.get(PropertiesConstants.MRIYA_SOURCES_KAFKA_TOPIC);
         final StreamExecutionEnvironment flinkEnv = StreamExecutionEnvironment.getExecutionEnvironment();
         Properties props = KafkaConfigUtil.buildKafkaProps();
         FlinkKafkaConsumer<Message> kafkaSource = new FlinkKafkaConsumer<>(topic, new MessageSchema(topic), props);

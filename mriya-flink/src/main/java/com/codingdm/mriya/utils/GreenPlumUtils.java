@@ -8,6 +8,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -74,7 +75,7 @@ public class GreenPlumUtils {
             char c = data.charAt(i);
             switch (c) {
                 case 0x00:
-                    log.warn("字符串中发现非法字符 0x00，已经将其删除");
+//                    log.warn("字符串中发现非法字符 0x00，已经将其删除");
                     continue;
                 case QUOTE:
                 case ESCAPE:
@@ -171,6 +172,6 @@ public class GreenPlumUtils {
             }
             sb.append(NEWLINE);
         }
-        return sb.toString().getBytes("UTF-8");
+        return sb.toString().getBytes(StandardCharsets.UTF_8);
     }
 }

@@ -67,8 +67,16 @@ public class GreenplumSink extends RichSinkFunction<Message> {
         Transformer transformer = new MysqlTransformer();
         List<String> deleteSql = transformer.getDeleteSql(message);
         if(CollectionUtils.isNotEmpty(deleteSql)){
-            for (String del : deleteSql) {
-                statement.execute(del);
+            try {
+                for (String del : deleteSql) {
+                    statement.execute(del);
+                }
+            }catch (Exception e){
+                log.info(deleteSql.toString());
+                log.info(message.toJsonString());
+                log.error(e.getMessage());
+                con.rollback();
+                throw new RuntimeException();
             }
         }
         // 执行copy

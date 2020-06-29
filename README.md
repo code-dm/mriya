@@ -76,3 +76,4 @@ ALTER TABLE tbl_name
 4.  新建 Pull Request
 
 ### 同步速度
+![同步速度](http://image.wdmblog.cn/Mriya-QPS.png "同步速度")

@@ -11,6 +11,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * @author wudongming1
@@ -59,8 +60,10 @@ public class RowData {
 
     public List<ColumnData> getData() {
         if(data != null){
-            Collections.sort(data, Comparator.comparingInt(o -> o.getColumnName().hashCode()));
+            return data.stream()
+                    .sorted(Comparator.comparingInt(o -> o.getColumnName().hashCode()))
+                    .collect(Collectors.toList());
         }
-        return data;
+        return null;
     }
 }

@@ -43,7 +43,10 @@ public class MysqlTransformer implements Transformer {
         if(CollectionUtils.isNotEmpty(message.getRowData())){
             List<RowData> rowData = new ArrayList<>(message.getRowData());
             List<String> primaryKeyNames = new ArrayList<>(message.getPkNames());
-            String primaryKeyName = String.join(CommonConstants.LINE_DOUBLE, primaryKeyNames);
+            List<String> primaryKeyNamesF = primaryKeyNames.stream()
+                    .map(k -> String.format(CommonConstants.PERCENT_S_DOUBLE, k))
+                    .collect(Collectors.toList());
+            String primaryKeyName = String.join(CommonConstants.LINE_DOUBLE, primaryKeyNamesF);
 
             List<String> pkValuesList = rowData.stream()
                     .map(md -> {
