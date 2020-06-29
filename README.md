@@ -58,9 +58,25 @@ ALTER TABLE tbl_name
 2.  安装canal
 3.  安装kafka
 4.  安装zookeeper
+
+1-4 安装教程(https://github.com/alibaba/canal/wiki)
+
 5.  安装配置中心nacos
+
+nacos 安装教程(https://nacos.io/zh-cn/docs/deployment.html)
+
 6.  安装Flink
+
+单机版安装(https://ci.apache.org/projects/flink/flink-docs-release-1.10/ops/deployment/cluster_setup.html#starting-flink)
+
 7.  安装Greenplum
+
+docker安装Greenplum
+```
+docker pull datagrip/greenplum
+docker run -it -p 5432:5432 datagrip/greenplum
+```
+用户名: gpadmin 密码: pivotal
 
 ### 使用说明
 
@@ -71,19 +87,9 @@ cd mriya
 mvn install -Dmaven.test.skip=true
 cd mriya-flink/target
 ```
-
-2.  xxxx
-3.  xxxx
-
-### 使用docker快速体验
+将打包好的jar包通过Flink Web上传并执行
 
 
-### 参与贡献
-
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
 
 ### 同步速度
 ![同步速度](http://image.wdmblog.cn/Mriya-QPS.png "同步速度")
