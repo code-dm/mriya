@@ -77,6 +77,7 @@ docker pull datagrip/greenplum
 docker run -it -p 5432:5432 datagrip/greenplum
 ```
 用户名: gpadmin 密码: pivotal
+用户名: root 密码: pivotal 
 
 ### 使用说明
 
