@@ -87,3 +87,4 @@ cd mriya-flink/target
 
 ### 同步速度
 ![同步速度](http://image.wdmblog.cn/Mriya-QPS.png "同步速度")
+![同步速度](http://image.wdmblog.cn/Mriya-QPS2.png "同步速度")
