@@ -3,7 +3,7 @@ package com.codingdm.mriya.connection;
 import java.sql.Connection;
 
 /**
- * @author wudongming1
+ * @author wudongming
  * @email wdmcode@aliyun.com
  * @Date 6/9/2020 1:20 PM
  **/

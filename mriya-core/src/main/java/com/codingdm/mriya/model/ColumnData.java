@@ -9,7 +9,7 @@ import java.util.Objects;
 
 /**
  * 数据库字段类
- * @author wudongming1
+ * @author wudongming
  * @email wdmcode@aliyun.com
  * @Date 6/8/2020 2:06 PM
  **/

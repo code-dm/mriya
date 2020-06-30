@@ -13,8 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author wudongming1
- * @email dongming1.wu@genscript.com
+ * @author wudongming
+ * @email wdmcode@aliyun.com
  * @create 2019-08-19 13:17
  **/
 public class MysqlUtils {

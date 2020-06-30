@@ -2,7 +2,7 @@ package com.codingdm.mriya.enums;
 
 /**
  * 获取filter的来源
- * @author wudongming1
+ * @author wudongming
  */
 
 public enum FilterSourceTypeEnum {

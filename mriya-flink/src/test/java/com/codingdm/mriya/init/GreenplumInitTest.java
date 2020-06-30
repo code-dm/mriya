@@ -4,8 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
 /**
- * @author wudongming1
- * @email dongming1.wu@genscript.com
+ * @author wudongming
+ * @email wdmcode@aliyun.com
  * @Date 6/24/2020 1:35 PM
  **/
 @Slf4j

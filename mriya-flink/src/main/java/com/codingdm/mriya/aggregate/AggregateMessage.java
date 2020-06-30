@@ -10,7 +10,7 @@ import org.apache.flink.api.common.functions.AggregateFunction;
 import java.util.*;
 
 /**
- * @author wudongming1
+ * @author wudongming
  * @email wdmcode@aliyun.com
  * @Date 6/3/2020 4:03 PM
  **/

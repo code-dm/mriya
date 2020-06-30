@@ -1,7 +1,7 @@
 package com.codingdm.mriya.enums;
 
 /**
- * @author wudongming1
+ * @author wudongming
  * @email wdmcode@aliyun.com
  * @Date 5/27/2020 1:40 PM
  **/

@@ -6,7 +6,7 @@ import org.apache.flink.api.java.utils.ParameterTool;
 import org.junit.Test;
 
 /**
- * @author wudongming1
+ * @author wudongming
  * @email wdmcode@aliyun.com
  * @Date 6/5/2020 9:54 AM
  **/

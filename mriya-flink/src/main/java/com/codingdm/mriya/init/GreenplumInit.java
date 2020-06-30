@@ -19,8 +19,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * @author wudongming1
- * @email dongming1.wu@genscript.com
+ * @author wudongming
+ * @email wdmcode@aliyun.com
  * @Date 6/23/2020 4:59 PM
  **/
 @Slf4j

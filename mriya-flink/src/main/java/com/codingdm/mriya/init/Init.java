@@ -1,8 +1,8 @@
 package com.codingdm.mriya.init;
 
 /**
- * @author wudongming1
- * @email dongming1.wu@genscript.com
+ * @author wudongming
+ * @email wdmcode@aliyun.com
  * @Date 6/23/2020 4:57 PM
  **/
 public interface Init {

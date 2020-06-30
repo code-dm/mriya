@@ -3,7 +3,7 @@ package com.codingdm.mriya.constant;
 
 
 /**
- * @author wudongming1
+ * @author wudongming
  * @email wdmcode@aliyun.com
  * @Date 6/2/2020 5:33 PM
  **/

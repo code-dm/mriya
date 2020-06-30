@@ -24,8 +24,8 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * @author wudongming1
- * @email dongming1.wu@genscript.com
+ * @author wudongming
+ * @email wdmcode@aliyun.com
  * @Date 6/28/2020 2:55 PM
  **/
 @Slf4j

@@ -10,8 +10,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 /**
- * @author wudongming1
- * @email dongming1.wu@genscript.com
+ * @author wudongming
+ * @email wdmcode@aliyun.com
  * @Date 6/24/2020 9:54 AM
  **/
 @Slf4j

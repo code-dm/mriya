@@ -2,7 +2,7 @@ package com.codingdm.mriya.enums;
 
 /**
  * 过滤器类型 BLACKLIST 黑名单 WHITELIST白名单
- * @author wudongming1
+ * @author wudongming
  */
 
 public enum FilterTypeEnum {

@@ -3,7 +3,7 @@ package com.codingdm.mriya.constant;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * @author wudongming1
+ * @author wudongming
  * @email wdmcode@aliyun.com
  * @Date 6/10/2020 3:37 PM
  **/
