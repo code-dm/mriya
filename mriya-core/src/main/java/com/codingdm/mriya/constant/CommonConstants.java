@@ -39,5 +39,7 @@ public class CommonConstants {
     public static final String BIT = "BIT";
     public static final String BPCHAR = "BPCHAR";
 
+    public static final String ALREADY_EXISTS = "already exists";
+
 
 }

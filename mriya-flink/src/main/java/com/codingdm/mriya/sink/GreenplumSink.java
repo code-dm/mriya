@@ -3,6 +3,7 @@ package com.codingdm.mriya.sink;
 import com.codingdm.mriya.config.NacosConfig;
 import com.codingdm.mriya.connection.SinkConnection;
 import com.codingdm.mriya.connection.impl.GpConnection;
+import com.codingdm.mriya.constant.CommonConstants;
 import com.codingdm.mriya.constant.PropertiesConstants;
 import com.codingdm.mriya.constant.TemplateConstant;
 import com.codingdm.mriya.ddl.DDLTemplate;
@@ -109,7 +110,9 @@ public class GreenplumSink extends RichSinkFunction<Message> {
                 e.printStackTrace();
                 log.info(message.toJsonString());
                 log.error(e.getMessage());
-                throw new RuntimeException(e);
+                if(!e.getMessage().contains(CommonConstants.ALREADY_EXISTS)){
+                    throw new RuntimeException(e);
+                }
             }
 
         }

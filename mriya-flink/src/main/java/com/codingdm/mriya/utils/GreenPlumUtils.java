@@ -75,11 +75,12 @@ public class GreenPlumUtils {
             char c = data.charAt(i);
             switch (c) {
                 case 0x00:
-//                    log.warn("字符串中发现非法字符 0x00，已经将其删除");
+                    log.warn("字符串中发现非法字符 0x00，已经将其删除");
                     continue;
                 case QUOTE:
                 case ESCAPE:
                     sb.append(ESCAPE);
+                default:
             }
 
             sb.append(c);
@@ -174,7 +175,6 @@ public class GreenPlumUtils {
             }
             sb.append(NEWLINE);
         }
-        System.out.println(sb.toString());
         return sb.toString().getBytes(StandardCharsets.UTF_8);
     }
 }
