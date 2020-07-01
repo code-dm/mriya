@@ -52,6 +52,54 @@ ALTER TABLE tbl_name
 5. 定义aggregate，将同一张表的数据进行合并去重
 6. 自定义Sink，定义GreenplumSink或者其他目标数据源。
 
+### docker 极速体验
+```
+git clone https://github.com/JeasonPeople/mriya.git
+cd docker-compose
+docker-compose up
+```
+1. 访问http://docker-ip:8848/nacos修改配置(默认账号nacos/nacos)
+在public下新增Properties文件, Data ID=MRIYA, group=MRIYA_GROUP
+
+```
+mriya.source.kafka.bootstrap.servers=kafka:9092
+mriya.source.kafka.zookeeper.connect=zk:2181
+mriya.source.kafka.group.id=dw-etl-prod-gp6
+mriya.source.kafka.auto.offset.reset=earliest
+mriya.source.kafka.topic=mriya
+
+mriya.target.datasource.type=greenplum
+mriya.target.datasource.url=jdbc:postgresql://greenplum:5432/gsdw?serverTimezone=GMT+8
+mriya.target.datasource.schema=dw_ods
+mriya.target.datasource.username=gpadmin
+mriya.target.datasource.password=pivotal
+# 支持freemarker语法，${table}为必写项
+mriya.table.name.template=${topic}_${database}_${table}
+
+# psql -d template1 -c "alter user gpadmin password 'pivotal'"
+# mriya.message.filer=${topic}-${database}-${table}
+# mriya.message.filer=mes-accounting_bak-*
+```
+2. 使用gpadmin账号连接greenplum创建database以及schema(默认账号root/pivotal gpadmin/pivotal)
+```
+CREATE DATABASE "mriya";
+CREATE SCHEMA "dw_ods";
+```
+3. 访问http://docker-ip:8081/#/submit提交jar并运行jar
+
+4. 使用连接工具连接MySql(默认账号root/Mriya@Mriya)运行sql
+```aidl
+CREATE DATABASE `mriya`;
+CREATE TABLE `mriya`.`table_1`  (
+  `k1` int(10) NOT NULL AUTO_INCREMENT COMMENT 'primary key',
+  `c1` varchar(255) NULL,
+  `c2` varchar(255) NULL,
+  `c3` varchar(255) NULL,
+  `c4` datetime(2) NULL,
+  PRIMARY KEY (`k1`)
+);
+
+```
 
 ### 安装教程
 1.  安装MySql
@@ -90,8 +138,8 @@ cd mriya-flink/target
 ```
 将打包好的jar包通过Flink Web上传并执行
 
-
-
 ### 同步速度
 ![同步速度](http://image.wdmblog.cn/Mriya-QPS.png "同步速度")
 ![同步速度](http://image.wdmblog.cn/Mriya-QPS2.png "同步速度")
+
+

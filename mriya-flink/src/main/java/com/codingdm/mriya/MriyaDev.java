@@ -39,6 +39,7 @@ public class MriyaDev {
         Properties props = KafkaConfigUtil.buildKafkaProps();
         FlinkKafkaConsumer<Message> kafkaSource = new FlinkKafkaConsumer<>(topic, new MessageSchema(topic), props);
         flinkEnv.addSource(kafkaSource)
+                .filter(MsgFilter::filterType)
                 .filter(MsgFilter::filter)
                 .keyBy("targetTable")
                 .timeWindow(Time.seconds(5))

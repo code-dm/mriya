@@ -1,5 +1,6 @@
 package com.codingdm.mriya.filter;
 
+import com.codingdm.mriya.enums.EventType;
 import com.codingdm.mriya.model.Message;
 import org.junit.Test;
 
@@ -26,10 +27,21 @@ public class MsgFilterTest {
     public void testFilter2(){
         Message msg = new Message();
 
-        msg.setTopic("mriya");
-        msg.setDatabase("database2");
+        msg.setTopic("mes");
+        msg.setDatabase("accounting_bak");
         msg.setTable("test_table");
-
         System.out.println(MsgFilter.filter(msg));
+    }
+
+    @Test
+    public void testFilter3(){
+        Message msg = new Message();
+
+        msg.setTopic("mes");
+        msg.setDatabase("accounting_bak");
+        msg.setTable("test_table");
+        msg.setType(EventType.CREATE);
+
+        System.out.println(MsgFilter.filterType(msg));
     }
 }
