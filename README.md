@@ -142,4 +142,10 @@ cd mriya-flink/target
 ![同步速度](http://image.wdmblog.cn/Mriya-QPS.png "同步速度")
 ![同步速度](http://image.wdmblog.cn/Mriya-QPS2.png "同步速度")
 
+### 添加管理员微信进入技术群
+![工作流程](http://image.wdmblog.cn/codingdm.jpg)
+
+### 关注公众号
+
+![工作流程](http://image.wdmblog.cn/qrcode_for_gh_e6fd53510eba_258.jpg "工作流程")
 
