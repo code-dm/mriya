@@ -1,5 +1,6 @@
 package com.codingdm.mriya.aggregate;
 
+import com.codingdm.mriya.constant.CommonConstants;
 import com.codingdm.mriya.model.ColumnData;
 import com.codingdm.mriya.model.RowData;
 import com.codingdm.mriya.model.Message;
@@ -7,6 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.flink.api.common.functions.AggregateFunction;
 
+import java.sql.Types;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -63,6 +66,8 @@ public class AggregateMessage implements AggregateFunction<Message, Message, Mes
         for(String key : data.keySet()){
             columns.add(new ColumnData(key, data.get(key), sqlType.get(key)));
         }
+        SimpleDateFormat df = new SimpleDateFormat(CommonConstants.NOW_FORMAT);
+        columns.add(new ColumnData(CommonConstants.DW_MODIFY_DATE, df.format(new Date()), Types.TIMESTAMP));
         return columns;
     }
 

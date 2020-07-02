@@ -12,6 +12,7 @@ import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -28,6 +29,7 @@ public class MysqlTransformer implements Transformer {
 
     @Override
     public List<String> getColumnsList(Message message) {
+        message.getSqlType().put(CommonConstants.DW_MODIFY_DATE, Types.TIMESTAMP);
         if(message.getSqlType() != null){
                 return message.getSqlType()
                         .keySet()

@@ -8,8 +8,10 @@ import com.codingdm.mriya.constant.PropertiesConstants;
 import com.codingdm.mriya.constant.TemplateConstant;
 import com.codingdm.mriya.ddl.DDLTemplate;
 import com.codingdm.mriya.ddl.impl.GreenplumTemplate;
+import com.codingdm.mriya.model.ColumnData;
 import com.codingdm.mriya.model.GPColumn;
 import com.codingdm.mriya.model.Message;
+import com.codingdm.mriya.model.RowData;
 import com.codingdm.mriya.transformer.Transformer;
 import com.codingdm.mriya.transformer.impl.MysqlTransformer;
 import com.codingdm.mriya.utils.GreenPlumUtils;
@@ -40,6 +42,7 @@ import java.util.List;
 @Slf4j
 public class GreenplumSink extends RichSinkFunction<Message> {
     private SinkConnection sinkConnection;
+
 
     @Override
     public void open(Configuration parameters) throws Exception {
@@ -89,6 +92,11 @@ public class GreenplumSink extends RichSinkFunction<Message> {
                 String schemaName = NacosConfig.get(PropertiesConstants.MRIYA_TARGET_DATASOURCE_SCHEMA);
                 String copySql = GreenPlumUtils.getCopySql(columnsList, schemaName, message.getTargetTable());
                 CopyManager copyManager = new CopyManager((BaseConnection) con);
+//                List<RowData> rowData = new ArrayList<>(message.getRowData());
+//                for (RowData rowDatum : rowData) {
+//                    ColumnData data = new ColumnData()
+//                    rowDatum.getData().add()
+//                }
                 byte[] bytes = GreenPlumUtils.serializeRecord(new ArrayList<>(message.getRowData()));
                 InputStream in = new ByteArrayInputStream(bytes);
                 copyManager.copyIn(copySql, in);

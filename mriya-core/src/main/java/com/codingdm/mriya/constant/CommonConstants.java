@@ -40,6 +40,8 @@ public class CommonConstants {
     public static final String BPCHAR = "BPCHAR";
 
     public static final String ALREADY_EXISTS = "already exists";
+    public static final String DW_MODIFY_DATE = "dw_modify_date";
+    public static final String NOW_FORMAT = "yyyy-MM-dd HH:mm:sse";
 
 
 }
