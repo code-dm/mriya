@@ -75,8 +75,8 @@ public class GreenplumSink extends RichSinkFunction<Message> {
                 }
             }catch (Exception e){
                 e.printStackTrace();
-                log.info(deleteSql.toString());
-                log.info(message.toJsonString());
+                log.error(deleteSql.toString());
+                log.error(message.toJsonString());
                 log.error(e.getMessage());
                 con.rollback();
                 throw new RuntimeException(e);
@@ -95,7 +95,7 @@ public class GreenplumSink extends RichSinkFunction<Message> {
                 in.close();
             }
         }catch (PSQLException e){
-            log.info(message.toJsonString());
+            log.error(message.toJsonString());
             log.error(e.getMessage());
             e.printStackTrace();
             con.rollback();
@@ -108,7 +108,7 @@ public class GreenplumSink extends RichSinkFunction<Message> {
                 statement.execute(sql);
             }catch (SQLException e){
                 e.printStackTrace();
-                log.info(message.toJsonString());
+                log.error(message.toJsonString());
                 log.error(e.getMessage());
                 if(!e.getMessage().contains(CommonConstants.ALREADY_EXISTS)){
                     throw new RuntimeException(e);
