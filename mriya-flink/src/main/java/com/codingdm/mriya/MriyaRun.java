@@ -30,10 +30,9 @@ import java.util.Properties;
  * @created: 2020/06/02 21:16
  */
 @Log4j
-public class MriyaDev {
+public class MriyaRun {
     public static void main(String[] args) throws Exception {
         log.info("start dev");
-//        String topic = "mriya";
         String topic = NacosConfig.get(PropertiesConstants.MRIYA_SOURCES_KAFKA_TOPIC);
         final StreamExecutionEnvironment flinkEnv = StreamExecutionEnvironment.getExecutionEnvironment();
         Properties props = KafkaConfigUtil.buildKafkaProps();
@@ -46,8 +45,7 @@ public class MriyaDev {
                 .trigger(DdlTrigger.build())
                 .aggregate(AggregateMessage.build())
                 .addSink(new GreenplumSink());
-
-        flinkEnv.execute("run dev");
+        flinkEnv.execute("mriya run topic: " + topic);
     }
 
 }
