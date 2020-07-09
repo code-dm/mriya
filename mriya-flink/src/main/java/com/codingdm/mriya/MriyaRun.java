@@ -32,7 +32,7 @@ import java.util.Properties;
 @Log4j
 public class MriyaRun {
     public static void main(String[] args) throws Exception {
-        log.info("start dev");
+        log.info("start mriya");
         String topic = NacosConfig.get(PropertiesConstants.MRIYA_SOURCES_KAFKA_TOPIC);
         final StreamExecutionEnvironment flinkEnv = StreamExecutionEnvironment.getExecutionEnvironment();
         Properties props = KafkaConfigUtil.buildKafkaProps();

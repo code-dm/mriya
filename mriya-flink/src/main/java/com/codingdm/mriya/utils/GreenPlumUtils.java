@@ -156,7 +156,7 @@ public class GreenPlumUtils {
                         if(columnValue != null){
                             byte[] data = columnValue.toString().getBytes();
                             sb.append(QUOTE);
-                            sb.append(escapeBinary(data));
+                            sb.append(escapeString(escapeBinary(data)));
                             sb.append(QUOTE);
                         }
                         break;

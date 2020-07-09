@@ -11,6 +11,13 @@
 2. 使用mriya消费kafka中的消息，还原MySQL 的增删改。
 3. 将MySQL的增删改转义成目标源的增删改语句
 
+### 特性
+
+1. 基于binlog的近实时同步ETL
+2. 支持自动化表创建，自动化DDL变更同步
+3. 使用nacos注册中心同步，变更配置不需要重启
+4. 后续添加支持多目标源
+
 #### MySql --> PostGreSql/Greenplum(使用delete+copy方式):
 
 1.  支持近实时级别的数据增删改
