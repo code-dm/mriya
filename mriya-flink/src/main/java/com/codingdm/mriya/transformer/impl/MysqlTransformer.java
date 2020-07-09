@@ -29,13 +29,15 @@ public class MysqlTransformer implements Transformer {
 
     @Override
     public List<String> getColumnsList(Message message) {
-        message.getSqlType().put(CommonConstants.DW_MODIFY_DATE, Types.TIMESTAMP);
         if(message.getSqlType() != null){
+            message.getSqlType().put(CommonConstants.DW_MODIFY_DATE, Types.TIMESTAMP);
+            if(message.getSqlType() != null){
                 return message.getSqlType()
                         .keySet()
                         .stream()
                         .sorted(Comparator.comparingInt(String::hashCode))
                         .collect(Collectors.toList());
+            }
         }
         return null;
     }

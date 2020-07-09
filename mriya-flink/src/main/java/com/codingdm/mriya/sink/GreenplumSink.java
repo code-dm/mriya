@@ -87,27 +87,24 @@ public class GreenplumSink extends RichSinkFunction<Message> {
         }
         // 执行copy
         List<String> columnsList = transformer.getColumnsList(message);
-        try {
-            if(CollectionUtils.isNotEmpty(columnsList)){
-                String schemaName = NacosConfig.get(PropertiesConstants.MRIYA_TARGET_DATASOURCE_SCHEMA);
-                String copySql = GreenPlumUtils.getCopySql(columnsList, schemaName, message.getTargetTable());
-                CopyManager copyManager = new CopyManager((BaseConnection) con);
-//                List<RowData> rowData = new ArrayList<>(message.getRowData());
-//                for (RowData rowDatum : rowData) {
-//                    ColumnData data = new ColumnData()
-//                    rowDatum.getData().add()
-//                }
-                byte[] bytes = GreenPlumUtils.serializeRecord(new ArrayList<>(message.getRowData()));
-                InputStream in = new ByteArrayInputStream(bytes);
-                copyManager.copyIn(copySql, in);
-                in.close();
+        if(columnsList != null){
+            try {
+                if(CollectionUtils.isNotEmpty(columnsList)){
+                    String schemaName = NacosConfig.get(PropertiesConstants.MRIYA_TARGET_DATASOURCE_SCHEMA);
+                    String copySql = GreenPlumUtils.getCopySql(columnsList, schemaName, message.getTargetTable());
+                    CopyManager copyManager = new CopyManager((BaseConnection) con);
+                    byte[] bytes = GreenPlumUtils.serializeRecord(new ArrayList<>(message.getRowData()));
+                    InputStream in = new ByteArrayInputStream(bytes);
+                    copyManager.copyIn(copySql, in);
+                    in.close();
+                }
+            }catch (PSQLException e){
+                log.error(message.toJsonString());
+                log.error(e.getMessage());
+                e.printStackTrace();
+                con.rollback();
+                throw new RuntimeException(e);
             }
-        }catch (PSQLException e){
-            log.error(message.toJsonString());
-            log.error(e.getMessage());
-            e.printStackTrace();
-            con.rollback();
-            throw new RuntimeException(e);
         }
         // 执行ddl语句
         if(StringUtils.isNotBlank(message.getSql())){
@@ -118,7 +115,8 @@ public class GreenplumSink extends RichSinkFunction<Message> {
                 e.printStackTrace();
                 log.error(message.toJsonString());
                 log.error(e.getMessage());
-                if(!e.getMessage().contains(CommonConstants.ALREADY_EXISTS)){
+                if(!e.getMessage().contains(CommonConstants.ALREADY_EXISTS)
+                        && !e.getMessage().contains(CommonConstants.DOES_NOT_EXISTS)){
                     throw new RuntimeException(e);
                 }
             }

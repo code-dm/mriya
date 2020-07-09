@@ -57,17 +57,29 @@ public class GreenplumTemplate implements DDLTemplate {
             gpColumn.setTable(tableName);
             switch (gpColumn.getAlterType()){
                 case DROP:
-                    alterList.add(rendering(TemplateConstant.ALTER_DROP_COLUMN, gpColumn));
+                    String dropSql = rendering(TemplateConstant.ALTER_DROP_COLUMN, gpColumn);
+                    if(!alterList.contains(dropSql)){
+                        alterList.add(dropSql);
+                    }
                     break;
                 case CHANGE:
-                    alterList.add(rendering(TemplateConstant.ALTER_CHANGE_COLUMN, gpColumn));
+                    String changeSql = rendering(TemplateConstant.ALTER_CHANGE_COLUMN, gpColumn);
+                    if(!alterList.contains(changeSql)){
+                        alterList.add(changeSql);
+                    }
                     break;
                 case MODIFY:
-                    alterList.add(rendering(TemplateConstant.ALTER_MODIFY_COLUMN, gpColumn));
+                    String modifySql = rendering(TemplateConstant.ALTER_MODIFY_COLUMN, gpColumn);
+                    if(!alterList.contains(modifySql)){
+                        alterList.add(modifySql);
+                    }
                     getCommentSql(gpColumn, comments);
                     break;
                 case ADD:
-                    alterList.add(rendering(TemplateConstant.ALTER_ADD_COLUMN, gpColumn));
+                    String addSql = rendering(TemplateConstant.ALTER_ADD_COLUMN, gpColumn);
+                    if(!alterList.contains(addSql)){
+                        alterList.add(addSql);
+                    }
                     getCommentSql(gpColumn, comments);
                     break;
                 case UPDATE_PRIMARY:
