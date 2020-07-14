@@ -32,10 +32,13 @@ public class TemplateConstant {
                                                             "dw_modify_date timestamp,\n" +
                                                             "PRIMARY KEY (${primaryKeys?join(\", \")})\n" +
                                                             " )\n" +
+                                                            "<#if sourceType == 'greenplum'>\n" +
                                                             "distributed by(${primaryKeys?join(\", \")});\n" +
+                                                            "<#elseif sourceType == 'postgresql'>;</#if>\n" +
                                                             "<#list gpColumns as gpColumn>\n" +
                                                             "<#if (gpColumn.comment)?default(\"\")?length gt 1 >COMMENT ON COLUMN \"${schema}\".\"${table}\".\"${gpColumn.name}\" IS '${gpColumn.comment}';</#if>\n" +
                                                             "</#list>";
+
 
     public static final String UPDATE_PRIMARY = "ALTER TABLE \"${schema}\".\"${table}\"\n" +
                                                 "DROP CONSTRAINT \"${table}_pkey\";\n" +

@@ -6,7 +6,9 @@ CREATE TABLE IF NOT EXISTS "${schema}"."${table}"
 dw_modify_date timestamp,
 PRIMARY KEY (${primaryKeys?join(", ")})
  )
+<#if sourceType == 'greenplum'>
 distributed by(${primaryKeys?join(", ")});
+<#elseif sourceType == 'postgresql'>;</#if>
 <#list gpColumns as gpColumn>
 <#if (gpColumn.comment)?default("")?length gt 1 >COMMENT ON COLUMN "${schema}"."${table}"."${gpColumn.name}" IS '${gpColumn.comment}';</#if>
 </#list>

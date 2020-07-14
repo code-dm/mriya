@@ -24,9 +24,10 @@ public interface DDLTemplate {
      * @param sql org sql
      * @param tableName tableName
      * @param schema org tableName
+     * @param dataSourceType dataSourceType
      * @return to sql
      */
-    String createSql(String sql, String tableName, String schema);
+    String createSql(String sql, String tableName, String schema, String dataSourceType);
 
 
     /**

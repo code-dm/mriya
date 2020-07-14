@@ -84,7 +84,8 @@ public class GreenplumTemplateTest {
 
         DDLTemplate template = new GreenplumTemplate();
         String target_demo = template.createSql(alterSql, "target_demo",
-                NacosConfig.get(PropertiesConstants.MRIYA_TARGET_DATASOURCE_SCHEMA));
+                NacosConfig.get(PropertiesConstants.MRIYA_TARGET_DATASOURCE_SCHEMA),
+                "postgresql");
         System.out.println(target_demo);
 
     }

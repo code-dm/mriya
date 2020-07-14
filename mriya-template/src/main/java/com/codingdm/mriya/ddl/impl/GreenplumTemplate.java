@@ -1,9 +1,7 @@
 package com.codingdm.mriya.ddl.impl;
 
 import com.codingdm.mriya.SqlParser;
-import com.codingdm.mriya.config.NacosConfig;
 import com.codingdm.mriya.constant.CommonConstants;
-import com.codingdm.mriya.constant.PropertiesConstants;
 import com.codingdm.mriya.constant.TemplateConstant;
 import com.codingdm.mriya.ddl.DDLTemplate;
 import com.codingdm.mriya.model.Column;
@@ -35,6 +33,7 @@ public class GreenplumTemplate implements DDLTemplate {
     private final static String GPCOLUMNS = "gpColumns";
     private final static String PRIMARYKEYS = "primaryKeys";
     private final static String OLDTABLENAME = "oldTableName";
+    private final static String DATA_SOURCE_TYPE = "sourceType";
 
     private final SqlParser sqlParser;
 
@@ -108,7 +107,7 @@ public class GreenplumTemplate implements DDLTemplate {
     }
 
     @Override
-    public String createSql(String sql, String tableName, String schema) {
+    public String createSql(String sql, String tableName, String schema, String dataSourceType) {
         List<Column> columns = sqlParser.parserAlterSql(sql);
         if(CollectionUtils.isNotEmpty(columns)){
             List<GPColumn> gpColumns = columns.stream()
@@ -125,6 +124,7 @@ public class GreenplumTemplate implements DDLTemplate {
                 model.put(TABLE, tableName);
                 model.put(GPCOLUMNS, gpColumns);
                 model.put(PRIMARYKEYS, primaryKeys);
+                model.put(DATA_SOURCE_TYPE, dataSourceType);
                 return TemplateUtil.rendering(TemplateConstant.CREATE_TABLE_DISTRIBUTED, model);
             }else {
                 log.error(tableName + " not have primary key");

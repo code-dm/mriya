@@ -17,6 +17,7 @@ public class PropertiesConstants {
     public static final String MRIYA_TARGET_DATASOURCE_SCHEMA =  "mriya.target.datasource.schema";
     public static final String MRIYA_TARGET_DATASOURCE_USERNAME ="mriya.target.datasource.username";
     public static final String MRIYA_TARGET_DATASOURCE_PASSWORD ="mriya.target.datasource.password";
+    public static final String MRIYA_TARGET_DATASOURCE_TYPE ="mriya.target.datasource.type";
 
     public static final String MRIYA_MYSQL_DATASOURCE_URL =     "mriya.mysql.datasource.url";
     public static final String MRIYA_MYSQL_DATASOURCE_USERNAME ="mriya.mysql.datasource.username";

@@ -49,7 +49,8 @@ public class GreenplumInit implements Init{
             try {
                 for (Message message : tableBySource) {
                     String sql = template.createSql(message.getSql(), message.getTargetTable(),
-                            NacosConfig.get(PropertiesConstants.MRIYA_TARGET_DATASOURCE_SCHEMA));
+                            NacosConfig.get(PropertiesConstants.MRIYA_TARGET_DATASOURCE_SCHEMA),
+                            NacosConfig.get(PropertiesConstants.MRIYA_TARGET_DATASOURCE_TYPE));
                     Statement statement = connection.createStatement();
                     System.out.println(sql);
                     statement.execute(sql);

@@ -136,7 +136,8 @@ public class GreenplumSink extends RichSinkFunction<Message> {
                 break;
             case CREATE:
                 sql = template.createSql(message.getSql(), message.getTargetTable(),
-                        NacosConfig.get(PropertiesConstants.MRIYA_TARGET_DATASOURCE_SCHEMA));
+                        NacosConfig.get(PropertiesConstants.MRIYA_TARGET_DATASOURCE_SCHEMA),
+                        NacosConfig.get(PropertiesConstants.MRIYA_TARGET_DATASOURCE_TYPE));
                 log.info(message.getTargetTable() + " create table: " + sql);
                 break;
             case RENAME:
