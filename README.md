@@ -62,7 +62,7 @@ ALTER TABLE tbl_name
 ### docker 极速体验
 ```
 git clone https://github.com/JeasonPeople/mriya.git
-cd docker-compose
+cd mriya/docker-compose/
 docker-compose up
 ```
 1. 访问http://docker-ip:8848/nacos修改配置(默认账号nacos/nacos)
