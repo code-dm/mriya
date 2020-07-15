@@ -47,14 +47,29 @@ public class Message implements Serializable {
     private String topic;
     public String targetTable;
     private Set<RowData> rowData;
+    private List<Map<String, Object>> nodeData;
 
     public Message(){ }
 
     public Message(String topic, String database, String table){
-        setTopic(topic);
         setDatabase(database);
         setTable(table);
+        setTopic(topic);
         setTargetTable();
+    }
+
+    public Message(Message message) {
+        setId(message.getId());
+        setDatabase(message.getDatabase());
+        setTable(message.getTable());
+        setPkNames(message.getPkNames());
+        setType(message.getType());
+        setTs(message.getTs());
+        setOld(message.getOld());
+        setEs(message.getEs());
+        setIsDdl(message.getIsDdl());
+        setTopic(message.getTopic());
+
     }
 
     public List<Map<String, Object>> getData() {
