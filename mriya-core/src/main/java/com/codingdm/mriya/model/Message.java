@@ -14,6 +14,7 @@ import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -103,12 +104,12 @@ public class Message implements Serializable {
      * @return
      */
     public String getFormatTableTemplate(){
-        Message message = new Message();
-        message.setTopic(this.getTopic());
-        message.setDatabase(this.getDatabase());
+        Map<String, String> p = new HashMap<>(2);
+        p.put("topic", this.getTopic());
+        p.put("database", this.getDatabase());
         String tableNameTemplate = NacosConfig.get(PropertiesConstants.MRIYA_TABLE_NAME_TEMPLATE)
                 .replace("${table}", "${r'${table}'}");
-        return TemplateUtil.rendering(tableNameTemplate, message);
+        return TemplateUtil.rendering(tableNameTemplate, p);
     }
 
     public String formatTableName(String table) {
@@ -138,6 +139,11 @@ public class Message implements Serializable {
                         .map(v::get)
                         .map(Object::toString)
                         .collect(Collectors.joining(CommonConstants.FILTER_LINE)));
+    }
+
+    public void setTopic(String topic) {
+        this.topic = topic;
+        this.setTargetTable();
     }
 
     private static final String PK_NAME_SPLIT = "||";
