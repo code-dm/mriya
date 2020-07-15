@@ -76,7 +76,7 @@ mriya.source.kafka.auto.offset.reset=earliest
 mriya.source.kafka.topic=mriya
 
 mriya.target.datasource.type=greenplum
-mriya.target.datasource.url=jdbc:postgresql://greenplum:5432/gsdw?serverTimezone=GMT+8
+mriya.target.datasource.url=jdbc:postgresql://greenplum:5432/mriya?serverTimezone=GMT+8
 mriya.target.datasource.schema=dw_ods
 mriya.target.datasource.username=gpadmin
 mriya.target.datasource.password=pivotal
