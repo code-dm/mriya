@@ -158,7 +158,9 @@ public class Message implements Serializable {
 
     public void setTopic(String topic) {
         this.topic = topic;
-        this.setTargetTable();
+        if(StringUtils.isNotEmpty(this.getTable())){
+            this.setTargetTable();
+        }
     }
 
     private static final String PK_NAME_SPLIT = "||";
