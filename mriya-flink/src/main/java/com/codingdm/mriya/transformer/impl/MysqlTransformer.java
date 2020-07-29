@@ -13,9 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 
 import java.sql.Types;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -54,15 +52,19 @@ public class MysqlTransformer implements Transformer {
 
             List<String> pkValuesList = rowData.stream()
                     .map(md -> {
-                        StringBuilder pkValue = new StringBuilder();
+                        Map<String, Object> pkvs = new HashMap<>(primaryKeyNames.size());
                         for (ColumnData datum : md.getData()) {
                             for (String keyName : primaryKeyNames) {
                                 if (keyName.equals(datum.getColumnName())) {
-                                    pkValue.append(datum.getColumnValue());
+                                    pkvs.put(keyName, datum.getColumnValue());
                                 }
                             }
                         }
-                        return pkValue.toString();
+                        StringBuilder sb = new StringBuilder();
+                        for (String keyName : primaryKeyNames) {
+                            sb.append(pkvs.get(keyName));
+                        }
+                        return sb.toString();
                     })
                     .map(s-> String.format(CommonConstants.PERCENT_S, s))
                     .collect(Collectors.toList());

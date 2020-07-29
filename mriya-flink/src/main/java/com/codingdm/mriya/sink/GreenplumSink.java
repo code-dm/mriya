@@ -99,6 +99,8 @@ public class GreenplumSink extends RichSinkFunction<Message> {
                     in.close();
                 }
             }catch (PSQLException e){
+                System.out.println(message.toJsonString());
+                System.out.println(deleteSql.toString());
                 log.error(message.toJsonString());
                 log.error(e.getMessage());
                 e.printStackTrace();
