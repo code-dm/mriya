@@ -24,7 +24,7 @@ public class TemplateConstant {
 
     public static final String DROP_TABLE = "DROP TABLE IF EXISTS \"${schema}\".\"${table}\" CASCADE;";
 
-    public static final String CREATE_TABLE_DISTRIBUTED = "CREATE TABLE IF NOT EXISTS \"${schema}\".\"${table}\"\n" +
+    public static final String CREATE_TABLE_DISTRIBUTED = "CREATE TABLE \"${schema}\".\"${table}\"\n" +
                                                             "(\n" +
                                                             "<#list gpColumns as gpColumn>\n" +
                                                             "    \"${gpColumn.name}\" ${gpColumn.pgColumnType},\n" +
