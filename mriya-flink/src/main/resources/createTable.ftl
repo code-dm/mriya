@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS "${schema}"."${table}"
+CREATE TABLE "${schema}"."${table}"
 (
 <#list gpColumns as gpColumn>
     "${gpColumn.name}" ${gpColumn.pgColumnType},
