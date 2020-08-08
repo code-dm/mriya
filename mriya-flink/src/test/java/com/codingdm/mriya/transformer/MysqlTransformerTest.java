@@ -35,4 +35,15 @@ public class MysqlTransformerTest {
         List<String> columnsList = transformer.getDeleteSql(message);
         columnsList.forEach(System.out::println);
     }
+
+    @Test
+    public void getDeleteSqlMany(){
+        String jsonString = "{\"data\":null,\"database\":\"mriya\",\"es\":1591173007000,\"id\":21,\"isDdl\":false,\"rowData\":[{\"data\":[{\"columnName\":\"t4\",\"columnValue\":\"2020-06-03\",\"type\":91},{\"columnName\":\"t5\",\"columnValue\":\"01:00:00\",\"type\":92},{\"columnName\":\"t6\",\"columnValue\":\"2020-06-03 09:27:28\",\"type\":93},{\"columnName\":\"t10\",\"columnValue\":\"15.0\",\"type\":3},{\"columnName\":\"t7\",\"columnValue\":\"2020-06-03 17:27:34\",\"type\":93},{\"columnName\":\"t8\",\"columnValue\":\"15.0\",\"type\":8},{\"columnName\":\"t9\",\"columnValue\":\"15\",\"type\":2005},{\"columnName\":\"t1\",\"columnValue\":\"id\",\"type\":4},{\"columnName\":\"id\",\"columnValue\":\"22\",\"type\":12},{\"columnName\":\"t2\",\"columnValue\":\"15\",\"type\":12},{\"columnName\":\"t3\",\"columnValue\":\"15.0\",\"type\":7}],\"pkValues\":null,\"pkValuesId\":\"canal224_mriya_table_t1_22\",\"type\":\"DELETE\"}],\"mysqlType\":{\"t4\":\"date\",\"t5\":\"time\",\"t6\":\"datetime\",\"t10\":\"decimal(10,3)\",\"t7\":\"timestamp\",\"t8\":\"double\",\"t9\":\"text\",\"id\":\"int(255)\",\"t1\":\"varchar(100)\",\"t2\":\"varchar(200)\",\"t3\":\"float\"},\"old\":null,\"pkNames\":[\"id\", \"t1\"],\"sql\":\"\",\"sqlType\":{\"t4\":91,\"t5\":92,\"t6\":93,\"t10\":3,\"t7\":93,\"t8\":8,\"t9\":2005,\"id\":4,\"t1\":12,\"t2\":12,\"t3\":7},\"table\":\"table_t1\",\"targetTable\":\"canal224_mriya_table_t1\",\"topic\":\"canal224\",\"ts\":1591173007948,\"type\":\"DELETE\"}";
+        System.out.println(jsonString);
+        Message message = Message.buildMessage(jsonString, "topic");
+
+        Transformer transformer = new MysqlTransformer();
+        List<String> columnsList = transformer.getDeleteSql(message);
+        columnsList.forEach(System.out::println);
+    }
 }
