@@ -49,10 +49,12 @@ public class AggregateMessage implements AggregateFunction<Message, Message, Mes
             }
             for (Map<String, Object> d : inMsg.getData()) {
                 String pkValuesIds = inMsg.getPkValuesIds(d);
-                List<ColumnData> columns = dataMapToColumnList(d, inMsg.getSqlType());
-                RowData mg = new RowData(pkValuesIds, inMsg.getType(), columns);
-                rowData.remove(mg);
-                rowData.add(mg);
+                if(pkValuesIds != null){
+                    List<ColumnData> columns = dataMapToColumnList(d, inMsg.getSqlType());
+                    RowData mg = new RowData(pkValuesIds, inMsg.getType(), columns);
+                    rowData.remove(mg);
+                    rowData.add(mg);
+                }
             }
             accumulator.setRowData(rowData);
         }

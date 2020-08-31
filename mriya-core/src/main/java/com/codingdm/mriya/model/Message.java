@@ -146,14 +146,17 @@ public class Message implements Serializable {
      * @return str
      */
     public String getPkValuesIds(Map<String, Object> v) {
-        return String.format(
-                CommonConstants.PK_VALUES_IDS,
-                this.getTargetTable(),
-                this.getPkNames()
-                        .stream()
-                        .map(v::get)
-                        .map(Object::toString)
-                        .collect(Collectors.joining(CommonConstants.FILTER_LINE)));
+        if(v != null){
+            return String.format(
+                    CommonConstants.PK_VALUES_IDS,
+                    this.getTargetTable(),
+                    this.getPkNames()
+                            .stream()
+                            .map(v::get)
+                            .map(Object::toString)
+                            .collect(Collectors.joining(CommonConstants.FILTER_LINE)));
+        }
+        return null;
     }
 
     public void setTopic(String topic) {

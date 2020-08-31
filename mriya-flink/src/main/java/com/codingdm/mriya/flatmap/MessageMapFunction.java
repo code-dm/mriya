@@ -25,10 +25,12 @@ public class MessageMapFunction implements MapFunction<Message, Message> {
                 Set<RowData> rowData = new HashSet<>(message.getData().size());
                 for (Map<String, Object> d : message.getData()) {
                     String pkValuesIds = message.getPkValuesIds(d);
-                    List<ColumnData> columns = dataMapToColumnList(d, message.getSqlType());
-                    RowData mg = new RowData(pkValuesIds, message.getType(), columns);
-                    rowData.remove(mg);
-                    rowData.add(mg);
+                    if(pkValuesIds != null){
+                        List<ColumnData> columns = dataMapToColumnList(d, message.getSqlType());
+                        RowData mg = new RowData(pkValuesIds, message.getType(), columns);
+                        rowData.remove(mg);
+                        rowData.add(mg);
+                    }
                 }
                 message.setData(null);
                 message.setRowData(rowData);
