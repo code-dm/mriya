@@ -14,10 +14,7 @@ import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -146,15 +143,17 @@ public class Message implements Serializable {
      * @return str
      */
     public String getPkValuesIds(Map<String, Object> v) {
-        if(v != null){
+        if(v != null && this.getPkNames() != null){
+            List<String> pkValues = new ArrayList<>(this.getPkNames().size());
+            for (String pkName : this.getPkNames()) {
+                if(v.containsKey(pkName) && v.get(pkName) != null){
+                    pkValues.add(v.get(pkName).toString());
+                }
+            }
             return String.format(
                     CommonConstants.PK_VALUES_IDS,
                     this.getTargetTable(),
-                    this.getPkNames()
-                            .stream()
-                            .map(v::get)
-                            .map(Object::toString)
-                            .collect(Collectors.joining(CommonConstants.FILTER_LINE)));
+                    pkValues);
         }
         return null;
     }
