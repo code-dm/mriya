@@ -9,6 +9,6 @@ package com.codingdm.mriya.constant;
  */
 public class SqlConstants {
 
-    public static final String DELETE_SQL = "DELETE FROM \"%s\".\"%s\" WHERE %s :: varchar in (%s);";
+    public static final String DELETE_SQL = "DELETE FROM \"%s\".\"%s\" WHERE %s in (%s);";
 
 }
