@@ -63,13 +63,16 @@ public class NacosConfig {
         }catch (NacosException e){
             log.error("nacos config NacosException --> \n" + e.getErrMsg());
             e.printStackTrace();
+            throw new RuntimeException("nacos config NacosException");
         }catch (ConfigurationException e){
             log.error("properties read IOException --> \n" + e.getMessage());
             e.printStackTrace();
+            throw new RuntimeException("properties read IOException");
         }
         catch (IOException e) {
             log.error("nacos config IOException --> \n" + e.getMessage());
             e.printStackTrace();
+            throw new RuntimeException("nacos config IOException");
         }
     }
 
