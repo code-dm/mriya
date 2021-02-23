@@ -5,7 +5,7 @@
 
 ### 工作流程
 
-![工作流程](http://image.wdmblog.cn/%E7%BD%91%E7%BB%9C%E6%8B%93%E6%89%91%E5%9B%BE%20%281%29.png "工作流程")
+![工作流程](https://mmbiz.qpic.cn/mmbiz_png/SDDSICuyDj0g6icEphbIcm8cHlrcrOeEqbQLh163OLHyzIbJdyM9ibfUMAUW8JXIjTA1zKOQbqkfRrdWQiaCrNBfQ/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1 "工作流程")
 
 1. 利用canal解析MySQL的binary log，并将解析的log投入kafka中。
 2. 使用mriya消费kafka中的消息，还原MySQL 的增删改。
@@ -146,13 +146,13 @@ cd mriya-flink/target
 将打包好的jar包通过Flink Web上传并执行
 
 ### 同步速度
-![同步速度](http://image.wdmblog.cn/Mriya-QPS.png "同步速度")
-![同步速度](http://image.wdmblog.cn/Mriya-QPS2.png "同步速度")
+![同步速度](https://mmbiz.qpic.cn/mmbiz_png/SDDSICuyDj0g6icEphbIcm8cHlrcrOeEq1hicBOWAVkEcw2C8iaord2LsdYicmyjuxZxIqXRictEBrMOQ0e4PGsWmlQ/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1 "同步速度")
+![同步速度](https://mmbiz.qpic.cn/mmbiz_png/SDDSICuyDj0g6icEphbIcm8cHlrcrOeEqz4MvhzW5ibIReygJn3ZicFCxEticR5JRHliaZouLILkqkuN5iaZkV4ib9Z4A/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1 "同步速度")
 
 ### 添加管理员微信进入技术群
-![工作流程](http://image.wdmblog.cn/codingdm2.jpg)
+![工作流程](https://mmbiz.qpic.cn/mmbiz_jpg/SDDSICuyDj0g6icEphbIcm8cHlrcrOeEqed3Ebt0O7MNBrS84AYG5Dzmic9cn7ZzeTRkmJcoKslpF2D8UibmVm3Jw/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
 
 ### 关注公众号
 
-![工作流程](http://image.wdmblog.cn/qrcode_for_gh_e6fd53510eba_258.jpg "工作流程")
+![工作流程](https://mmbiz.qpic.cn/mmbiz_jpg/SDDSICuyDj0g6icEphbIcm8cHlrcrOeEqowAXSiceB8jXSLSlGNe85Gt8e1ib1aMtzVF73vobzZX2UnzKAQDSicRJQ/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1 "工作流程")
 
