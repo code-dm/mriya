@@ -35,7 +35,7 @@
         <lombok.version>1.16.20</lombok.version>
         <spring.boot.version>2.1.7.RELEASE</spring.boot.version>
         <commons.lang3.version>3.8.1</commons.lang3.version>
-        <nacos.version>1.2.1</nacos.version>
+        <nacos.version>1.4.1</nacos.version>
         <github.global.server>github</github.global.server>
     </properties>
 

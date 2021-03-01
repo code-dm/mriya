@@ -56,10 +56,10 @@ public class NacosConfig {
 
             properties.read(new StringReader(config));
 
-            configService.addListener(
-                    resourcesConfig.get(PropertiesConstants.MRIYA_NACOS_CONFIG_DATAID),
-                    resourcesConfig.get(PropertiesConstants.MRIYA_NACOS_CONFIG_GROUP),
-                    new ConfingListener());
+//            configService.addListener(
+//                    resourcesConfig.get(PropertiesConstants.MRIYA_NACOS_CONFIG_DATAID),
+//                    resourcesConfig.get(PropertiesConstants.MRIYA_NACOS_CONFIG_GROUP),
+//                    new ConfingListener());
         }catch (NacosException e){
             log.error("nacos config NacosException --> \n" + e.getErrMsg());
             e.printStackTrace();
